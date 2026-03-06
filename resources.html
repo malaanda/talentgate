@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources & Checklists - TalentGate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .resource-card {
+            background: var(--white);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--accent);
+        }
+
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checklist {
+            margin-top: 1rem;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 0.8rem;
+        }
+
+        .checklist li:before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="navbar" style="position: sticky;">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="index.html"><img src="img/logo.png" alt="TalentGate"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="jobs.html">Job Board</a></li>
+                <li><a href="blog.html">News</a></li>
+                <li><a href="resources.html" class="active">Resources</a></li>
+                <li><a href="index.html#contact" class="btn-nav">Get Started</a></li>
+            </ul>
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <header class="page-hero bg-navy text-white section-padding">
+        <div class="container text-center">
+            <h1>Resources & Compliance</h1>
+            <p class="lead-text text-white">Essential information on migration pathways, sponsorship obligations, and
+                worker rights.</p>
+        </div>
+    </header>
+
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Navigation (Optional or just focus on main content) -->
+                <div class="col-text" style="flex: 2;">
+
+                    <div class="resource-card" id="dama">
+                        <h3><i class="fas fa-map-marked-alt"></i> Designated Area Migration Agreements (DAMA)</h3>
+                        <p>DAMAs provide access to more overseas workers than the standard skilled migration program.
+                            They are tailored to the needs of specific regions.</p>
+                        <ul class="checklist">
+                            <li>Check if your business is in a DAMA region (e.g., Orana, Far North Queensland).</li>
+                            <li>Verify the occupation is on the DAMA occupation list.</li>
+                            <li>Seek endorsement from the DAMA Representative (DAR).</li>
+                            <li>Apply for a Labour Agreement with the Department of Home Affairs.</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card" id="hila">
+                        <h3><i class="fas fa-industry"></i> Horticulture Industry Labour Agreement (HILA)</h3>
+                        <p>The HILA allows horticultural employers to sponsor overseas workers for skilled and
+                            semi-skilled roles where Australian workers are unavailable.</p>
+                        <ul class="checklist">
+                            <li>Demonstrate that you are an eligible horticultural employer.</li>
+                            <li>Show that you have attempted to recruit locally first (LMT).</li>
+                            <li>Comply with the Horticulture Award 2020 salary requirements.</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card" id="sponsorship">
+                        <h3><i class="fas fa-briefcase"></i> Employer Sponsorship Obligations</h3>
+                        <p>Becoming an approved business sponsor is a serious commitment. You must meet specific
+                            obligations to ensure your business remains compliant.</p>
+                        <ul class="checklist">
+                            <li>Ensure equivalent terms and conditions of employment (no exploitation).</li>
+                            <li>Keep records of recruitment and employment.</li>
+                            <li>Pay all costs associated with sponsorship (do not recover from worker).</li>
+                            <li>Inform the Department of any changes in circumstances (e.g., worker leaves).</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card" id="rights">
+                        <h3><i class="fas fa-balance-scale"></i> Worker Rights in Australia</h3>
+                        <p>All workers in Australia, including visa holders, have the same workplace rights and
+                            protections.</p>
+                        <ul class="checklist">
+                            <li>Right to minimum wage and superannuation.</li>
+                            <li>Right to a safe workplace.</li>
+                            <li>Right to join a union.</li>
+                            <li>Protection from unfair dismissal (where eligible).</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h3>TalentGate<span>.</span></h3>
+                <p>Australia’s Ethical Gateway to Skilled & Talented Workers.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p><a href="https://www.google.com/maps/search/?api=1&query=Level+10,+580+George+Street,+Sydney+NSW+2000"
+                        target="_blank" style="color: inherit;"><i class="fas fa-map-marker-alt"></i> Level 10, 580
+                        George Street, Sydney NSW 2000</a></p>
+                <p><a href="mailto:support@talentgate.com.au" style="color: inherit;"><i class="fas fa-envelope"></i>
+                        support@talentgate.com.au</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 TalentGate. All rights reserved. Powered by Dojo Legal.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

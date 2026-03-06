@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Insights - TalentGate</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar" style="position: sticky;">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="index.html"><img src="img/logo.png" alt="TalentGate"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="jobs.html">Job Board</a></li>
+                <li><a href="blog.html" class="active">News</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="index.html#contact" class="btn-nav">Get Started</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Genreic Hero -->
+    <header class="page-hero bg-navy text-white section-padding">
+        <div class="container text-center">
+            <h1>News & Insights</h1>
+            <p class="lead-text text-white">Latest updates, industry trends, and compliance advice.</p>
+        </div>
+    </header>
+
+    <!-- Blog Section -->
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div id="blog-list" class="job-grid">
+                <!-- Blog posts will be injected here by script.js -->
+                <div class="loading-spinner">Loading articles...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h3>TalentGate<span>.</span></h3>
+                <p>Australia’s Ethical Gateway to Skilled & Talented Workers.</p>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p><a href="https://www.google.com/maps/search/?api=1&query=Level+10,+580+George+Street,+Sydney+NSW+2000"
+                        target="_blank" style="color: inherit;"><i class="fas fa-map-marker-alt"></i> Level 10, 580
+                        George Street, Sydney NSW 2000</a></p>
+                <p><a href="mailto:support@talentgate.com.au" style="color: inherit;"><i class="fas fa-envelope"></i>
+                        support@talentgate.com.au</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html#about">About Us</a>
+                <a href="index.html#employers">For Employers</a>
+                <a href="index.html#workers">For Workers</a>
+                <a href="https://www.dojolegal.com.au">www.dojolegal.com.au</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 TalentGate. All rights reserved. Powered by Dojo Legal.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js?v=2"></script>
+</body>
+
+</html>

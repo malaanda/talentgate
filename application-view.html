@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Details - TalentGate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f4f7f6;
+            padding: 2rem;
+            color: #333;
+        }
+
+        .container-print {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-print {
+            border-bottom: 2px solid var(--navy);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-print img {
+            max-height: 50px;
+        }
+
+        .header-print h1 {
+            color: var(--navy);
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .section-print {
+            margin-bottom: 2rem;
+        }
+
+        .section-print h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .field-row {
+            display: flex;
+            margin-bottom: 0.8rem;
+        }
+
+        .field-label {
+            font-weight: 600;
+            width: 200px;
+            flex-shrink: 0;
+            color: #555;
+        }
+
+        .field-value {
+            flex-grow: 1;
+        }
+
+        .print-actions {
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-print {
+            background-color: #0A2239;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-back {
+            color: #666;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+
+            .container-print {
+                box-shadow: none;
+                padding: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .print-actions {
+                display: none;
+            }
+
+            .btn-print,
+            .btn-back {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="print-actions">
+        <a href="admin.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        <button onclick="window.print()" class="btn-print"><i class="fas fa-print"></i> Print / Save
+            Information</button>
+    </div>
+
+    <div class="container-print" id="printArea">
+        <div class="header-print">
+            <img src="img/logo.png" alt="TalentGate">
+            <div style="text-align: right;">
+                <h1>Candidate Application</h1>
+                <p style="font-size: 0.9rem; color: #666;" id="submittedAt">Submitted: </p>
+            </div>
+        </div>
+
+        <div class="section-print">
+            <h2>Personal Details</h2>
+            <div class="field-row">
+                <span class="field-label">Full Name:</span>
+                <span class="field-value" id="fullName">-</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Email:</span>
+                <span class="field-value" id="email">-</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Phone:</span>
+                <span class="field-value" id="phone">-</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Location:</span>
+                <span class="field-value" id="location">-</span>
+            </div>
+        </div>
+
+        <div class="section-print">
+            <h2>Work Rights & Visa</h2>
+            <div class="field-row">
+                <span class="field-label">Visa Status:</span>
+                <span class="field-value" id="visaStatus">-</span>
+            </div>
+        </div>
+
+        <div class="section-print">
+            <h2>Skills & Experience</h2>
+            <div class="field-row">
+                <span class="field-label">Occupation:</span>
+                <span class="field-value" id="occupation">-</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Experience:</span>
+                <span class="field-value" id="experienceYears">-</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Key Skills:</span>
+                <span class="field-value" id="skills">-</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Recent Job:</span>
+                <span class="field-value" id="recentJob">-</span>
+            </div>
+        </div>
+
+        <div class="section-print">
+            <h2>Candidate Statement</h2>
+            <div class="field-row" style="flex-direction: column;">
+                <span class="field-label" style="margin-bottom: 0.5rem; color: var(--primary);">Why they are a good
+                    fit:</span>
+                <p class="field-value" id="interest"
+                    style="background: #f9f9f9; padding: 1rem; border-radius: 4px; font-style: italic;">-</p>
+            </div>
+        </div>
+
+        <div class="section-print">
+            <h2>Attached Documents</h2>
+            <div class="field-row">
+                <span class="field-label">Resume/CV:</span>
+                <span class="field-value" id="resumeFile">-</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Certificates:</span>
+                <span class="field-value" id="certificatesFile">-</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Licenses/Tickets:</span>
+                <span class="field-value" id="licensesFile">-</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">References:</span>
+                <span class="field-value" id="referencesFile">-</span>
+            </div>
+        </div>
+
+        <div class="section-print">
+            <h2>Application Info</h2>
+            <div class="field-row">
+                <span class="field-label">Applied For:</span>
+                <span class="field-value" id="jobTitle">-</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Application ID:</span>
+                <span class="field-value" id="appId">-</span>
+            </div>
+        </div>
+
+        <div
+            style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee; font-size: 0.8rem; color: #999; text-align: center;">
+            <p>Generated by TalentGate Application System</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            if (!id) {
+                document.body.innerHTML = '<div class="container" style="text-align:center; padding: 2rem;"><h3>Error: No application ID provided.</h3></div>';
+                return;
+            }
+
+            const apps = JSON.parse(localStorage.getItem('tg_applications') || '[]');
+            const app = apps.find(a => a.id.toString() === id);
+
+            if (!app) {
+                document.body.innerHTML = '<div class="container" style="text-align:center; padding: 2rem;"><h3>Error: Application not found.</h3><a href="admin.html">Go Back</a></div>';
+                return;
+            }
+
+            // Populate Fields
+            document.title = `Application - ${app.fullName}`;
+            setText('submittedAt', `Submitted: ${app.submittedAt}`);
+            setText('fullName', app.fullName);
+            setText('email', app.email);
+            setText('phone', app.phone);
+            setText('location', app.location);
+            setText('visaStatus', app.visaStatus);
+            setText('occupation', app.occupation);
+            setText('experienceYears', app.experienceYears + ' Years');
+            setText('skills', app.skills);
+            setText('recentJob', app.recentJob);
+            setText('interest', app.interest);
+            setText('resumeFile', app.resumeFile);
+            setText('certificatesFile', app.certificatesFile);
+            setText('licensesFile', app.licensesFile);
+            setText('referencesFile', app.referencesFile);
+            setText('jobTitle', app.jobTitle);
+            setText('appId', app.id);
+        });
+
+        function setText(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value || '-';
+        }
+    </script>
+</body>
+
+</html>

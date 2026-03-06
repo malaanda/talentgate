@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Forklift Driver",
+    "industry": "Agriculture",
+    "location": "Regional NSW",
+    "type": "Casual",
+    "description": "Experienced forklift driver needed for busy harvest season. Must have valid LO/LF licence.",
+    "posted": "2025-01-20"
+  },
+  {
+    "id": 2,
+    "title": "Aged Care Worker",
+    "industry": "Healthcare",
+    "location": "Sydney Metro",
+    "type": "Full-time",
+    "description": "Passionate care worker required for residential facility. Certificate III in Individual Support essential.",
+    "posted": "2025-01-22"
+  },
+  {
+    "id": 3,
+    "title": "Civil Labourer",
+    "industry": "Construction",
+    "location": "Western Sydney",
+    "type": "Contract",
+    "description": "General labourers wanted for large infrastructure project. White card and own PPE required.",
+    "posted": "2025-01-18"
+  },
+  {
+    "id": 4,
+    "title": "Chef de Partie",
+    "industry": "Hospitality",
+    "location": "Melbourne CBD",
+    "type": "Permanent",
+    "description": "Join an award-winning kitchen team. Minimum 2 years experience in a similar role.",
+    "posted": "2025-01-21"
+  }
+]

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Application - TalentGate</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Simplified Navbar -->
+    <nav id="navbar" style="position: sticky;">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="index.html"><img src="img/logo.png" alt="TalentGate"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Back to Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h1 class="section-title">Candidate Application Form</h1>
+                <p class="section-subtitle">Welcome to TalentGate. Complete this application so we can match you with
+                    the right opportunities.</p>
+
+                <!-- Dynamic Job Details -->
+                <div id="job-details-container"
+                    style="display: none; background: #fff; border: 1px solid #eee; padding: 2rem; margin-top: 2rem; border-radius: 8px; text-align: left; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <h2 id="app-job-title" style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.8rem;">
+                    </h2>
+                    <div style="color: var(--secondary); font-weight: 600; margin-bottom: 1rem;">
+                        <span id="app-job-location"></span> &bull; <span id="app-job-type"></span> &bull; <span
+                            id="app-job-industry"></span>
+                    </div>
+                    <p id="app-job-desc" style="line-height: 1.6; color: #555;"></p>
+                </div>
+            </div>
+
+            <div class="contact-form" style="max-width: 800px; margin: 0 auto;">
+                <form id="applicationForm" name="candidate-application" method="POST" enctype="multipart/form-data"
+                    data-netlify="true">
+
+                    <!-- 1. Personal Details -->
+                    <h3 class="lead-text"
+                        style="color: var(--primary); margin-top: 1rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
+                        1. Personal Details</h3>
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" name="dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Current Location (City/State/Country)</label>
+                            <input type="text" id="location" name="location" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Are you currently in Australia?</label>
+                        <select name="inAustralia">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <!-- 2. Work Rights & Visa -->
+                    <h3 class="lead-text"
+                        style="color: var(--primary); margin-top: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
+                        2. Work Rights & Visa</h3>
+                    <div class="form-group">
+                        <label>Do you have the right to work in Australia?</label>
+                        <select name="workRights" required>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="Unsure">Unsure</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="visaStatus">Visa Status</label>
+                        <select id="visaStatus" name="visaStatus" required>
+                            <option value="">Select one...</option>
+                            <option value="Citizen">Citizen</option>
+                            <option value="Permanent Resident">Permanent Resident</option>
+                            <option value="Student">Student</option>
+                            <option value="Working Holiday">Working Holiday</option>
+                            <option value="Temporary Skill Shortage">Temporary Skill Shortage</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>If not in Australia, are you willing to relocate?</label>
+                        <select name="relocate">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <!-- 3. Skills & Experience -->
+                    <h3 class="lead-text"
+                        style="color: var(--primary); margin-top: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
+                        3. Skills & Experience</h3>
+                    <div class="form-group">
+                        <label for="occupation">Primary trade or occupation</label>
+                        <input type="text" id="occupation" name="occupation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="experienceYears">Years of experience in this occupation</label>
+                        <select id="experienceYears" name="experienceYears">
+                            <option value="0-1">0–1 years</option>
+                            <option value="2-3">2–3 years</option>
+                            <option value="4-5">4–5 years</option>
+                            <option value="6+">6+ years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="skills">Key skills and areas of expertise</label>
+                        <textarea id="skills" name="skills" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="recentJob">Most recent relevant job (Employer, role, dates, duties)</label>
+                        <textarea id="recentJob" name="recentJob" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="ausExperience">Experience on Australian worksites? (Yes / No / Describe)</label>
+                        <input type="text" id="ausExperience" name="ausExperience">
+                    </div>
+                    <div class="form-group">
+                        <label for="ausSafety">Familiar with Australian construction standards/safety? (Yes / No /
+                            Describe)</label>
+                        <input type="text" id="ausSafety" name="ausSafety">
+                    </div>
+
+                    <!-- 4. Qualifications & Licenses -->
+                    <h3 class="lead-text"
+                        style="color: var(--primary); margin-top: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
+                        4. Qualifications & Licenses</h3>
+                    <div class="form-group">
+                        <labelFor="qualification">Highest qualification achieved</label>
+                            <select id="qualification" name="qualification">
+                                <option value="High School">High School</option>
+                                <option value="Certificate">Certificate</option>
+                                <option value="Diploma">Diploma</option>
+                                <option value="Degree">Degree</option>
+                                <option value="Other">Other</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Do you hold any of the following? (Check all that apply)</label>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                            <label style="font-weight: 400;"><input type="checkbox" name="licenses" value="White Card">
+                                White Card</label>
+                            <label style="font-weight: 400;"><input type="checkbox" name="licenses"
+                                    value="Trade/Skill Certificate"> Trade/Skill Certificate</label>
+                            <label style="font-weight: 400;"><input type="checkbox" name="licenses"
+                                    value="Forklift/EWP"> Forklift/EWP/Other licenses</label>
+                            <label style="font-weight: 400;"><input type="checkbox" name="licenses"
+                                    value="Drivers Licence"> Driver’s Licence</label>
+                            <label style="font-weight: 400;"><input type="checkbox" name="licenses" value="First Aid">
+                                First Aid Certificate</label>
+                            <label style="font-weight: 400;"><input type="checkbox" name="licenses" value="Other">
+                                Other</label>
+                        </div>
+                    </div>
+
+                    <!-- 5. English Proficiency -->
+                    <h3 class="lead-text"
+                        style="color: var(--primary); margin-top: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
+                        5. English Proficiency</h3>
+                    <div class="form-group">
+                        <label for="englishLevel">English Proficiency</label>
+                        <select id="englishLevel" name="englishLevel">
+                            <option value="Fluent">Fluent</option>
+                            <option value="Good">Good</option>
+                            <option value="Basic">Basic</option>
+                            <option value="Limited">Limited</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="englishTests">Completed any English language tests? (Score and date)</label>
+                        <input type="text" id="englishTests" name="englishTests" placeholder="e.g. IELTS 7.0 (2023)">
+                    </div>
+                    <div class="form-group">
+                        <label>Comfortable communicating in English at work?</label>
+                        <select name="englishComfort">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <!-- 6. Availability & Preferences -->
+                    <h3 class="lead-text"
+                        style="color: var(--primary); margin-top: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
+                        6. Availability & Preferences</h3>
+                    <div class="form-group">
+                        <label for="startDate">When can you start?</label>
+                        <input type="text" id="startDate" name="startDate" placeholder="e.g. Immediately">
+                    </div>
+                    <div class="form-group">
+                        <label for="preferredLocation">Preferred work location(s)</label>
+                        <input type="text" id="preferredLocation" name="preferredLocation">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Open to regional/remote placements?</label>
+                            <select name="regional">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Willing to work overtime/weekends?</label>
+                            <select name="overtime">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Job Type</label>
+                        <select name="jobType">
+                            <option value="Permanent">Permanent</option>
+                            <option value="Temporary">Temporary</option>
+                        </select>
+                    </div>
+
+                    <!-- 7. Additional Information -->
+                    <h3 class="lead-text"
+                        style="color: var(--primary); margin-top: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
+                        7. Additional Information</h3>
+                    <div class="form-group">
+                        <label for="medical">Any medical conditions or physical restrictions? (Describe if Yes)</label>
+                        <textarea id="medical" name="medical" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Open to further training or upskilling?</label>
+                        <select name="training">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">Why are you interested in this role/opportunity?</label>
+                        <textarea id="interest" name="interest" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="comments">Additional comments</label>
+                        <textarea id="comments" name="comments" rows="2"></textarea>
+                    </div>
+
+                    <!-- 8. Document Uploads -->
+                    <h3 class="lead-text"
+                        style="color: var(--primary); margin-top: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
+                        8. Document Uploads</h3>
+                    <div class="form-group">
+                        <label for="resume">Resume/CV</label>
+                        <input type="file" id="resume" name="resume">
+                    </div>
+                    <div class="form-group">
+                        <label for="certificates">Qualification certificates</label>
+                        <input type="file" id="certificates" name="certificates" multiple>
+                    </div>
+                    <div class="form-group">
+                        <label for="licensesUpload">Licenses/tickets</label>
+                        <input type="file" id="licensesUpload" name="licensesUpload" multiple>
+                    </div>
+                    <div class="form-group">
+                        <label for="references">Reference letters (optional)</label>
+                        <input type="file" id="references" name="references" multiple>
+                    </div>
+
+                    <!-- 9. Declaration & Consent -->
+                    <h3 class="lead-text"
+                        style="color: var(--primary); margin-top: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
+                        9. Declaration & Consent</h3>
+                    <div class="form-group">
+                        <label style="font-weight: 400; font-size: 0.95rem;">
+                            <input type="checkbox" required> I declare the information provided is true and correct.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight: 400; font-size: 0.95rem;">
+                            <input type="checkbox" required> I consent to my information being used for recruitment
+                            purposes.
+                        </label>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <button type="submit" class="btn btn-gold" style="width: 100%; font-size: 1.2rem;">Submit
+                            Application</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h3>TalentGate<span>.</span></h3>
+                <p>Australia’s Ethical Gateway to Skilled & Talented Workers.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 TalentGate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

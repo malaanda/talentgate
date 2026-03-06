@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Board - TalentGate</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar" style="position: sticky;">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="index.html"><img src="img/logo.png" alt="TalentGate"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="jobs.html" class="active">Job Board</a></li>
+                <li><a href="blog.html">News</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="index.html#contact" class="btn-nav">Get Started</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Generic Hero -->
+    <header class="page-hero bg-navy text-white section-padding">
+        <div class="container text-center">
+            <h1>Current Opportunities</h1>
+            <p class="lead-text text-white">Find your next role with Australia's most ethical recruiter.</p>
+        </div>
+    </header>
+
+    <!-- Job Board Section -->
+    <section class="section-padding bg-light">
+        <div class="container">
+
+            <!-- Category Selection View -->
+            <div id="category-selection" style="text-align: center;">
+                <h2 class="section-title mb-5">Select an Industry</h2>
+                <div class="industry-tabs">
+                    <!-- Agriculture -->
+                    <div class="industry-card">
+                        <a href="industry-horticulture.html"
+                            style="text-decoration: none; color: inherit; display: block;">
+                            <div class="icon-box"><i class="fas fa-tractor"></i></div>
+                            <h3>Agriculture & Processing</h3>
+                        </a>
+                        <p>Farmhands, pickers, packers, machinery operators, logistics.</p>
+                        <a href="jobs.html?category=Agriculture" class="btn btn-primary mt-4"
+                            style="font-size: 0.9rem; padding: 10px 20px;">
+                            View Open Roles
+                        </a>
+                    </div>
+
+                    <!-- Healthcare -->
+                    <div class="industry-card">
+                        <a href="industry-aged-care.html"
+                            style="text-decoration: none; color: inherit; display: block;">
+                            <div class="icon-box"><i class="fas fa-hospital-user"></i></div>
+                            <h3>Healthcare & Care</h3>
+                        </a>
+                        <p>Nurses, aged care workers, personal care assistants.</p>
+                        <a href="jobs.html?category=Healthcare" class="btn btn-primary mt-4"
+                            style="font-size: 0.9rem; padding: 10px 20px;">
+                            View Open Roles
+                        </a>
+                    </div>
+
+                    <!-- Hospitality -->
+                    <div class="industry-card">
+                        <a href="industry-hospitality.html"
+                            style="text-decoration: none; color: inherit; display: block;">
+                            <div class="icon-box"><i class="fas fa-hotel"></i></div>
+                            <h3>Hospitality & Trades</h3>
+                        </a>
+                        <p>Chefs, kitchen staff, waitstaff, labourers, tradespeople.</p>
+                        <a href="jobs.html?category=Hospitality" class="btn btn-primary mt-4"
+                            style="font-size: 0.9rem; padding: 10px 20px;">
+                            View Open Roles
+                        </a>
+                    </div>
+
+                    <!-- Services -->
+                    <div class="industry-card">
+                        <a href="industry-construction.html"
+                            style="text-decoration: none; color: inherit; display: block;">
+                            <div class="icon-box"><i class="fas fa-bus"></i></div>
+                            <h3>Services & Support</h3>
+                        </a>
+                        <p>Drivers, cleaners, maintenance, admin, IT, teachers.</p>
+                        <a href="jobs.html?category=Construction" class="btn btn-primary mt-4"
+                            style="font-size: 0.9rem; padding: 10px 20px;">
+                            View Open Roles
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job List Container (Hidden by default) -->
+            <div id="job-display" style="display: none;">
+                <div style="margin-bottom: 2rem;">
+                    <button id="back-to-categories" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left"></i> Back to Categories
+                    </button>
+                    <h2 id="category-title" class="section-title" style="margin-top: 1rem;">All Jobs</h2>
+                </div>
+
+                <!-- Search Filter (optional, kept for flexibility) -->
+                <div class="job-filters" style="margin-bottom: 2rem;">
+                    <input type="text" id="job-search" placeholder="Search roles in this category...">
+                </div>
+
+                <div id="job-list" class="job-grid">
+                    <!-- Jobs injected here -->
+                    <div class="loading-spinner">Loading jobs...</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section-padding text-center">
+        <div class="container">
+            <h2>Don't see a role for you?</h2>
+            <p class="mb-5">Register your details with us and we'll contact you when a suitable position becomes
+                available.</p>
+            <a href="application.html" class="btn btn-primary">General Application</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h3>TalentGate<span>.</span></h3>
+                <p>Australia’s Ethical Gateway to Skilled & Talented Workers.</p>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p><a href="https://www.google.com/maps/search/?api=1&query=Level+10,+580+George+Street,+Sydney+NSW+2000"
+                        target="_blank" style="color: inherit;"><i class="fas fa-map-marker-alt"></i> Level 10, 580
+                        George Street, Sydney NSW 2000</a></p>
+                <p><a href="mailto:support@talentgate.com.au" style="color: inherit;"><i class="fas fa-envelope"></i>
+                        support@talentgate.com.au</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html#about">About Us</a>
+                <a href="index.html#employers">For Employers</a>
+                <a href="index.html#workers">For Workers</a>
+                <a href="https://www.dojolegal.com.au">www.dojolegal.com.au</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 TalentGate. All rights reserved. Powered by Dojo Legal.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

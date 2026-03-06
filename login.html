@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login - TalentGate</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-container {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-gray);
+        }
+
+        .login-card {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card img {
+            max-width: 150px;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+        }
+
+        .error-msg {
+            color: #d9534f;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: none;
+            background: #ffe6e6;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .success-msg {
+            color: #155724;
+            background-color: #d4edda;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* Loading State */
+        .loading-overlay {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Tabs */
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            cursor: pointer;
+            color: #888;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        /* Recaptcha */
+        .recaptcha-container {
+            background-color: #f9f9f9;
+            border: 1px solid #d3d3d3;
+            border-radius: 4px;
+            width: fit-content;
+            margin: 0 auto 1.5rem auto;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 200px;
+        }
+
+        .recaptcha-check {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .recaptcha-check input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .recaptcha-check label {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .recaptcha-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #555;
+            margin-left: 15px;
+        }
+
+        .recaptcha-logo i {
+            font-size: 20px;
+            color: #4285f4;
+            margin-bottom: 2px;
+        }
+
+        .qrcode-box {
+            background: #f4f4f4;
+            padding: 1rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        .link-text {
+            color: var(--primary);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Simple Nav -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="index.html"><img src="img/logo.png" alt="TalentGate"></a>
+            </div>
+            <a href="index.html" class="btn-text"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="login-container">
+        <div class="login-card">
+
+            <!-- MAIN LOGIN FLOW -->
+            <div id="loginFlow">
+                <div class="text-center mb-4">
+                    <h2 style="color: var(--primary); margin-bottom: 0.5rem;">Staff Portal</h2>
+                    <p style="color: var(--text-light);">Restricted Access</p>
+                </div>
+
+                <div class="error-msg" id="globalError">Invalid credentials</div>
+                <div class="success-msg" id="loginSuccessMsg"></div>
+
+                <!-- STEP 1: Password -->
+                <div id="step1">
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="username" placeholder="Enter username" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="password" placeholder="Enter password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+
+                        <div
+                            style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                            <p style="font-size: 0.8rem; color: #888; margin: 0;">System ID: TG-2025-SECURE</p>
+                            <a class="link-text" onclick="showForgotPassword()">Forgot Password?</a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- LOGIN LOADING -->
+                <div id="loading" class="loading-overlay">
+                    <div class="spinner"></div>
+                    <p>Verifying credentials...</p>
+                </div>
+
+                <!-- STEP 2: Verification -->
+                <div id="step2" style="display: none;">
+
+                    <!-- Method Tabs -->
+                    <div class="auth-tabs">
+                        <div class="auth-tab active" onclick="switchTab('email')">Email Code</div>
+                        <div class="auth-tab" onclick="switchTab('app')">Authenticator App</div>
+                    </div>
+
+                    <!-- EMAIL METHOD -->
+                    <div id="method-email">
+                        <div style="margin-bottom: 1.5rem;">
+                            <i class="fas fa-envelope-open-text" style="font-size: 2rem; color: var(--accent);"></i>
+                            <h3 style="font-size: 1.2rem; margin-top: 1rem;">Check your notifications</h3>
+                            <p style="font-size: 0.9rem; color: #666;">Enter the unique 6-digit code sent to you.</p>
+                        </div>
+                    </div>
+
+                    <!-- APP METHOD -->
+                    <div id="method-app" style="display: none;">
+                        <div class="qrcode-box">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=TalentGateAuth"
+                                alt="QR Code" style="margin-bottom:0; max-width: 120px;">
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Scan with Authy or Google
+                            Authenticator.<br>Or enter manual key: <strong>TG-AUTH-KEY</strong></p>
+                    </div>
+
+                    <form id="codeForm">
+                        <div class="form-group">
+                            <label>Verification Code</label>
+                            <input type="text" id="authCode" placeholder="" maxlength="6"
+                                style="letter-spacing: 4px; text-align: center; font-size: 1.2rem;" required
+                                autocomplete="off">
+                        </div>
+
+                        <!-- Mock reCAPTCHA -->
+                        <div class="recaptcha-container">
+                            <div class="recaptcha-check">
+                                <input type="checkbox" id="robotCheck" required>
+                                <label for="robotCheck">I'm not a robot</label>
+                            </div>
+                            <div class="recaptcha-logo">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>reCAPTCHA</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Verify & Login</button>
+                        <p style="margin-top: 1rem; font-size: 0.8rem;">
+                            <a href="#" onclick="location.reload()" style="color: var(--text-light);">Back to Login</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- FORGOT PASSWORD FLOW -->
+            <div id="forgotFlow" style="display: none;">
+                <div class="text-center mb-4">
+                    <h2 style="color: var(--primary); margin-bottom: 0.5rem;">Reset Password</h2>
+                    <p style="color: var(--text-light);">Identity Verification Required</p>
+                </div>
+
+                <div class="error-msg" id="resetError">Invalid details</div>
+
+                <!-- RESET STEP 1: Request -->
+                <div id="reset-step1">
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Enter the email address associated
+                        with your staff account.</p>
+                    <form id="resetRequestForm">
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="resetEmail" placeholder="malenda.nguyen@gmail.com" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Verification
+                            Code</button>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">
+                            <a class="link-text" onclick="showLogin()">Back to Sign In</a>
+                        </p>
+                    </form>
+                </div>
+
+                <!-- RESET LOADING -->
+                <div id="reset-loading" class="loading-overlay">
+                    <div class="spinner"></div>
+                    <p>Verifying email...</p>
+                </div>
+
+                <!-- RESET STEP 2: Verify Code -->
+                <div id="reset-step2" style="display: none;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <i class="fas fa-shield-halved" style="font-size: 2rem; color: var(--accent);"></i>
+                        <h3 style="font-size: 1.2rem; margin-top: 1rem;">Security Check</h3>
+                        <p style="font-size: 0.9rem; color: #666;">For your security, verify your identity using the
+                            code sent to your email.</p>
+                    </div>
+
+                    <form id="resetVerifyForm">
+                        <div class="form-group">
+                            <label>Verification Code</label>
+                            <input type="text" id="resetCodeInput" placeholder="" maxlength="6"
+                                style="letter-spacing: 4px; text-align: center; font-size: 1.2rem;" required
+                                autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Verify Identity</button>
+                    </form>
+                </div>
+
+                <!-- RESET STEP 3: Set New Password -->
+                <div id="reset-step3" style="display: none;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <i class="fas fa-lock" style="font-size: 2rem; color: #28a745;"></i>
+                        <h3 style="font-size: 1.2rem; margin-top: 1rem;">Set New Password</h3>
+                    </div>
+                    <form id="newPasswordForm">
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" id="newPass" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" id="confirmPass" required minlength="6">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Update Password</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- LOGIN VARIABLES ---
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const loading = document.getElementById('loading');
+        const errorBox = document.getElementById('globalError');
+        let generatedCode = null;
+        let currentMethod = 'email';
+
+        // --- RESET VARIABLES ---
+        const loginFlow = document.getElementById('loginFlow');
+        const forgotFlow = document.getElementById('forgotFlow');
+        const resetStep1 = document.getElementById('reset-step1');
+        const resetStep2 = document.getElementById('reset-step2');
+        const resetStep3 = document.getElementById('reset-step3');
+        const resetLoading = document.getElementById('reset-loading');
+        const resetError = document.getElementById('resetError');
+        let resetGenCode = null;
+
+        // --- GLOBAL ACTIONS ---
+        function showForgotPassword() {
+            loginFlow.style.display = 'none';
+            forgotFlow.style.display = 'block';
+            resetStep1.style.display = 'block';
+            resetStep2.style.display = 'none';
+            resetStep3.style.display = 'none';
+        }
+
+        function showLogin() {
+            forgotFlow.style.display = 'none';
+            loginFlow.style.display = 'block';
+            step1.style.display = 'block';
+            step2.style.display = 'none';
+        }
+
+        // --- LOGIN LOGIC ---
+        document.getElementById('passwordForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const userInput = document.getElementById('username').value.trim();
+            const passInput = document.getElementById('password').value;
+
+            // NOTE: Check against 'admin' and 'admin2025' OR the newly set password (simulated)
+            const expectedUser = 'admin';
+            const currentPass = localStorage.getItem('tg_current_pass') || 'admin2025';
+
+            if (userInput.toLowerCase() === expectedUser && passInput === currentPass) {
+                step1.style.display = 'none';
+                loading.style.display = 'flex';
+                generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+                // Send email via FormSubmit API
+                fetch('https://formsubmit.co/ajax/4bb7f8dc20f4c5f59e74fe014b29e607', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        _subject: "TalentGate Login 2FA Code",
+                        message: `Your login verification code is: ${generatedCode}`,
+                        _captcha: "false"
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        loading.style.display = 'none';
+                        step2.style.display = 'block';
+                        console.log(`[AUTH] Login 2FA Code sent to email.`);
+                        document.getElementById('authCode').focus();
+                    })
+                    .catch(error => {
+                        console.error('Error sending email:', error);
+                        loading.style.display = 'none';
+                        showError('Failed to send 2FA code. Please try again or use fallback.', errorBox);
+                    });
+            } else {
+                showError('Invalid username or password.', errorBox);
+            }
+        });
+
+        // Login Step 2 Check
+        document.getElementById('codeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const enteredCode = document.getElementById('authCode').value;
+            const isValidEmail = (currentMethod === 'email' && enteredCode === generatedCode);
+            const isValidApp = (currentMethod === 'app' && enteredCode.length === 6);
+            if (isValidEmail || isValidApp) {
+                localStorage.setItem('tg_admin_session', 'true');
+                // Redirect to the Application Dashboard (Draft)
+                window.location.href = 'admin-stages.html';
+            } else {
+                showError('Incorrect verification code.', errorBox);
+            }
+        });
+
+        // --- FORGOT PASSWORD LOGIC ---
+
+        // Reset Step 1: Send Code
+        document.getElementById('resetRequestForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value.trim().toLowerCase();
+            if (email === 'malenda.nguyen@gmail.com') {
+                resetStep1.style.display = 'none';
+                resetLoading.style.display = 'flex';
+                resetGenCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+                // Send email via FormSubmit API
+                fetch('https://formsubmit.co/ajax/4bb7f8dc20f4c5f59e74fe014b29e607', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        _subject: "TalentGate Password Reset",
+                        message: `Your Password Reset Code is: ${resetGenCode}`,
+                        _captcha: "false"
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        resetLoading.style.display = 'none';
+                        resetStep2.style.display = 'block';
+                        console.log(`[RESET] Security Code sent to email.`);
+                        document.getElementById('resetCodeInput').focus();
+                    })
+                    .catch(error => {
+                        console.error('Error sending email:', error);
+                        resetLoading.style.display = 'none';
+                        showError('Failed to send reset code. Please try again.', resetError);
+                    });
+            } else {
+                showError('Email address not found in system.', resetError);
+            }
+        });
+
+        // Reset Step 2: Verify Code
+        document.getElementById('resetVerifyForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const code = document.getElementById('resetCodeInput').value;
+            if (code === resetGenCode) {
+                resetStep2.style.display = 'none';
+                resetStep3.style.display = 'block';
+            } else {
+                showError('Incorrect security code.', resetError);
+            }
+        });
+
+        // Reset Step 3: Update Password
+        document.getElementById('newPasswordForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const newPass = document.getElementById('newPass').value;
+            const confirmPass = document.getElementById('confirmPass').value;
+
+            if (newPass === confirmPass) {
+                // Save new password to LocalStorage to simulate backend update
+                localStorage.setItem('tg_current_pass', newPass);
+
+                showLogin();
+                const successBox = document.getElementById('loginSuccessMsg');
+                successBox.textContent = 'Password updated successfully. Please sign in.';
+                successBox.style.display = 'block';
+
+                // Reset form
+                document.getElementById('password').value = '';
+                document.getElementById('newPasswordForm').reset();
+            } else {
+                showError('Passwords do not match.', resetError);
+            }
+        });
+
+
+        // Utilities
+        function switchTab(method) {
+            currentMethod = method;
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('#method-email, #method-app').forEach(el => el.style.display = 'none');
+            if (method === 'email') {
+                document.querySelector('.auth-tab:first-child').classList.add('active');
+                document.getElementById('method-email').style.display = 'block';
+            } else {
+                document.querySelector('.auth-tab:last-child').classList.add('active');
+                document.getElementById('method-app').style.display = 'block';
+            }
+        }
+
+        function showError(msg, elem) {
+            elem.textContent = msg;
+            elem.style.display = 'block';
+            const card = document.querySelector('.login-card');
+            card.style.transform = 'translateX(10px)';
+            setTimeout(() => card.style.transform = 'translateX(-10px)', 100);
+            setTimeout(() => card.style.transform = 'translateX(0)', 200);
+        }
+    </script>
+</body>
+
+</html>

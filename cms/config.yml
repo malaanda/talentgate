@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: malaanda/talentgate # Path to your GitHub repository
+  name: git-gateway
   branch: main # Branch to update
 
 # Media mapping

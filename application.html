@@ -51,9 +51,13 @@
 
             <div class="contact-form" style="max-width: 800px; margin: 0 auto;">
                 <form id="applicationForm" name="candidate-application" method="POST" enctype="multipart/form-data"
-                    data-netlify="true">
+                    data-netlify="true" action="/application.html?success=true">
 
                     <!-- 1. Personal Details -->
+                    <input type="hidden" name="form-name" value="candidate-application" />
+                    <!-- Hidden input to capture the occupation dynamically if passed via URL -->
+                    <input type="hidden" id="applied_job_hidden" name="applied_job_title" value="">
+
                     <h3 class="lead-text"
                         style="color: var(--primary); margin-top: 1rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
                         1. Personal Details</h3>

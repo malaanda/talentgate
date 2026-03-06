@@ -161,54 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .catch(err => console.error("Error fetching job details for application:", err));
         }
 
-        // Handle Form Submission (Draft Mode)
-        applicationForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            // Collect Form Data
-            const formData = new FormData(applicationForm);
-
-            // Helper to get file names
-            const getFileNames = (inputName) => {
-                const input = applicationForm.querySelector(`input[name="${inputName}"]`);
-                if (input && input.files.length > 0) {
-                    return Array.from(input.files).map(f => f.name).join(', ');
-                }
-                return 'No file uploaded';
-            };
-
-            const application = {
-                id: Date.now(), // Simple unique ID
-                submittedAt: new Date().toLocaleString(),
-                jobTitle: jobTitle || 'General Application',
-                fullName: formData.get('fullName'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                location: formData.get('location'),
-                visaStatus: formData.get('visaStatus'),
-                occupation: formData.get('occupation'),
-                experienceYears: formData.get('experienceYears'),
-                // New Fields
-                interest: formData.get('interest') || '',
-                skills: formData.get('skills') || '',
-                recentJob: formData.get('recentJob') || '',
-                // Files (Names only for draft)
-                resumeFile: getFileNames('resume'),
-                certificatesFile: getFileNames('certificates'),
-                licensesFile: getFileNames('licensesUpload'),
-                referencesFile: getFileNames('references')
-            };
-
-            // Save to LocalStorage
-            let applications = JSON.parse(localStorage.getItem('tg_applications') || '[]');
-            applications.push(application);
-            localStorage.setItem('tg_applications', JSON.stringify(applications));
-
-            // Show Success Message (Simple Alert for Draft)
-            alert(`Thanks, ${application.fullName}! Your application for ${application.jobTitle} has been saved to the draft system.`);
-            applicationForm.reset();
-            window.location.href = 'index.html'; // Redirect to home
-        });
+        // Form submission is now handled natively by Netlify Forms via the HTML <form data-netlify="true"> tag.
     }
     // Article Page Logic
     const articleContent = document.getElementById('article-content');

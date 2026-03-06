@@ -1,0 +1,46 @@
+backend:
+  name: github
+  repo: malaanda/talentgate # Path to your GitHub repository
+  branch: main # Branch to update
+
+# Media mapping
+media_folder: "img" # Where images are saved to the repo
+public_folder: "img" # Path the images will take on the live site
+
+collections:
+  - name: "jobs_data"
+    label: "Jobs Data"
+    files:
+      - label: "Jobs List"
+        name: "jobs"
+        file: "data/jobs.json"
+        fields:
+          - name: "jobs"
+            label: "Jobs"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "number"}
+              - {label: "Job Title", name: "title", widget: "string"}
+              - {label: "Industry", name: "industry", widget: "select", options: ["Agriculture", "Healthcare", "Hospitality", "Construction"]}
+              - {label: "Location", name: "location", widget: "string"}
+              - {label: "Job Type", name: "type", widget: "select", options: ["Full-time", "Part-time", "Casual", "Contract", "Permanent"]}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Date Posted", name: "posted", widget: "date"}
+
+  - name: "blog_data"
+    label: "Blog Data"
+    files:
+      - label: "Blog Articles"
+        name: "blog"
+        file: "data/blog.json"
+        fields:
+          - name: "blog"
+            label: "Articles"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "number"}
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Date Published", name: "date", widget: "date"}
+              - {label: "Featured Image", name: "image", widget: "image"}
+              - {label: "Summary excerpt", name: "summary", widget: "text"}
+              - {label: "Content (HTML allowed)", name: "content", widget: "markdown"}

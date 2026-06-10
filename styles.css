@@ -22,6 +22,7 @@
     --font-body: 'Open Sans', sans-serif;
 }
 
+
 * {
     margin: 0;
     padding: 0;
@@ -830,9 +831,9 @@ footer {
 }
 
 .job-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .job-card {
@@ -1074,3 +1075,251 @@ footer {
     transform: translateY(-3px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
+
+/* Restored Premium card list layout (Matches Vo Hoang Family Trust style) */
+.job-list-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.job-row-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    box-sizing: border-box;
+    border-left: 4px solid transparent;
+}
+
+.job-row-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(10, 34, 57, 0.06);
+    border-color: #e2e8f0;
+    border-left: 4px solid var(--accent); /* Beautiful golden left highlight */
+}
+
+.job-row-content {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.job-row-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.job-row-logo {
+    width: 60px;
+    height: 60px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--primary);
+    flex-shrink: 0;
+    border: 1px solid #e2e8f0;
+}
+
+.job-row-content {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.job-row-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .job-row-card {
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+    .job-row-logo {
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+    }
+    .job-row-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    .job-row-footer button {
+        width: 100%;
+    }
+}
+
+/* Microsoft SSO & M365 Dev Sandbox Overlay Styles */
+.btn-microsoft {
+    background-color: #2f2f2f;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    font-size: 1.05rem;
+    box-sizing: border-box;
+}
+
+.btn-microsoft:hover {
+    background-color: #1f1f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.m365-sim-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(10, 34, 57, 0.7); /* Dojo navy backdrop */
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(8px);
+    opacity: 0; visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.m365-sim-overlay.active {
+    opacity: 1; visibility: visible;
+}
+
+.m365-card {
+    background: white;
+    width: 100%; max-width: 440px;
+    border-radius: 4px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.24);
+    padding: 44px;
+    box-sizing: border-box;
+    font-family: "Segoe UI", -apple-system, sans-serif;
+    color: #1b1b1b;
+    text-align: left;
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.m365-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    width: 22px;
+    height: 22px;
+    margin-bottom: 24px;
+}
+
+.m365-logo-box {
+    width: 10px;
+    height: 10px;
+}
+
+.m365-logo-box.orange { background-color: #f25022; }
+.m365-logo-box.green { background-color: #7fba00; }
+.m365-logo-box.blue { background-color: #00a4ef; }
+.m365-logo-box.yellow { background-color: #ffb900; }
+
+.m365-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1b1b1b;
+}
+
+.m365-subtitle {
+    font-size: 0.95rem;
+    color: #505050;
+    margin-bottom: 24px;
+}
+
+.m365-input {
+    width: 100%;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px solid #737373;
+    font-size: 1rem;
+    outline: none;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    background: transparent;
+    color: #1b1b1b;
+    border-radius: 0;
+}
+
+.m365-input::placeholder {
+    color: #737373;
+}
+
+.m365-input:focus {
+    border-bottom-color: #0067b8;
+    border-bottom-width: 2px;
+}
+
+.m365-btn-primary {
+    background-color: #0067b8;
+    color: white;
+    border: none;
+    padding: 8px 32px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-block;
+    transition: background-color 0.2s;
+    border-radius: 0;
+}
+
+.m365-btn-primary:hover {
+    background-color: #005da6;
+}
+
+.m365-btn-secondary {
+    background-color: #cccccc;
+    color: #1b1b1b;
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-right: 12px;
+    border-radius: 0;
+}
+
+.m365-card-footer {
+    margin-top: 28px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.m365-card-back {
+    position: absolute;
+    top: 24px; left: 24px;
+    cursor: pointer;
+    color: #505050;
+    font-size: 1rem;
+}
+

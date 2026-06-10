@@ -282,20 +282,26 @@
                         style="color: var(--primary); margin-top: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem;">
                         8. Document Uploads</h3>
                     <div class="form-group">
-                        <label for="resume">Resume/CV</label>
-                        <input type="file" id="resume" name="resume">
+                        <label for="passport">Passport or National ID (High Security Upload) *</label>
+                        <input type="file" id="passport" name="passport" accept=".pdf,.jpg,.jpeg,.png" required onchange="validateFileSize(this)">
+                        <small style="color: #666; font-size: 0.85rem;">Accepted formats: PDF, JPG, PNG. Max size: 5MB.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="resume">Resume/CV *</label>
+                        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required onchange="validateFileSize(this)">
+                        <small style="color: #666; font-size: 0.85rem;">Accepted formats: PDF, DOC, DOCX. Max size: 5MB.</small>
                     </div>
                     <div class="form-group">
                         <label for="certificates">Qualification certificates</label>
-                        <input type="file" id="certificates" name="certificates" multiple>
+                        <input type="file" id="certificates" name="certificates" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="validateFileSize(this)">
                     </div>
                     <div class="form-group">
                         <label for="licensesUpload">Licenses/tickets</label>
-                        <input type="file" id="licensesUpload" name="licensesUpload" multiple>
+                        <input type="file" id="licensesUpload" name="licensesUpload" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="validateFileSize(this)">
                     </div>
                     <div class="form-group">
                         <label for="references">Reference letters (optional)</label>
-                        <input type="file" id="references" name="references" multiple>
+                        <input type="file" id="references" name="references" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="validateFileSize(this)">
                     </div>
 
                     <!-- 9. Declaration & Consent -->
@@ -339,6 +345,20 @@
         </div>
     </footer>
     <script src="script.js"></script>
+    <script>
+        function validateFileSize(input) {
+            const maxSize = 5 * 1024 * 1024; // 5MB
+            if (input.files && input.files.length > 0) {
+                for (let i = 0; i < input.files.length; i++) {
+                    if (input.files[i].size > maxSize) {
+                        alert("File '" + input.files[i].name + "' exceeds the 5MB security limit. Please upload a smaller file.");
+                        input.value = ""; // Clear the input
+                        return;
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -4,549 +4,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TalentGate – Powered by Dojo Legal</title>
-    <!-- Fonts: Montserrat (Headings) & Open Sans (Body) -->
+    <title>Job Board - TalentGate</title>
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Job Modal Styles */
+        .job-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 34, 57, 0.6); /* Navy backdrop */
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+        .job-modal-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+        .job-modal-content {
+            background: white;
+            width: 90%; max-width: 700px;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            display: flex; flex-direction: column;
+        }
+        .job-modal-overlay.active .job-modal-content {
+            transform: translateY(0);
+        }
+        .job-modal-header {
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky; top: 0; background: white; z-index: 10;
+        }
+        .job-modal-close {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            background: #f1f5f9; border: none; width: 36px; height: 36px;
+            border-radius: 50%; color: #64748b; font-size: 1.2rem;
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
+            transition: 0.2s;
+        }
+        .job-modal-close:hover { background: #e2e8f0; color: #0f172a; }
+        .job-modal-body {
+            padding: 2rem; flex-grow: 1;
+        }
+        .job-modal-footer {
+            padding: 1.5rem 2rem; background: #f8fafc;
+            border-top: 1px solid #e2e8f0; text-align: right;
+            position: sticky; bottom: 0;
+        }
+        .job-desc-full {
+            line-height: 1.7; color: #334155;
+        }
+        .job-desc-full ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+        .job-desc-full p { margin-bottom: 1rem; }
+        
+        .truncate-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Navigation -->
-    <nav id="navbar">
+    <!-- Simplified Navigation -->
+    <nav id="navbar" style="position: sticky;">
         <div class="container nav-content">
             <div class="logo">
-                <a href="#"><img src="img/logo.png" alt="TalentGate"></a>
+                <a href="index.html"><img src="img/logo.png" alt="TalentGate"></a>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="jobs.html">Job Board</a></li>
-                <li><a href="blog.html">News</a></li>
-                <li><a href="resources.html">Resources</a></li>
-                <li><a href="#contact" class="btn-nav">Get Started</a></li>
+                <li><a href="index.html">Portal Home</a></li>
+                <li><a href="application.html" class="btn-nav">General Application</a></li>
             </ul>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="hero" id="home">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-
-            <h1>Australia’s Ethical Gateway to <span class="highlight">Skilled & Talented Workers</span></h1>
-            <p>Combining ethical recruitment with deep legal expertise. Building every placement on trust, transparency,
-                and genuine care.</p>
-            <div class="cta-group">
-                <a href="#employers" class="btn btn-primary">For Employers</a>
-                <a href="#workers" class="btn btn-outline">For Workers</a>
-            </div>
+    <!-- Generic Hero -->
+    <header class="page-hero bg-navy text-white section-padding">
+        <div class="container text-center">
+            <h1>Current Opportunities</h1>
+            <p class="lead-text text-white">Find your next role with Australia's most ethical recruiter.</p>
         </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="section-padding">
-        <div class="container">
-            <div class="row align-center">
-                <div class="col-text">
-                    <span class="eyebrow">Who We Are</span>
-                    <h2 class="section-title">About TalentGate</h2>
-                    <p class="lead-text">TalentGate is Australia’s modern bridge between employers and skilled workers.
-                        Powered by Dojo Legal, we combine legal, migration, and recruitment expertise for a seamless
-                        experience.</p>
-                    <p>Our team includes lawyers, recruiters, compliance experts, and settlement advisors—all working
-                        together to deliver real results.</p>
-                    <div class="mt-4">
-                        <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Our Mission:</h4>
-                        <p>To lift clients above legal and migration challenges, empowering them with empathy,
-                            expertise, and unwavering integrity.</p>
-                        <h4 style="color: var(--primary); margin-bottom: 0.5rem; margin-top: 1rem;">Our Vision:</h4>
-                        <p>A new standard for human-centric, tech-enabled workforce solutions in Australia.</p>
-                    </div>
-                </div>
-                <div class="col-image">
-                    <img src="img/about-static.png" alt="Ethical Recruitment Team">
-                </div>
-            </div>
-
-            <!-- Leadership Team -->
-            <div class="team-section mt-5" style="margin-top: 5rem;">
-                <h3 class="section-title text-center" style="font-size: 2rem; margin-bottom: 3rem;">Leadership & Team
-                </h3>
-                <div class="team-grid">
-                    <div class="value-card">
-                        <i class="fas fa-user-tie"></i>
-                        <h3>Alan Nguyen</h3>
-                        <p>Principal/Senior Immigration Lawyer, Strategy Lead</p>
-                    </div>
-                    <div class="value-card">
-                        <i class="fas fa-balance-scale"></i>
-                        <h3>Sam Kanjo</h3>
-                        <p>Immigration Lawyer & Legal Practice Manager</p>
-                    </div>
-                    <div class="value-card">
-                        <i class="fas fa-briefcase"></i>
-                        <h3>Zahra</h3>
-                        <p>Junior Lawyer & Office Manager</p>
-                    </div>
-                    <div class="value-card">
-                        <i class="fas fa-headset"></i>
-                        <h3>Fatma</h3>
-                        <p>Customer Service Manager</p>
-                    </div>
-                    <div class="value-card">
-                        <i class="fas fa-search"></i>
-                        <h3>Louis</h3>
-                        <p>Recruitment Consultant</p>
-                    </div>
-                    <div class="value-card">
-                        <i class="fas fa-robot"></i>
-                        <h3>Malanda</h3>
-                        <p>AI Automation/Transformation</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mission & Values -->
-    <section id="mission" class="section-padding bg-light">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title">Our Mission & Values</h2>
-                <p class="section-subtitle">To open doors and build futures for employers and workers, setting new
-                    standards for generic, human-centric recruitment in Australia.</p>
-            </div>
-            <div class="values-grid">
-                <div class="value-card">
-                    <i class="fas fa-balance-scale"></i>
-                    <h3>Integrity</h3>
-                    <p>Transparency in every interaction.</p>
-                </div>
-                <div class="value-card">
-                    <i class="fas fa-heart"></i>
-                    <h3>Empathy</h3>
-                    <p>Respect for all individuals.</p>
-                </div>
-                <div class="value-card">
-                    <i class="fas fa-gavel"></i>
-                    <h3>Excellence</h3>
-                    <p>In compliance and legal standards.</p>
-                </div>
-                <div class="value-card">
-                    <i class="fas fa-handshake"></i>
-                    <h3>Partnership</h3>
-                    <p>Long-term partnership over transactional placement.</p>
-                </div>
-                <div class="value-card">
-                    <i class="fas fa-users"></i>
-                    <h3>Diversity</h3>
-                    <p>Equity and inclusion at our core.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- For Employers -->
-    <section id="employers" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-text">
-                    <span class="eyebrow">For Employers</span>
-                    <h2 class="section-title">Workforce Planning & Recruitment</h2>
-                    <p>Multi-year workforce solutions—screened, qualified candidates, no recruitment fees.</p>
-                    <div class="feature-list mt-4">
-                        <h3>Our Services for Employers:</h3>
-                        <ul class="aligned-list">
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <strong>Employer Sponsorship & Migration:</strong>
-                                <span>End-to-end support for HILA, DAMA, PR pathways.</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <strong>Labour Agreements:</strong>
-                                <span>Strategic PR mapping and high-level support.</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <strong>Compliance & Risk Management:</strong>
-                                <span>Legal oversight, SOPs, and regular updates.</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <strong>Settlement Support:</strong>
-                                <span>Banking, housing, and local services for your team.</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <strong>Monthly Compliance Subscription:</strong>
-                                <span>Digital checklists and regulatory updates.</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="mt-4">
-                        <a href="#contact" class="btn btn-primary">Book Strategy Call</a>
-                        <a href="#" class="btn btn-outline-primary" style="margin-left: 10px;">Learn More</a>
-                    </div>
-                </div>
-                <div class="col-image relative">
-                    <div class="relative">
-                        <img src="img/employer-static.png" alt="Construction Site Manager" />
-                        <!-- Impact Card Overlay -->
-                        <div class="impact-card">
-                            <h4>Impact</h4>
-                            <p>Solve chronic labour shortages and build loyal teams.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </section>
-
-    <!-- For Workers -->
-    <section id="workers" class="section-padding bg-dark text-white">
-        <div class="container">
-            <div class="split-approach reverse-mobile">
-                <div class="relative">
-                    <img src="img/worker-static.png" alt="Skilled Worker Opportunity" />
-                </div>
-                <div class="col-text">
-                    <span class="eyebrow text-gold">For Workers</span>
-                    <h2 class="section-title text-white">PR Pathway Mapping & Support</h2>
-                    <p>We provide honest, structured advice on your best permanent residency options and step-by-step
-                        guidance from matching to settlement.</p>
-
-                    <div class="feature-list mt-4">
-                        <h3 class="text-gold">Our Services for Workers:</h3>
-                        <ul>
-                            <li><i class="fas fa-check-circle text-gold"></i> <strong>Sponsorship & Visa
-                                    Support:</strong> Guidance from start to finish.</li>
-                            <li><i class="fas fa-check-circle text-gold"></i> <strong>Settlement Concierge:</strong>
-                                Help with banking, housing, schooling, and local integration.</li>
-                            <li><i class="fas fa-check-circle text-gold"></i> <strong>No False Promises:</strong> Only
-                                realistic, ethical pathways—no job or PR guarantees.</li>
-                        </ul>
-                    </div>
-                    <div class="mt-4">
-                        <a href="application.html" class="btn btn-gold">Explore Your Pathway</a>
-                        <a href="#" class="btn btn-outline-white" style="margin-left: 10px;">Self-Assessment Tool</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Signature Approach -->
-    <section id="approach" class="section-padding bg-light">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title">Our Signature Approach</h2>
-            </div>
-
-            <div class="split-approach">
-                <!-- Heart-Mind-Trust -->
-                <div class="approach-card employer-side">
-                    <h3>For Employers</h3>
-                    <div class="circle-badge">Heart-Mind-Trust</div>
-                    <ul>
-                        <li><strong>Heart:</strong> We care about your business and people.</li>
-                        <li><strong>Mind:</strong> Deep expertise and strategic problem-solving.</li>
-                        <li><strong>Trust:</strong> Transparent process, fixed fees, proven results.</li>
-                    </ul>
-                </div>
-
-                <!-- JOB-PR-Settlement -->
-                <div class="approach-card worker-side">
-                    <h3>For Workers</h3>
-                    <div class="circle-badge gold">JOB–PR–Settlement</div>
-                    <ul>
-                        <li><strong>Job:</strong> Meaningful employment that fits your skills.</li>
-                        <li><strong>PR:</strong> Honest guidance on permanent residency pathways.</li>
-                        <li><strong>Settlement:</strong> Ongoing support for a secure future.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Choose -->
-    <section id="stats-section" class="section-padding bg-navy text-white text-center">
-        <div class="container">
-            <h2 class="section-title text-white mb-5">Why Choose TalentGate?</h2>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number"><i class="fas fa-ban"></i></div>
-                    <p>No Recruitment Fees</p>
-                </div>
-                <!-- Added item -->
-                <div class="stat-item">
-                    <div class="stat-number"><i class="fas fa-gavel"></i></div>
-                    <p>Legal Expertise</p>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number"><i class="fas fa-sync"></i></div>
-                    <p>End-to-End Support</p>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number"><i class="fas fa-shield-alt"></i></div>
-                    <p>Ethics & Compliance</p>
-                </div>
-            </div>
-            <p class="mt-4 opacity-75">Backed by Dojo Legal’s 20+ years’ experience and 200+ published legal decisions.
-            </p>
-        </div>
-    </section>
-
-    <!-- Application Form CTA (High Visibility) -->
-    <!-- Application Form CTA (High Visibility) -->
-    <section class="section-padding cta-premium text-center">
-        <div class="container" style="position: relative; z-index: 2;">
-            <h2 class="section-title" style="color: var(--primary); margin-bottom: 0.5rem; font-size: 3rem;">Ready to
-                Work?</h2>
-            <p class="lead-text"
-                style="color: var(--primary); margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; font-weight: 600;">
-                Fast-track your employment opportunities by completing our comprehensive candidate application.
-                It helps us match your skills with the perfect employer immediately.
-            </p>
-            <a href="application.html" class="btn btn-white-gold" style="padding: 18px 50px; font-size: 1.3rem;">Form
-                Submission</a>
-        </div>
-    </section>
-
-    <!-- Industries & Roles -->
-    <section id="industries" class="section-padding">
-        <div class="container">
-            <h2 class="section-title text-center mb-5">Industries & Roles</h2>
-            <div class="industry-tabs">
-                <a href="industry-horticulture.html" class="industry-card"
-                    style="display: block; text-decoration: none; color: inherit;">
-                    <div class="icon-box"><i class="fas fa-tractor"></i></div>
-                    <h3>Agriculture & Processing</h3>
-                    <p>Farmhands, pickers, packers, machinery operators, logistics.</p>
-                </a>
-                <a href="industry-aged-care.html" class="industry-card"
-                    style="display: block; text-decoration: none; color: inherit;">
-                    <div class="icon-box"><i class="fas fa-hospital-user"></i></div>
-                    <h3>Healthcare & Care</h3>
-                    <p>Nurses, aged care workers, personal care assistants.</p>
-                </a>
-                <a href="industry-hospitality.html" class="industry-card"
-                    style="display: block; text-decoration: none; color: inherit;">
-                    <div class="icon-box"><i class="fas fa-hotel"></i></div>
-                    <h3>Hospitality & Trades</h3>
-                    <p>Chefs, kitchen staff, waitstaff, labourers, tradespeople.</p>
-                </a>
-                <a href="industry-construction.html" class="industry-card"
-                    style="display: block; text-decoration: none; color: inherit;">
-                    <div class="icon-box"><i class="fas fa-bus"></i></div>
-                    <h3>Services & Support</h3>
-                    <p>Drivers, cleaners, maintenance, admin, IT, teachers.</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Impact Story -->
+    <!-- Job Board Section -->
     <section class="section-padding bg-light">
         <div class="container">
-            <div class="impact-story row align-center">
-                <div class="col-text" style="width: 100%;">
-                    <span class="eyebrow">Success Stories</span>
-                    <h3>Real Outcomes</h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
-                        <div class="testimonial">
-                            <blockquote>“TalentGate made the migration and recruitment process seamless. The team’s
-                                empathy and expertise are unmatched.”</blockquote>
-                            <cite style="display: block; margin-top: 1rem; font-weight: bold; color: var(--primary);">—
-                                Regional Employer, NSW</cite>
-                        </div>
-                        <div class="testimonial" style="margin-top: 0;">
-                            <blockquote>“I felt supported at every step, from my first call to settling in Australia.”
-                            </blockquote>
-                            <cite style="display: block; margin-top: 1rem; font-weight: bold; color: var(--primary);">—
-                                Skilled Worker, Vietnam</cite>
-                        </div>
+
+            <!-- Search & Filter Bar (Indeed/Upwork style) -->
+            <div class="search-filter-panel" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); margin-top: -3rem; position: relative; z-index: 10; border: 1px solid #e2e8f0; max-width: 950px; margin-left: auto; margin-right: auto; margin-bottom: 3rem; box-sizing: border-box;">
+                <form id="jobs-search-form" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;" onsubmit="event.preventDefault();">
+                    <!-- Occupation Search -->
+                    <div style="flex: 2; min-width: 250px; position: relative; display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.8rem 1rem; box-sizing: border-box; background: white;">
+                        <i class="fas fa-search" style="color: #64748b; margin-right: 0.8rem; font-size: 1.1rem;"></i>
+                        <input type="text" id="search-occupation" placeholder="Job title, keywords, or occupation..." style="border: none; outline: none; width: 100%; font-size: 1rem; color: var(--primary);">
                     </div>
+                    <!-- Location Select -->
+                    <div style="flex: 1.2; min-width: 180px; position: relative; display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.8rem 1rem; box-sizing: border-box; background: white;">
+                        <i class="fas fa-map-marker-alt" style="color: #64748b; margin-right: 0.8rem; font-size: 1.1rem;"></i>
+                        <select id="filter-location" style="border: none; outline: none; width: 100%; font-size: 1rem; color: var(--primary); background: transparent; cursor: pointer;">
+                            <option value="">All Locations</option>
+                            <option value="Sydney">Sydney, NSW</option>
+                            <option value="Melbourne">Melbourne, VIC</option>
+                            <option value="Brisbane">Brisbane, QLD</option>
+                            <option value="Perth">Perth, WA</option>
+                            <option value="Adelaide">Adelaide, SA</option>
+                            <option value="Hobart">Hobart, TAS</option>
+                            <option value="Canberra">Canberra, ACT</option>
+                            <option value="Darwin">Darwin, NT</option>
+                            <option value="Regional NSW">Regional NSW</option>
+                            <option value="Regional VIC">Regional VIC</option>
+                            <option value="Regional QLD">Regional QLD</option>
+                            <option value="Regional WA">Regional WA</option>
+                        </select>
+                    </div>
+                    <!-- Industry Select -->
+                    <div style="flex: 1.2; min-width: 180px; position: relative; display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.8rem 1rem; box-sizing: border-box; background: white;">
+                        <i class="fas fa-industry" style="color: #64748b; margin-right: 0.8rem; font-size: 1.1rem;"></i>
+                        <select id="filter-industry" style="border: none; outline: none; width: 100%; font-size: 1rem; color: var(--primary); background: transparent; cursor: pointer;">
+                            <option value="">All Industries</option>
+                            <option value="Agriculture">Agriculture & Processing</option>
+                            <option value="Healthcare">Healthcare & Care</option>
+                            <option value="Hospitality">Hospitality & Trades</option>
+                            <option value="Construction">Services & Support</option>
+                        </select>
+                    </div>
+                    <!-- Reset Button -->
+                    <button type="button" id="reset-filters" class="btn btn-outline" style="padding: 0 1.5rem; font-weight: 600; font-size: 0.95rem; border: 1px solid #cbd5e1; color: #64748b; display: flex; align-items: center; gap: 0.5rem; justify-content: center; height: 50px; box-sizing: border-box; border-radius: 8px; background: transparent; cursor: pointer; transition: all 0.2s;">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                </form>
+            </div>
+
+            <!-- Job List Container -->
+            <div id="job-display" style="display: block;">
+                <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.8rem;">
+                    <h2 class="section-title" id="jobs-list-header" style="margin: 0; font-size: 1.8rem; text-align: left; color: var(--primary);">All Open Positions</h2>
+                </div>
+
+                <div id="job-list" class="job-list-layout">
+                    <!-- Jobs injected dynamically here as Indeed/Upwork style rows -->
+                    <div class="loading-spinner">Loading opportunities...</div>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="section-padding bg-white">
+    <!-- Call to Action -->
+    <section class="section-padding text-center">
         <div class="container">
-            <h2 class="section-title text-center mb-5">Frequently Asked Questions</h2>
-            <div class="row">
-                <div class="col-text" style="flex: 1;">
-                    <div class="faq-item" style="margin-bottom: 1.5rem;">
-                        <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Q: Do you charge recruitment or
-                            placement fees?</h4>
-                        <p>A: No, our model is based on transparent, fixed legal and strategy fees only.</p>
-                    </div>
-                    <div class="faq-item" style="margin-bottom: 1.5rem;">
-                        <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Q: What industries do you serve?</h4>
-                        <p>A: Agriculture, food processing, healthcare, construction, hospitality, logistics,
-                            professional services, and more.</p>
-                    </div>
-                    <div class="faq-item" style="margin-bottom: 1.5rem;">
-                        <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Q: Do you guarantee job or PR
-                            outcomes?</h4>
-                        <p>A: We never make false promises. We only proceed with ethical, realistic pathways.</p>
-                    </div>
-                </div>
-                <div class="col-text" style="flex: 1;">
-                    <div class="faq-item" style="margin-bottom: 1.5rem;">
-                        <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Q: Can you help with settlement and
-                            relocation?</h4>
-                        <p>A: Yes, our settlement concierge covers banking, housing, schooling, and local integration.
-                        </p>
-                    </div>
-                    <div class="faq-item" style="margin-bottom: 1.5rem;">
-                        <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Q: How long does the process take?
-                        </h4>
-                        <p>A: Timelines vary by service. Contact us for a tailored assessment.</p>
-                    </div>
-                    <div class="faq-item" style="margin-bottom: 1.5rem;">
-                        <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Q: What happens after I make contact?
-                        </h4>
-                        <p>A: We triage your needs, provide honest advice, and guide you step-by-step.</p>
-                    </div>
-                </div>
-            </div>
+            <h2>Don't see a role for you?</h2>
+            <p class="mb-5">Register your details with us and we'll contact you when a suitable position becomes
+                available.</p>
+            <a href="application.html" class="btn btn-primary">General Application</a>
         </div>
     </section>
 
-    <!-- Partner Section -->
-    <section class="section-padding bg-light text-center">
-        <div class="container">
-            <h2 class="section-title">For Partners</h2>
-            <p class="section-subtitle">We build strong strategic alliances with B2B partners and industry bodies.</p>
-            <div class="values-grid" style="margin-top: 3rem;">
-                <div class="value-card">
-                    <h3>B2B Referral Program</h3>
-                    <p>Structured onboarding & bilingual handbooks.</p>
-                </div>
-                <div class="value-card">
-                    <h3>Strategic Alliances</h3>
-                    <p>Co-branded resources & knowledge sharing.</p>
-                </div>
-                <div class="value-card">
-                    <h3>Industry Partnerships</h3>
-                    <p>SI Group, Ironwood, AUSVEG, NFF.</p>
+    <!-- Job Details Modal -->
+    <div class="job-modal-overlay" id="jobModal" onclick="closeJobModal(event)">
+        <div class="job-modal-content" onclick="event.stopPropagation()">
+            <button class="job-modal-close" onclick="closeJobModal()"><i class="fas fa-times"></i></button>
+            <div class="job-modal-header">
+                <h2 id="modal-title" style="margin-bottom: 0.5rem; color: var(--primary); padding-right: 2rem;">Job Title</h2>
+                <div class="job-meta" id="modal-meta" style="margin: 0; font-size: 0.95rem; justify-content: flex-start; gap: 1.5rem; border: none; padding: 0;">
+                    <!-- Injected meta -->
                 </div>
             </div>
-            <div class="mt-4">
-                <a href="#contact" class="btn btn-primary">Become a Partner</a>
+            <div class="job-modal-body">
+                <div id="modal-image-container" style="display: none; margin-bottom: 1.5rem;">
+                    <img id="modal-image" src="" alt="Job Image" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
+                </div>
+                <div class="job-desc-full" id="modal-desc">
+                    <!-- Injected full HTML description -->
+                </div>
+                <div id="modal-dates" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; font-size: 0.85rem; color: #64748b; display: flex; justify-content: space-between;">
+                    <!-- Injected dates -->
+                </div>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA / Get Started -->
-    <section class="section-padding bg-gradient text-white text-center">
-        <div class="container">
-            <h2 class="section-title text-white">How to Get Started</h2>
-            <div class="cta-split">
-                <div class="cta-box">
-                    <h3>Employers</h3>
-                    <p>Book a no-fee Workforce Strategy Session to discuss your needs.</p>
-                    <a href="#contact" class="btn btn-white">Book Strategy Session</a>
-                </div>
-                <div class="cta-box">
-                    <h3>Workers</h3>
-                    <p>Start your journey—submit your details for matching.</p>
-                    <a href="#contact" class="btn btn-outline-white">Submit Details</a>
-                </div>
+            <div class="job-modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                <button onclick="shareJobModal()" id="modal-share-btn" class="btn btn-outline-primary" style="padding: 0.6rem 1.2rem; font-size: 0.9rem; border-radius: 6px;"><i class="fas fa-link"></i> Copy Link</button>
+                <a href="#" id="modal-apply-btn" class="btn btn-primary" style="font-weight: 600; padding: 0.8rem 2rem;">Apply Now <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i></a>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Contact Inquiry Form -->
-    <section id="contact-form-section" class="section-padding bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-text">
-                    <span class="eyebrow">Get in Touch</span>
-                    <h2 class="section-title">Send Us an Inquiry</h2>
-                    <p class="lead-text">Have a question? Fill out the form below and our team will get back to you
-                        within 24 hours.</p>
-                    <p>Whether you're an employer needing staff or a worker seeking opportunity, we're here to help.</p>
-                </div>
-                <div class="col-image">
-                    <form class="contact-form" id="inquiryForm" name="contact" method="POST" data-netlify="true">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" placeholder="John Doe" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="john@example.com" required>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" placeholder="0400 000 000">
-                            </div>
-                            <div class="form-group">
-                                <label for="user-type">I am a...</label>
-                                <select id="user-type" name="user-type">
-                                    <option value="employer">Employer</option>
-                                    <option value="worker">Worker</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" placeholder="How can we help you?"
-                                required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer / Contact -->
-    <footer id="contact">
+    <!-- Footer -->
+    <footer>
         <div class="container footer-content">
             <div class="footer-col">
                 <h3>TalentGate<span>.</span></h3>
                 <p>Australia’s Ethical Gateway to Skilled & Talented Workers.</p>
-                <div class="socials">
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>Contact Us</h4>
-                <p><a href="https://www.google.com/maps/search/?api=1&query=Level+10,+580+George+Street,+Sydney+NSW+2000"
-                        target="_blank" style="color: inherit;"><i class="fas fa-map-marker-alt"></i> Level 10, 580
-                        George Street, Sydney NSW 2000</a></p>
-                <p><a href="mailto:support@talentgate.com.au" style="color: inherit;"><i class="fas fa-envelope"></i>
-                        support@talentgate.com.au</a></p>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <a href="#about">About Us</a>
-                <a href="#employers">For Employers</a>
-                <a href="#workers">For Workers</a>
-                <a href="https://www.dojolegal.com.au">www.dojolegal.com.au</a>
-                <a href="login.html" style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.7;"><i
-                        class="fas fa-lock"></i> Staff Login</a>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="container">
-                <p>&copy; 2025 TalentGate. All rights reserved. Powered by Dojo Legal.</p>
+                <p>&copy; 2026 TalentGate. All rights reserved.</p>
             </div>
         </div>
     </footer>

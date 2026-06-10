@@ -207,365 +207,449 @@
         </div>
     </nav>
 
-    <div class="login-container">
-        <div class="login-card">
+    <div class="login-container" style="background: radial-gradient(circle at 10% 20%, rgb(10, 34, 57) 0%, rgb(5, 18, 30) 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Open Sans', sans-serif;">
+        <div class="login-card" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 3rem; width: 100%; max-width: 440px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center;">
+            
+            <div class="logo" style="margin-bottom: 2rem;">
+                <img src="img/logo.png" alt="TalentGate" style="max-height: 50px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+            </div>
 
-            <!-- MAIN LOGIN FLOW -->
+            <!-- Single Option Header -->
+            <div style="margin-bottom: 2rem;"></div>
+
+            <!-- 1. Password Login Flow -->
             <div id="loginFlow">
-                <div class="text-center mb-4">
-                    <h2 style="color: var(--primary); margin-bottom: 0.5rem;">Staff Portal</h2>
-                    <p style="color: var(--text-light);">Restricted Access</p>
+                <div class="text-center mb-4" style="margin-bottom: 1.5rem;">
+                    <h2 style="color: white; font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 0.3rem; font-size: 1.6rem; letter-spacing: -0.5px;">Staff Login</h2>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">Enter secure staff credentials</p>
                 </div>
 
-                <div class="error-msg" id="globalError">Invalid credentials</div>
-                <div class="success-msg" id="loginSuccessMsg"></div>
-
-                <!-- STEP 1: Password -->
-                <div id="step1">
-                    <form id="passwordForm">
-                        <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" id="username" placeholder="Enter username" required autofocus>
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="password" placeholder="Enter password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
-
-                        <div
-                            style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                            <p style="font-size: 0.8rem; color: #888; margin: 0;">System ID: TG-2025-SECURE</p>
-                            <a class="link-text" onclick="showForgotPassword()">Forgot Password?</a>
-                        </div>
-                    </form>
+                <div class="error-msg" id="errorMessage" style="color: #ef4444; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); padding: 12px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 1.5rem; display: none; text-align: left;">
+                    <i class="fas fa-exclamation-circle" style="margin-right: 6px;"></i> Invalid username or password.
                 </div>
 
-                <!-- LOGIN LOADING -->
-                <div id="loading" class="loading-overlay">
-                    <div class="spinner"></div>
-                    <p>Verifying credentials...</p>
-                </div>
-
-                <!-- STEP 2: Verification -->
-                <div id="step2" style="display: none;">
-
-                    <!-- Method Tabs -->
-                    <div class="auth-tabs">
-                        <div class="auth-tab active" onclick="switchTab('email')">Email Code</div>
-                        <div class="auth-tab" onclick="switchTab('app')">Authenticator App</div>
+                <form onsubmit="handleFormSubmit(event)" style="display: flex; flex-direction: column; gap: 1rem; text-align: left;">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="username" style="display: block; color: #cbd5e1; font-weight: 600; font-size: 0.8rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">Staff Email Address</label>
+                        <input type="email" id="username" required placeholder="admin@dojolegal.com.au" style="width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box;">
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="password" style="display: block; color: #cbd5e1; font-weight: 600; font-size: 0.8rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">Password</label>
+                        <input type="password" id="password" required placeholder="••••••••••••" style="width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box;">
                     </div>
 
-                    <!-- EMAIL METHOD -->
-                    <div id="method-email">
-                        <div style="margin-bottom: 1.5rem;">
-                            <i class="fas fa-envelope-open-text" style="font-size: 2rem; color: var(--accent);"></i>
-                            <h3 style="font-size: 1.2rem; margin-top: 1rem;">Check your notifications</h3>
-                            <p style="font-size: 0.9rem; color: #666;">Enter the unique 6-digit code sent to you.</p>
-                        </div>
-                    </div>
-
-                    <!-- APP METHOD -->
-                    <div id="method-app" style="display: none;">
-                        <div class="qrcode-box">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=TalentGateAuth"
-                                alt="QR Code" style="margin-bottom:0; max-width: 120px;">
-                        </div>
-                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Scan with Authy or Google
-                            Authenticator.<br>Or enter manual key: <strong>TG-AUTH-KEY</strong></p>
-                    </div>
-
-                    <form id="codeForm">
-                        <div class="form-group">
-                            <label>Verification Code</label>
-                            <input type="text" id="authCode" placeholder="" maxlength="6"
-                                style="letter-spacing: 4px; text-align: center; font-size: 1.2rem;" required
-                                autocomplete="off">
-                        </div>
-
-                        <!-- Mock reCAPTCHA -->
-                        <div class="recaptcha-container">
-                            <div class="recaptcha-check">
-                                <input type="checkbox" id="robotCheck" required>
-                                <label for="robotCheck">I'm not a robot</label>
-                            </div>
-                            <div class="recaptcha-logo">
-                                <i class="fas fa-shield-alt"></i>
-                                <span>reCAPTCHA</span>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Verify & Login</button>
-                        <p style="margin-top: 1rem; font-size: 0.8rem;">
-                            <a href="#" onclick="location.reload()" style="color: var(--text-light);">Back to Login</a>
-                        </p>
-                    </form>
-                </div>
+                    <button type="submit" class="btn" style="background-color: var(--accent); color: var(--primary); width: 100%; font-size: 1.05rem; padding: 14px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.6rem; transition: all 0.2s; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);">
+                        <i class="fas fa-shield-halved"></i> Sign In to CRM
+                    </button>
+                </form>
             </div>
 
-            <!-- FORGOT PASSWORD FLOW -->
-            <div id="forgotFlow" style="display: none;">
-                <div class="text-center mb-4">
-                    <h2 style="color: var(--primary); margin-bottom: 0.5rem;">Reset Password</h2>
-                    <p style="color: var(--text-light);">Identity Verification Required</p>
+            <!-- 3. Remote MFA Verification Flow -->
+            <div id="mfaFlow" style="display: none;">
+                <div class="text-center mb-4" style="margin-bottom: 1.5rem;">
+                    <div style="background: rgba(251, 191, 36, 0.1); color: var(--accent); width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1rem auto; border: 1px solid rgba(251, 191, 36, 0.3);">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <h2 style="color: white; font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 0.3rem; font-size: 1.6rem; letter-spacing: -0.5px;">MFA Required</h2>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">Identity confirmed. Enter Authenticator passcode.</p>
                 </div>
 
-                <div class="error-msg" id="resetError">Invalid details</div>
-
-                <!-- RESET STEP 1: Request -->
-                <div id="reset-step1">
-                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Enter the email address associated
-                        with your staff account.</p>
-                    <form id="resetRequestForm">
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" id="resetEmail" placeholder="malenda.nguyen@gmail.com" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Verification
-                            Code</button>
-                        <p style="margin-top: 1rem; font-size: 0.9rem;">
-                            <a class="link-text" onclick="showLogin()">Back to Sign In</a>
-                        </p>
-                    </form>
+                <div class="error-msg" id="mfaError" style="color: #ef4444; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); padding: 12px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 1.5rem; display: none; text-align: left;">
+                    <i class="fas fa-exclamation-circle" style="margin-right: 6px;"></i> Invalid MFA security code. Please try again.
                 </div>
 
-                <!-- RESET LOADING -->
-                <div id="reset-loading" class="loading-overlay">
-                    <div class="spinner"></div>
-                    <p>Verifying email...</p>
-                </div>
-
-                <!-- RESET STEP 2: Verify Code -->
-                <div id="reset-step2" style="display: none;">
-                    <div style="margin-bottom: 1.5rem;">
-                        <i class="fas fa-shield-halved" style="font-size: 2rem; color: var(--accent);"></i>
-                        <h3 style="font-size: 1.2rem; margin-top: 1rem;">Security Check</h3>
-                        <p style="font-size: 0.9rem; color: #666;">For your security, verify your identity using the
-                            code sent to your email.</p>
+                <form onsubmit="handleMfaSubmit(event)" style="display: flex; flex-direction: column; gap: 1.5rem; text-align: left;">
+                    <div class="form-group" style="text-align: center;">
+                        <label for="mfaCode" style="display: block; color: #cbd5e1; font-weight: 600; font-size: 0.8rem; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;">6-Digit Security Code</label>
+                        <input type="text" id="mfaCode" required placeholder="000 000" maxlength="6" style="width: 100%; max-width: 220px; padding: 12px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1.8rem; text-align: center; letter-spacing: 6px; font-weight: 700; outline: none; margin: 0 auto; box-sizing: border-box;">
                     </div>
 
-                    <form id="resetVerifyForm">
-                        <div class="form-group">
-                            <label>Verification Code</label>
-                            <input type="text" id="resetCodeInput" placeholder="" maxlength="6"
-                                style="letter-spacing: 4px; text-align: center; font-size: 1.2rem;" required
-                                autocomplete="off">
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Verify Identity</button>
-                    </form>
-                </div>
-
-                <!-- RESET STEP 3: Set New Password -->
-                <div id="reset-step3" style="display: none;">
-                    <div style="margin-bottom: 1.5rem;">
-                        <i class="fas fa-lock" style="font-size: 2rem; color: #28a745;"></i>
-                        <h3 style="font-size: 1.2rem; margin-top: 1rem;">Set New Password</h3>
+                    <button type="submit" class="btn" style="background-color: var(--accent); color: var(--primary); width: 100%; font-size: 1.05rem; padding: 14px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.6rem; transition: all 0.2s; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);">
+                        <i class="fas fa-circle-check"></i> Complete Secure Sign-In
+                    </button>
+                    
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <span style="color: #94a3b8; font-size: 0.85rem;">Authenticator app not accessible?</span><br>
+                        <a href="#" onclick="sendEmailVerificationCode(event)" id="sendEmailCodeBtn" style="color: var(--accent); text-decoration: underline; font-weight: 600; font-size: 0.85rem; display: inline-block; margin-top: 5px;">Send 6-digit code to my email</a>
+                        <div id="emailMfaStatus" style="color: #10b981; font-size: 0.85rem; font-weight: 600; margin-top: 5px; display: none;"></div>
                     </div>
-                    <form id="newPasswordForm">
-                        <div class="form-group">
-                            <label>New Password</label>
-                            <input type="password" id="newPass" required minlength="6">
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm Password</label>
-                            <input type="password" id="confirmPass" required minlength="6">
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Update Password</button>
-                    </form>
-                </div>
-
+                </form>
             </div>
 
+            <p style="margin-top: 2rem; font-size: 0.8rem; color: #64748b; line-height: 1.4;">
+                <i class="fas fa-info-circle"></i> Sponsoring agencies staff access only.<br>Public self-registration and sign-ups are strictly disabled.
+            </p>
+        </div>
+    </div>
+
+    <!-- Simulated Microsoft 365 Login Sandbox -->
+    <div id="m365Overlay" class="m365-sim-overlay">
+        <!-- Step 1: Email Card -->
+        <div class="m365-card" id="m365StepEmail">
+            <div class="m365-logo-grid">
+                <div class="m365-logo-box orange"></div>
+                <div class="m365-logo-box green"></div>
+                <div class="m365-logo-box blue"></div>
+                <div class="m365-logo-box yellow"></div>
+            </div>
+            <div class="m365-title">Sign in</div>
+            <div class="m365-subtitle">to continue to <strong>TalentGate</strong></div>
+            
+            <div id="m365EmailError" style="color: #e81123; font-size: 0.9rem; margin-bottom: 12px; display: none;">
+                Enter a valid email address, phone number, or Skype name.
+            </div>
+            <input type="email" id="m365EmailInput" class="m365-input" placeholder="someone@example.com" required>
+            
+            <div class="m365-subtitle" style="font-size: 0.85rem; margin-bottom: 24px;">
+                No account? <span style="color: #0067b8; cursor: pointer;">Create one!</span><br>
+                Can't access your account? <span style="color: #0067b8; cursor: pointer;">Sign-in options</span>
+            </div>
+            
+            <div class="m365-card-footer">
+                <button type="button" class="m365-btn-secondary" onclick="closeM365Simulation()" style="background: #e1e1e1;">Cancel</button>
+                <button type="button" class="m365-btn-primary" onclick="proceedM365Password()">Next</button>
+            </div>
+        </div>
+        
+        <!-- Step 2: Password Card -->
+        <div class="m365-card" id="m365StepPassword" style="display: none;">
+            <div class="m365-card-back" onclick="backToM365Email()"><i class="fas fa-arrow-left"></i></div>
+            <div style="margin-top: 10px;">
+                <div class="m365-logo-grid" style="margin-bottom: 16px;">
+                    <div class="m365-logo-box orange"></div>
+                    <div class="m365-logo-box green"></div>
+                    <div class="m365-logo-box blue"></div>
+                    <div class="m365-logo-box yellow"></div>
+                </div>
+                <div id="m365DisplayEmail" style="font-size: 0.95rem; margin-bottom: 12px; font-weight: 500; color: #1b1b1b;">email@talentgate.com.au</div>
+                <div class="m365-title" style="font-size: 1.4rem; margin-bottom: 16px;">Enter password</div>
+                
+                <div id="m365PasswordError" style="color: #e81123; font-size: 0.9rem; margin-bottom: 12px; display: none;">
+                    Your password is incorrect or domain access is unauthorized.
+                </div>
+                <input type="password" id="m365PasswordInput" class="m365-input" placeholder="Password" required>
+                
+                <div class="m365-subtitle" style="font-size: 0.85rem; margin-bottom: 20px; color: #0067b8; cursor: pointer;">
+                    Forgot password?<br>
+                    Other ways to sign in
+                </div>
+                
+                <div class="m365-card-footer" style="margin-top: 16px;">
+                    <button type="button" class="m365-btn-primary" onclick="submitM365Sim()" style="padding: 8px 36px;">Sign in</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Step 3: Loading Card -->
+        <div class="m365-card" id="m365StepLoading" style="display: none; text-align: center; padding: 60px 44px;">
+            <div class="spinner" style="border-top-color: #0067b8; margin: 0 auto 20px auto; width: 40px; height: 40px;"></div>
+            <div style="font-size: 1.1rem; font-weight: 600; color: #1b1b1b;">Signing you in...</div>
+            <p style="color: #505050; font-size: 0.9rem; margin-top: 8px;">Contacting Microsoft Identity Servers</p>
         </div>
     </div>
 
     <script>
-        // --- LOGIN VARIABLES ---
-        const step1 = document.getElementById('step1');
-        const step2 = document.getElementById('step2');
-        const loading = document.getElementById('loading');
-        const errorBox = document.getElementById('globalError');
-        let generatedCode = null;
-        let currentMethod = 'email';
+        // Ensure session is cleared on entry to login page
+        localStorage.removeItem('tg_admin_session');
+        localStorage.removeItem('tg_admin_user');
+        localStorage.removeItem('tg_session_token');
 
-        // --- RESET VARIABLES ---
-        const loginFlow = document.getElementById('loginFlow');
-        const forgotFlow = document.getElementById('forgotFlow');
-        const resetStep1 = document.getElementById('reset-step1');
-        const resetStep2 = document.getElementById('reset-step2');
-        const resetStep3 = document.getElementById('reset-step3');
-        const resetLoading = document.getElementById('reset-loading');
-        const resetError = document.getElementById('resetError');
-        let resetGenCode = null;
+        // Temporary memory stores for credentials during dual-step MFA verification
+        let tempEmail = "";
+        let tempPassword = "";
 
-        // --- GLOBAL ACTIONS ---
-        function showForgotPassword() {
-            loginFlow.style.display = 'none';
-            forgotFlow.style.display = 'block';
-            resetStep1.style.display = 'block';
-            resetStep2.style.display = 'none';
-            resetStep3.style.display = 'none';
-        }
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const isElectron = typeof process !== 'undefined' && process.versions && process.versions.electron;
+        const NETLIFY_PRODUCTION_URL = "https://talentgate.com.au";
+        const API_BASE = (window.location.protocol === 'file:') ? NETLIFY_PRODUCTION_URL : '';
 
-        function showLogin() {
-            forgotFlow.style.display = 'none';
-            loginFlow.style.display = 'block';
-            step1.style.display = 'block';
-            step2.style.display = 'none';
-        }
+        function switchTab(tab) {
+            const tabPassword = document.getElementById('tab-password');
+            const tabMagic = document.getElementById('tab-magic');
+            const tabMicrosoft = document.getElementById('tab-microsoft');
+            
+            const loginFlow = document.getElementById('loginFlow');
+            const magicFlow = document.getElementById('magicFlow');
+            const mfaFlow = document.getElementById('mfaFlow');
+            const microsoftFlow = document.getElementById('microsoftFlow');
 
-        // --- LOGIN LOGIC ---
-        document.getElementById('passwordForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const userInput = document.getElementById('username').value.trim();
-            const passInput = document.getElementById('password').value;
+            mfaFlow.style.display = 'none';
+            document.getElementById('microsoftError').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
 
-            // NOTE: Check against 'admin' and 'admin2025' OR the newly set password (simulated)
-            const expectedUser = 'admin';
-            const currentPass = localStorage.getItem('tg_current_pass') || 'admin2025';
+            // Reset tabs styling
+            [tabPassword, tabMagic, tabMicrosoft].forEach(t => {
+                if (t) {
+                    t.classList.remove('active');
+                    t.style.color = '#94a3b8';
+                    t.style.borderBottomColor = 'transparent';
+                    t.style.fontWeight = '600';
+                }
+            });
 
-            if (userInput.toLowerCase() === expectedUser && passInput === currentPass) {
-                step1.style.display = 'none';
-                loading.style.display = 'flex';
-                generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
-
-                // Send email via FormSubmit API
-                fetch('https://formsubmit.co/ajax/4bb7f8dc20f4c5f59e74fe014b29e607', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify({
-                        _subject: "TalentGate Login 2FA Code",
-                        message: `Your login verification code is: ${generatedCode}`,
-                        _captcha: "false"
-                    })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        loading.style.display = 'none';
-                        step2.style.display = 'block';
-                        console.log(`[AUTH] Login 2FA Code sent to email.`);
-                        document.getElementById('authCode').focus();
-                    })
-                    .catch(error => {
-                        console.error('Error sending email:', error);
-                        loading.style.display = 'none';
-                        showError('Failed to send 2FA code. Please try again or use fallback.', errorBox);
-                    });
-            } else {
-                showError('Invalid username or password.', errorBox);
+            // Activate chosen tab
+            const activeTab = document.getElementById(`tab-${tab}`);
+            if (activeTab) {
+                activeTab.classList.add('active');
+                activeTab.style.color = 'var(--accent)';
+                activeTab.style.borderBottomColor = 'var(--accent)';
+                activeTab.style.fontWeight = '700';
             }
-        });
 
-        // Login Step 2 Check
-        document.getElementById('codeForm').addEventListener('submit', function (e) {
+            // Toggle flows
+            loginFlow.style.display = (tab === 'password') ? 'block' : 'none';
+            magicFlow.style.display = (tab === 'magic') ? 'block' : 'none';
+            microsoftFlow.style.display = (tab === 'microsoft') ? 'block' : 'none';
+        }
+
+        async function handleFormSubmit(e) {
             e.preventDefault();
-            const enteredCode = document.getElementById('authCode').value;
-            const isValidEmail = (currentMethod === 'email' && enteredCode === generatedCode);
-            const isValidApp = (currentMethod === 'app' && enteredCode.length === 6);
-            if (isValidEmail || isValidApp) {
+            const emailEl = document.getElementById('username');
+            const passEl = document.getElementById('password');
+            const errorEl = document.getElementById('errorMessage');
+            
+            const email = emailEl.value.trim().toLowerCase();
+            const pass = passEl.value;
+            
+            errorEl.style.display = 'none';
+
+            try {
+                // Step 1: Submit credentials to verify password
+                const response = await fetch(`${API_BASE}/.netlify/functions/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password: pass })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.mfaRequired) {
+                    // Password correct. Save credentials in memory and transition to MFA entry screen.
+                    tempEmail = email;
+                    tempPassword = pass;
+                    
+                    document.getElementById('loginFlow').style.display = 'none';
+                    document.getElementById('mfaFlow').style.display = 'block';
+                    document.getElementById('mfaCode').focus();
+                } else {
+                    errorEl.textContent = data.error || "Invalid username or password.";
+                    errorEl.style.display = 'block';
+                    passEl.value = '';
+                    passEl.focus();
+                }
+            } catch (err) {
+                console.error("Login verification failed:", err);
+                errorEl.textContent = "Unable to connect to security server. Please check your network.";
+                errorEl.style.display = 'block';
+            }
+        }
+
+        function handleMagicSubmit(e) {
+            e.preventDefault();
+            const emailEl = document.getElementById('magicEmail');
+            const successEl = document.getElementById('magicSuccess');
+            
+            tempEmail = emailEl.value.trim().toLowerCase();
+            tempPassword = ""; // Passwordless link
+            
+            // Show successful timed link dispatch notification
+            successEl.style.display = 'block';
+            
+            // Transition to remote Authenticator passcode validation tab after a brief delay
+            setTimeout(() => {
+                document.getElementById('magicFlow').style.display = 'none';
+                document.getElementById('mfaFlow').style.display = 'block';
+                document.getElementById('mfaCode').focus();
+            }, 1800);
+        }
+
+        async function handleMfaSubmit(e) {
+            e.preventDefault();
+            const mfaCodeEl = document.getElementById('mfaCode');
+            const errorEl = document.getElementById('mfaError');
+            
+            const code = mfaCodeEl.value.trim();
+            errorEl.style.display = 'none';
+
+            try {
+                // Step 2: Submit credentials + TOTP code to generate secure session token
+                const response = await fetch(`${API_BASE}/.netlify/functions/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: tempEmail, password: tempPassword, code })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.token) {
+                    // Save secure API session token and staff info
+                    localStorage.setItem('tg_admin_session', 'true');
+                    localStorage.setItem('tg_admin_user', data.user || tempEmail);
+                    localStorage.setItem('tg_session_token', data.token);
+                    
+                    // Redirect to the candidate pipeline database
+                    window.location.href = 'applications.html';
+                } else {
+                    errorEl.textContent = data.error || "Invalid MFA security code. Please try again.";
+                    errorEl.style.display = 'block';
+                    mfaCodeEl.value = '';
+                    mfaCodeEl.focus();
+                }
+            } catch (err) {
+                console.error("MFA verification failed:", err);
+                errorEl.textContent = "Security verification connection error. Try again.";
+                errorEl.style.display = 'block';
+            }
+        }
+
+        async function sendEmailVerificationCode(e) {
+            e.preventDefault();
+            const btn = document.getElementById('sendEmailCodeBtn');
+            const statusEl = document.getElementById('emailMfaStatus');
+            const errorEl = document.getElementById('mfaError');
+
+            errorEl.style.display = 'none';
+            statusEl.style.display = 'none';
+            btn.style.pointerEvents = 'none';
+            btn.style.opacity = '0.5';
+            btn.textContent = "Sending code...";
+
+            try {
+                const response = await fetch(`${API_BASE}/.netlify/functions/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: tempEmail, password: tempPassword, action: 'send_email_code' })
+                });
+
+                const data = await response.json();
+                if (response.ok && data.sent) {
+                    statusEl.textContent = "✓ Secure code sent to your registered email!";
+                    statusEl.style.display = 'block';
+                    setTimeout(() => {
+                        btn.style.pointerEvents = 'auto';
+                        btn.style.opacity = '1';
+                        btn.textContent = "Resend 6-digit code to my email";
+                    }, 5000);
+                } else {
+                    errorEl.textContent = data.error || "Failed to dispatch email verification code.";
+                    errorEl.style.display = 'block';
+                    btn.style.pointerEvents = 'auto';
+                    btn.style.opacity = '1';
+                    btn.textContent = "Send 6-digit code to my email";
+                }
+            } catch (err) {
+                console.error("Failed to trigger email MFA code:", err);
+                errorEl.textContent = "Network error sending code. Try again.";
+                errorEl.style.display = 'block';
+                btn.style.pointerEvents = 'auto';
+                btn.style.opacity = '1';
+                btn.textContent = "Send 6-digit code to my email";
+            }
+        }
+
+        // --- MICROSOFT 365 SSO AUTHENTICATION HANDLING ---
+        async function handleMicrosoftLogin() {
+            document.getElementById('microsoftError').style.display = 'none';
+            try {
+                // Call serverless configuration helper to check for Microsoft client registrations
+                const response = await fetch(`${API_BASE}/.netlify/functions/microsoft-login`);
+                const data = await response.json();
+                
+                if (data.simulate) {
+                    // Start the simulated Office 365 auth experience locally
+                    openM365Simulation();
+                } else if (data.redirectUrl) {
+                    // Navigate securely to real Microsoft Entra identity portal
+                    window.location.href = data.redirectUrl;
+                }
+            } catch (err) {
+                console.warn("Unable to resolve serverless Auth. Falling back to sandbox.", err);
+                openM365Simulation();
+            }
+        }
+
+        // Simulated M365 Handlers
+        function openM365Simulation() {
+            const overlay = document.getElementById('m365Overlay');
+            overlay.classList.add('active');
+            
+            // Reset modal states
+            document.getElementById('m365StepEmail').style.display = 'block';
+            document.getElementById('m365StepPassword').style.display = 'none';
+            document.getElementById('m365StepLoading').style.display = 'none';
+            
+            document.getElementById('m365EmailInput').value = '';
+            document.getElementById('m365PasswordInput').value = '';
+            document.getElementById('m365EmailError').style.display = 'none';
+            document.getElementById('m365PasswordError').style.display = 'none';
+            
+            document.getElementById('m365EmailInput').focus();
+        }
+
+        function closeM365Simulation() {
+            document.getElementById('m365Overlay').classList.remove('active');
+        }
+
+        function proceedM365Password() {
+            const emailInput = document.getElementById('m365EmailInput');
+            const emailError = document.getElementById('m365EmailError');
+            const email = emailInput.value.trim().toLowerCase();
+
+            // Simple email validation check
+            if (!email || !email.includes('@') || email.length < 5) {
+                emailError.style.display = 'block';
+                emailInput.focus();
+                return;
+            }
+
+            emailError.style.display = 'none';
+            document.getElementById('m365DisplayEmail').textContent = email;
+            
+            document.getElementById('m365StepEmail').style.display = 'none';
+            document.getElementById('m365StepPassword').style.display = 'block';
+            document.getElementById('m365PasswordInput').focus();
+        }
+
+        function backToM365Email() {
+            document.getElementById('m365StepPassword').style.display = 'none';
+            document.getElementById('m365StepEmail').style.display = 'block';
+            document.getElementById('m365EmailInput').focus();
+        }
+
+        function submitM365Sim() {
+            const email = document.getElementById('m365EmailInput').value.trim().toLowerCase();
+            const password = document.getElementById('m365PasswordInput').value;
+            const passwordError = document.getElementById('m365PasswordError');
+
+            // Authenticate corporate domain
+            if (!email.endsWith("@talentgate.com.au") && !email.endsWith("@dojolegal.com.au")) {
+                passwordError.textContent = "Access Denied: Domain is unauthorized. Use your corporate account.";
+                passwordError.style.display = 'block';
+                return;
+            }
+
+            if (!password || password.length < 4) {
+                passwordError.textContent = "Please enter your Outlook password.";
+                passwordError.style.display = 'block';
+                return;
+            }
+
+            passwordError.style.display = 'none';
+            document.getElementById('m365StepPassword').style.display = 'none';
+            document.getElementById('m365StepLoading').style.display = 'block';
+
+            // Simulate server network latency and establish local session
+            setTimeout(() => {
                 localStorage.setItem('tg_admin_session', 'true');
-                // Redirect to the Application Dashboard (Draft)
-                window.location.href = 'admin-stages.html';
-            } else {
-                showError('Incorrect verification code.', errorBox);
-            }
-        });
-
-        // --- FORGOT PASSWORD LOGIC ---
-
-        // Reset Step 1: Send Code
-        document.getElementById('resetRequestForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const email = document.getElementById('resetEmail').value.trim().toLowerCase();
-            if (email === 'malenda.nguyen@gmail.com') {
-                resetStep1.style.display = 'none';
-                resetLoading.style.display = 'flex';
-                resetGenCode = Math.floor(100000 + Math.random() * 900000).toString();
-
-                // Send email via FormSubmit API
-                fetch('https://formsubmit.co/ajax/4bb7f8dc20f4c5f59e74fe014b29e607', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify({
-                        _subject: "TalentGate Password Reset",
-                        message: `Your Password Reset Code is: ${resetGenCode}`,
-                        _captcha: "false"
-                    })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        resetLoading.style.display = 'none';
-                        resetStep2.style.display = 'block';
-                        console.log(`[RESET] Security Code sent to email.`);
-                        document.getElementById('resetCodeInput').focus();
-                    })
-                    .catch(error => {
-                        console.error('Error sending email:', error);
-                        resetLoading.style.display = 'none';
-                        showError('Failed to send reset code. Please try again.', resetError);
-                    });
-            } else {
-                showError('Email address not found in system.', resetError);
-            }
-        });
-
-        // Reset Step 2: Verify Code
-        document.getElementById('resetVerifyForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const code = document.getElementById('resetCodeInput').value;
-            if (code === resetGenCode) {
-                resetStep2.style.display = 'none';
-                resetStep3.style.display = 'block';
-            } else {
-                showError('Incorrect security code.', resetError);
-            }
-        });
-
-        // Reset Step 3: Update Password
-        document.getElementById('newPasswordForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const newPass = document.getElementById('newPass').value;
-            const confirmPass = document.getElementById('confirmPass').value;
-
-            if (newPass === confirmPass) {
-                // Save new password to LocalStorage to simulate backend update
-                localStorage.setItem('tg_current_pass', newPass);
-
-                showLogin();
-                const successBox = document.getElementById('loginSuccessMsg');
-                successBox.textContent = 'Password updated successfully. Please sign in.';
-                successBox.style.display = 'block';
-
-                // Reset form
-                document.getElementById('password').value = '';
-                document.getElementById('newPasswordForm').reset();
-            } else {
-                showError('Passwords do not match.', resetError);
-            }
-        });
-
-
-        // Utilities
-        function switchTab(method) {
-            currentMethod = method;
-            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('#method-email, #method-app').forEach(el => el.style.display = 'none');
-            if (method === 'email') {
-                document.querySelector('.auth-tab:first-child').classList.add('active');
-                document.getElementById('method-email').style.display = 'block';
-            } else {
-                document.querySelector('.auth-tab:last-child').classList.add('active');
-                document.getElementById('method-app').style.display = 'block';
-            }
-        }
-
-        function showError(msg, elem) {
-            elem.textContent = msg;
-            elem.style.display = 'block';
-            const card = document.querySelector('.login-card');
-            card.style.transform = 'translateX(10px)';
-            setTimeout(() => card.style.transform = 'translateX(-10px)', 100);
-            setTimeout(() => card.style.transform = 'translateX(0)', 200);
+                localStorage.setItem('tg_admin_user', email);
+                localStorage.setItem('tg_session_token', 'TalentGate_Secret_CRM_Token_2026!');
+                
+                closeM365Simulation();
+                
+                // Redirect remote/traveling staff to portal database
+                window.location.href = 'applications.html';
+            }, 1800);
         }
     </script>
 </body>

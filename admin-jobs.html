@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+    <script>
+        (function() {
+            if (localStorage.getItem('tg_admin_session') !== 'true') {
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Jobs - TalentGate Admin</title>
@@ -13,7 +20,22 @@
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); display: none;
+            align-items: center; justify-content: center; z-index: 1000;
+        }
+        .modal-content {
+            background: white; padding: 2rem; border-radius: 8px;
+            width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem; cursor: pointer;
+            font-size: 1.5rem; color: #666;
+        }
         .admin-header {
             background-color: var(--primary);
             color: var(--accent);
@@ -23,7 +45,7 @@
 
         .dashboard-container {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 1fr;
             gap: 2rem;
             margin-bottom: 3rem;
         }
@@ -132,99 +154,154 @@
 </head>
 
 <body style="background-color: #f4f7f6;">
-    <script>
-        if (localStorage.getItem('tg_admin_session') !== 'true') {
-            window.location.href = 'login.html';
-        }
-    </script>
 
-    <header class="admin-header">
+    <header class="admin-header" style="background-color: var(--primary); color: white; padding: 1.5rem 0; margin-bottom: 2rem; border-bottom: 3px solid var(--accent);">
         <div class="container">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                 <div>
-                    <h1>Manage Job Postings</h1>
-                    <p>Create and edit active job listings</p>
+                    <h1 style="margin: 0; font-size: 1.8rem; font-weight: 700; color: white; font-family: 'Montserrat', sans-serif;">TalentGate <span style="color: var(--accent);">Portal</span></h1>
+                    <p style="margin: 3px 0 0 0; color: #94a3b8; font-size: 0.85rem;">Labor Market Testing & Candidate Management</p>
                 </div>
-                <div style="display: flex; gap: 1rem;">
-                    <a href="applications.html" style="color: white; text-decoration: none; font-weight: 600;">
-                        Dashboard Home
+                <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                    <button onclick="openCreateJobModal()" style="background: var(--accent); border: none; color: var(--primary); font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; margin-right: 0.5rem;" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 10px rgba(212,175,55,0.3)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+                        <i class="fas fa-plus-circle"></i> Create New Job
+                    </button>
+                    <a href="applications.html" style="color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.color='white'; this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#cbd5e1'; this.style.background='transparent'">
+                        <i class="fas fa-chart-line"></i> Dashboard
                     </a>
-                    <a href="admin-stages.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">
-                        Application Pipeline <i class="fas fa-arrow-right"></i>
+                    <a href="admin-stages.html" style="color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.color='white'; this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#cbd5e1'; this.style.background='transparent'">
+                        <i class="fas fa-columns"></i> Pipeline
                     </a>
+                    <a href="admin-jobs.html" style="color: white; background: rgba(255,255,255,0.1); text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.2s;">
+                        <i class="fas fa-briefcase"></i> Post Jobs
+                    </a>
+                    <a href="admin-lmt.html" style="color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.color='white'; this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#cbd5e1'; this.style.background='transparent'">
+                        <i class="fas fa-shield-halved"></i> LMT Vault
+                    </a>
+                    <a href="admin-emails.html" style="color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.color='white'; this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#cbd5e1'; this.style.background='transparent'">
+                        <i class="fas fa-envelope"></i> Mail Hub
+                    </a>
+                    <button onclick="localStorage.removeItem('tg_admin_session'); window.location.href='login.html';" style="background: transparent; border: 1px solid rgba(255,255,255,0.25); color: #cbd5e1; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-weight: 600; margin-left: 0.5rem; transition: all 0.2s;" onmouseover="this.style.color='white'; this.style.background='rgba(239,68,68,0.2)'; this.style.borderColor='rgba(239,68,68,0.4)'" onmouseout="this.style.color='#cbd5e1'; this.style.background='transparent'; this.style.borderColor='rgba(255,255,255,0.25)'">
+                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Create Job Modal -->
+    <div id="createJobModal" class="modal-overlay" onclick="closeCreateJobModal(event)">
+        <div class="modal-content" style="max-width: 600px; text-align: left; background: #ffffff; color: #0A2239; border-radius: 12px; padding: 2rem; box-shadow: 0 15px 35px rgba(0,0,0,0.15); max-height: 90vh; overflow-y: auto;">
+            <div style="font-family: 'Montserrat', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--primary); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.8rem; margin-bottom: 1.5rem;">
+                <span><i class="fas fa-plus-circle" style="color: var(--accent);"></i> Create New Job Posting</span>
+                <span onclick="closeCreateJobModal(null)" style="cursor: pointer; font-size: 1.8rem; color: #94a3b8; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#94a3b8'">&times;</span>
+            </div>
+            <form id="jobForm">
+                <input type="hidden" id="jobId" value="">
+                
+                <div class="form-group">
+                    <label>Job Title*</label>
+                    <input type="text" id="jobTitle" required placeholder="e.g. Registered Nurse">
+                </div>
+
+                <div class="form-group">
+                    <label>Employer / Client Company* (Internal)</label>
+                    <input type="text" id="jobEmployer" required placeholder="e.g. Acme Health Corp (Hidden from public)">
+                </div>
+
+                <div class="form-group">
+                    <label>Industry Category*</label>
+                    <select id="jobIndustry" required>
+                        <option value="">Select Category...</option>
+                        <option value="Agriculture">Agriculture & Processing</option>
+                        <option value="Healthcare">Healthcare & Care</option>
+                        <option value="Hospitality">Hospitality & Trades</option>
+                        <option value="Construction">Services & Support</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Job Type*</label>
+                    <select id="jobType" required>
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                        <option value="Casual">Casual</option>
+                        <option value="Contract">Contract</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Target Job Board / Platform* (For LMT Compliance Folder Organizing)</label>
+                    <select id="jobPlatform" required>
+                        <option value="Indeed.com">Indeed.com</option>
+                        <option value="Seek.com.au">Seek.com.au</option>
+                        <option value="Upwork">Upwork</option>
+                        <option value="LinkedIn">LinkedIn</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Location*</label>
+                    <input type="text" id="jobLocation" required placeholder="e.g. Sydney, NSW or Remote">
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Date Posted*</label>
+                        <input type="date" id="datePosted" required>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Closing Date</label>
+                        <input type="date" id="dateClosing">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Annual Salary / Hourly Rate</label>
+                    <input type="text" id="jobSalary" placeholder="e.g. $65,000 – $75,000 per annum or $32/hr">
+                </div>
+
+                <div class="form-group">
+                    <label>Job Description / Overview*</label>
+                    <textarea id="jobDescription" required
+                        placeholder="Brief overview of the role and what the candidate will be doing..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>About the Employer</label>
+                    <textarea id="jobAboutEmployer" rows="3"
+                        placeholder="Brief description of the employer (shown publicly without revealing identity)..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Key Responsibilities <small style="color:#94a3b8;font-weight:400;">(one per line)</small></label>
+                    <textarea id="jobResponsibilities" rows="5"
+                        placeholder="Assist residents with personal care&#10;Monitor and report on resident health&#10;Maintain accurate care documentation"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Qualifications &amp; Requirements <small style="color:#94a3b8;font-weight:400;">(one per line)</small></label>
+                    <textarea id="jobQualifications" rows="5"
+                        placeholder="Certificate III in Individual Support&#10;Current First Aid certificate&#10;National Police Check"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Featured Image URL (Optional)</label>
+                    <input type="url" id="jobImage" placeholder="https://example.com/image.jpg">
+                    <small style="color: #888;">Leave blank for default industry image.</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Preview Draft</button>
+                <div id="formSuccess"
+                    style="display: none; color: #155724; background: #d4edda; padding: 10px; border-radius: 4px; margin-top: 1rem; text-align: center; font-size: 0.9rem;">
+                    Job posted successfully!
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="container">
         <div class="dashboard-container">
-            <!-- Job Creation Form -->
-            <div class="panel">
-                <h3 class="panel-header"><i class="fas fa-plus-circle"></i> Create New Job</h3>
-                <form id="jobForm">
-                    <div class="form-group">
-                        <label>Job Title*</label>
-                        <input type="text" id="jobTitle" required placeholder="e.g. Registered Nurse">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Industry Category*</label>
-                        <select id="jobIndustry" required>
-                            <option value="">Select Category...</option>
-                            <option value="Agriculture">Agriculture & Processing</option>
-                            <option value="Healthcare">Healthcare & Care</option>
-                            <option value="Hospitality">Hospitality & Trades</option>
-                            <option value="Construction">Services & Support</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Job Type*</label>
-                        <select id="jobType" required>
-                            <option value="Full-time">Full-time</option>
-                            <option value="Part-time">Part-time</option>
-                            <option value="Casual">Casual</option>
-                            <option value="Contract">Contract</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Location*</label>
-                        <input type="text" id="jobLocation" required placeholder="e.g. Sydney, NSW or Remote">
-                    </div>
-
-                    <div style="display: flex; gap: 1rem;">
-                        <div class="form-group" style="flex: 1;">
-                            <label>Date Posted*</label>
-                            <input type="date" id="datePosted" required>
-                        </div>
-                        <div class="form-group" style="flex: 1;">
-                            <label>Closing Date</label>
-                            <input type="date" id="dateClosing">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Job Description*</label>
-                        <textarea id="jobDescription" required
-                            placeholder="Enter the full job description, requirements, and responsibilities..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Featured Image URL (Optional)</label>
-                        <input type="url" id="jobImage" placeholder="https://example.com/image.jpg">
-                        <small style="color: #888;">Leave blank for default industry image.</small>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Post Job to
-                        Live Website</button>
-                    <div id="formSuccess"
-                        style="display: none; color: #155724; background: #d4edda; padding: 10px; border-radius: 4px; margin-top: 1rem; text-align: center; font-size: 0.9rem;">
-                        Job posted successfully!
-                    </div>
-                </form>
-            </div>
 
             <!-- Active Jobs List -->
             <div class="panel">
@@ -235,6 +312,7 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
+                                <th>Employer (Internal)</th>
                                 <th>Industry</th>
                                 <th>Location</th>
                                 <th>Posted</th>
@@ -254,80 +332,412 @@
         </div>
     </div>
 
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closePreview()">&times;</span>
+            <h2 style="color: var(--navy); margin-bottom: 1rem;">Job Preview</h2>
+            <div id="previewContainer" style="padding: 2rem; border: 1px solid #eee; border-radius: 8px; margin-bottom: 1.5rem;">
+                <!-- Filled by JS -->
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button type="button" class="btn btn-primary" style="background-color: var(--accent);" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> Download PDF</button>
+                <button type="button" class="btn btn-primary" onclick="publishJob()"><i class="fas fa-check-circle"></i> Confirm & Publish</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        const NETLIFY_PRODUCTION_URL = "https://talentgate.com.au"; // User can change this to their custom Netlify domain
+        const API_BASE = (window.location.protocol === 'file:') ? NETLIFY_PRODUCTION_URL : '';
+        const isElectron = window.location.protocol === 'file:';
+        const isLocal = window.location.protocol === 'file:' || !window.netlifyIdentity;
+        const hasCrmSession = localStorage.getItem('tg_admin_session') === 'true';
+        const useLiveCloud = !isLocal || (isElectron && hasCrmSession);
+
+        async function getAuthToken() {
+            if (isElectron) {
+                return "TalentGate_Secret_CRM_Token_2026!";
+            }
+            const sessionToken = localStorage.getItem('tg_session_token');
+            if (sessionToken) return sessionToken;
+            const user = window.netlifyIdentity ? window.netlifyIdentity.currentUser() : null;
+            return user ? await user.jwt() : "";
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // Set default date to today
             document.getElementById('datePosted').valueAsDate = new Date();
             loadCustomJobs();
         });
 
+        function isJobClosed(job) {
+            if (!job) return false;
+            
+            // Check if dateClosing is explicitly set and has passed
+            if (job.dateClosing) {
+                const closingDate = new Date(job.dateClosing);
+                closingDate.setHours(23, 59, 59, 999);
+                if (closingDate < new Date()) {
+                    return true;
+                }
+            }
+            
+            // Check if 30 days have passed since datePosted
+            if (job.datePosted) {
+                const postedDate = new Date(job.datePosted);
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                if (postedDate < thirtyDaysAgo) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        function getJobStatusBadge(job) {
+            const isClosed = isJobClosed(job);
+            if (isClosed) {
+                return `<span class="status-badge" style="background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem;"><i class="fas fa-lock"></i> Closed</span>`;
+            }
+            
+            if (job.datePosted) {
+                const postedDate = new Date(job.datePosted);
+                const today = new Date();
+                const diffTime = today - postedDate;
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                const daysRemaining = 30 - diffDays;
+                
+                if (daysRemaining > 0) {
+                    return `<span class="status-badge" style="background: #dcfce7; color: #10b981; border: 1px solid #86efac; padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem;" title="Expires in ${daysRemaining} days"><i class="fas fa-check-circle"></i> Live (${daysRemaining}d left)</span>`;
+                } else {
+                    return `<span class="status-badge" style="background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem;"><i class="fas fa-lock"></i> Closed</span>`;
+                }
+            }
+            return `<span class="status-badge" style="background: #dcfce7; color: #10b981; border: 1px solid #86efac; padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem;"><i class="fas fa-check-circle"></i> Live</span>`;
+        }
+
+        function getIndustryLabel(industry) {
+            if (!industry) return 'Services & Support';
+            if (industry === 'Construction') return 'Services & Support';
+            if (industry === 'Agriculture') return 'Agriculture & Processing';
+            if (industry === 'Healthcare') return 'Healthcare & Care';
+            if (industry === 'Hospitality') return 'Hospitality & Trades';
+            return industry;
+        }
+
+        async function loadCustomJobs() {
+            try {
+                let customJobs = [];
+                if (useLiveCloud) {
+                    try {
+                        const token = await getAuthToken();
+                        const response = await fetch(`${API_BASE}/.netlify/functions/jobs-api`, {
+                            headers: { Authorization: `Bearer ${token}` }
+                        });
+                        if (response.ok) {
+                            customJobs = await response.json();
+                        } else {
+                            throw new Error();
+                        }
+                    } catch (e) {
+                        customJobs = JSON.parse(localStorage.getItem('tg_custom_jobs') || '[]');
+                    }
+                } else {
+                    customJobs = JSON.parse(localStorage.getItem('tg_custom_jobs') || '[]');
+                }
+                const tbody = document.querySelector('#jobsTable tbody');
+                const emptyState = document.getElementById('emptyJobs');
+
+                if (customJobs.length === 0) {
+                    tbody.innerHTML = '';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                emptyState.style.display = 'none';
+                tbody.innerHTML = customJobs.map(job => `
+                    <tr>
+                        <td>
+                            <strong>${job.title}</strong><br>
+                            <small style="color: #888;">${job.type || 'Full-time'}</small><br>
+                            <a href="jobs.html?job=${encodeURIComponent(job.title)}" target="_blank" style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.72rem; color: #d97706; font-weight: 700; text-decoration: none; margin-top: 0.25rem; transition: 0.2s;" title="View public page as a visitor">
+                                <i class="fas fa-external-link-alt"></i> View Public Listing
+                            </a>
+                        </td>
+                        <td><span style="background: #e2e8f0; color: #475569; padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; border: 1px solid #cbd5e1;"><i class="fas fa-building"></i> ${job.employerCompany || 'Unknown'}</span></td>
+                        <td>${getIndustryLabel(job.industry)}</td>
+                        <td>${job.location || 'Australia'}</td>
+                        <td>${job.datePosted || 'N/A'}</td>
+                        <td>${getJobStatusBadge(job)}</td>
+                        <td>
+                            <a href="jobs.html?job=${encodeURIComponent(job.title)}" target="_blank" class="btn-primary" style="padding: 0.4rem 0.6rem; border: none; border-radius: 4px; margin-right: 0.4rem; cursor: pointer; color: white; background-color: #0d9488; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; height: 28px; width: 28px; box-sizing: border-box;" title="View Public Listing">
+                                <i class="fas fa-external-link-alt" style="font-size:0.8rem;"></i>
+                            </a>
+                            <button onclick="editJob('${job.id}')" class="btn-primary" style="padding: 0.4rem 0.6rem; border: none; border-radius: 4px; margin-right: 0.4rem; cursor: pointer; color: white; background-color: var(--primary); display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; height: 28px; width: 28px; box-sizing: border-box;" title="Edit Job">
+                                <i class="fas fa-edit" style="font-size:0.8rem;"></i>
+                            </button>
+                            <button onclick="deleteJob('${job.id}')" class="btn-delete" style="display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; height: 28px; width: 28px; box-sizing: border-box;" title="Remove Job">
+                                <i class="fas fa-trash" style="font-size:0.8rem;"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error("Load Jobs Error:", error);
+                document.getElementById('emptyJobs').innerHTML = 'Error securely loading jobs.';
+                document.getElementById('emptyJobs').style.display = 'block';
+            }
+        }
+
         const jobForm = document.getElementById('jobForm');
+
+        let currentJobDraft = null;
 
         jobForm.addEventListener('submit', (e) => {
             e.preventDefault();
-
-            const newJob = {
-                id: 'custom_' + Date.now(),
+            
+            currentJobDraft = {
+                id: document.getElementById('jobId').value || null,
                 title: document.getElementById('jobTitle').value.trim(),
+                employerCompany: document.getElementById('jobEmployer').value.trim(),
                 industry: document.getElementById('jobIndustry').value,
                 type: document.getElementById('jobType').value,
+                platform: document.getElementById('jobPlatform').value,
                 location: document.getElementById('jobLocation').value.trim(),
+                salary: document.getElementById('jobSalary').value.trim(),
                 datePosted: document.getElementById('datePosted').value,
                 dateClosing: document.getElementById('dateClosing').value,
                 description: document.getElementById('jobDescription').value.trim(),
+                aboutEmployer: document.getElementById('jobAboutEmployer').value.trim(),
+                responsibilities: document.getElementById('jobResponsibilities').value.trim().split('\n').map(s => s.trim()).filter(Boolean),
+                qualifications: document.getElementById('jobQualifications').value.trim().split('\n').map(s => s.trim()).filter(Boolean),
                 image: document.getElementById('jobImage').value.trim(),
-                isCustom: true // Flag to identify user-created jobs
+                isCustom: true 
             };
 
-            let customJobs = JSON.parse(localStorage.getItem('tg_custom_jobs') || '[]');
-            customJobs.unshift(newJob); // Add to beginning
-            localStorage.setItem('tg_custom_jobs', JSON.stringify(customJobs));
+            // Render Preview
+            const previewContainer = document.getElementById('previewContainer');
+            
+            const imageHtml = currentJobDraft.image ? 
+                `<div style="margin-bottom: 1.5rem;"><img src="${currentJobDraft.image}" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px;"></div>` : '';
+            
+            previewContainer.innerHTML = `
+                ${imageHtml}
+                <h1 style="color: var(--primary); font-size: 2rem; margin-bottom: 0.5rem; font-family: 'Montserrat', sans-serif;">${currentJobDraft.title}</h1>
+                <div style="color: #666; font-weight: 600; margin-bottom: 1.5rem; display: flex; gap: 1rem; font-family: 'Open Sans', sans-serif;">
+                    <span><i class="fas fa-map-marker-alt"></i> ${currentJobDraft.location}</span>
+                    <span><i class="fas fa-briefcase"></i> ${currentJobDraft.type}</span>
+                    <span><i class="fas fa-industry"></i> ${currentJobDraft.industry}</span>
+                </div>
+                <div style="line-height: 1.6; color: #444; margin-bottom: 2rem; white-space: pre-wrap; font-family: 'Open Sans', sans-serif;">${currentJobDraft.description}</div>
+                <div style="font-size: 0.85rem; color: #888; font-family: 'Open Sans', sans-serif;">
+                    <strong>Posted:</strong> ${currentJobDraft.datePosted}
+                    ${currentJobDraft.dateClosing ? ` | <strong>Closes:</strong> ${currentJobDraft.dateClosing}` : ''}
+                </div>
+            `;
 
-            // Show success, reset form
-            const successMsg = document.getElementById('formSuccess');
-            successMsg.style.display = 'block';
-            setTimeout(() => successMsg.style.display = 'none', 3000);
-
-            jobForm.reset();
-            document.getElementById('datePosted').valueAsDate = new Date(); // Reset date
-
-            loadCustomJobs();
+            document.getElementById('previewModal').style.display = 'flex';
         });
 
-        function loadCustomJobs() {
-            const customJobs = JSON.parse(localStorage.getItem('tg_custom_jobs') || '[]');
-            const tbody = document.querySelector('#jobsTable tbody');
-            const emptyState = document.getElementById('emptyJobs');
+        function closePreview() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
 
-            if (customJobs.length === 0) {
-                tbody.innerHTML = '';
-                emptyState.style.display = 'block';
+        async function publishJob() {
+            if (!currentJobDraft.id) {
+                currentJobDraft.id = 'job_' + Date.now();
+            }
+
+            // Dynamically file it under tg_lmt_data in localStorage for immediate compliance folder reflection
+            try {
+                let lmtData = JSON.parse(localStorage.getItem('tg_lmt_data') || '[]');
+                
+                // Clear any existing compliance entries for this specific job to prevent duplicates
+                const campaignId = 'ext_' + currentJobDraft.id;
+                lmtData = lmtData.filter(i => i.id !== campaignId);
+                
+                // Add the new compliance folder tracking campaign
+                lmtData.push({
+                    id: campaignId,
+                    client: currentJobDraft.employerCompany,
+                    location: currentJobDraft.location,
+                    role: currentJobDraft.title,
+                    platform: currentJobDraft.platform || "Indeed.com",
+                    url: "https://www.talentgate.com.au/jobs?q=" + encodeURIComponent(currentJobDraft.title),
+                    screenshot: "img/lmt_proofs/mock_indeed_ad.png", // realistic default mock screenshot
+                    status: "pending",
+                    date: currentJobDraft.datePosted,
+                    dateClosing: currentJobDraft.dateClosing || new Date(new Date(currentJobDraft.datePosted).getTime() + 30*24*60*60*1000).toISOString().split('T')[0],
+                    day: 1
+                });
+                
+                localStorage.setItem('tg_lmt_data', JSON.stringify(lmtData));
+            } catch (e) {
+                console.warn("Could not save to LMT database:", e);
+            }
+
+            if (!useLiveCloud) {
+                let customJobs = JSON.parse(localStorage.getItem('tg_custom_jobs') || '[]');
+                customJobs = customJobs.filter(j => j.id !== currentJobDraft.id);
+                customJobs.push(currentJobDraft);
+                localStorage.setItem('tg_custom_jobs', JSON.stringify(customJobs));
+
+                closePreview();
+                const successMsg = document.getElementById('formSuccess');
+                successMsg.style.display = 'block';
+                setTimeout(() => successMsg.style.display = 'none', 3000);
+
+                jobForm.reset();
+                document.getElementById('jobId').value = '';
+                document.querySelector('#jobForm button[type="submit"]').textContent = 'Preview Draft';
+                document.getElementById('datePosted').valueAsDate = new Date(); 
+
+                loadCustomJobs();
                 return;
             }
 
-            emptyState.style.display = 'none';
-            tbody.innerHTML = customJobs.map(job => `
-                <tr>
-                    <td><strong>${job.title}</strong><br><small style="color: #888;">${job.type}</small></td>
-                    <td>${job.industry}</td>
-                    <td>${job.location}</td>
-                    <td>${job.datePosted}</td>
-                    <td><span class="status-badge">Live</span></td>
-                    <td>
-                        <button onclick="deleteJob('${job.id}')" class="btn-delete" title="Remove Job">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
+            try {
+                const token = await getAuthToken();
+                const response = await fetch(`${API_BASE}/.netlify/functions/jobs-api`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(currentJobDraft)
+                });
+
+                if (!response.ok) throw new Error("Failed to securely save job");
+
+                // Show success, reset form
+                closePreview();
+                const successMsg = document.getElementById('formSuccess');
+                successMsg.style.display = 'block';
+                setTimeout(() => successMsg.style.display = 'none', 3000);
+
+                jobForm.reset();
+                document.getElementById('jobId').value = '';
+                document.querySelector('#jobForm button[type="submit"]').textContent = 'Preview Draft';
+                document.getElementById('datePosted').valueAsDate = new Date(); 
+
+                loadCustomJobs();
+            } catch (error) {
+                console.error("Save Job Error:", error);
+                alert("Failed to securely post the job. Please check your admin privileges and connection.");
+            }
         }
 
-        function deleteJob(jobId) {
-            if (confirm('Are you sure you want to completely remove this job posting? This will remove it from the live website immediately.')) {
+        function downloadPDF() {
+            const element = document.getElementById('previewContainer');
+            const opt = {
+                margin:       0.5,
+                filename:     `${currentJobDraft.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_spec.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        window.openCreateJobModal = function() {
+            jobForm.reset();
+            document.getElementById('jobId').value = '';
+            document.querySelector('#jobForm button[type="submit"]').textContent = 'Preview Draft';
+            document.getElementById('datePosted').valueAsDate = new Date(); 
+            document.getElementById('createJobModal').style.display = 'flex';
+        }
+
+        window.closeCreateJobModal = function(e) {
+            if (e && e.target) {
+                const isClickInside = e.target.closest('.modal-content');
+                if (isClickInside && e.target.tagName !== 'SPAN') return;
+            }
+            document.getElementById('createJobModal').style.display = 'none';
+        }
+
+        window.editJob = async function(jobId) {
+            try {
+                const isLocal = window.location.protocol === 'file:' || !window.netlifyIdentity;
+                let customJobs = [];
+                if (!isLocal) {
+                    try {
+                        const response = await fetch('/.netlify/functions/jobs-api');
+                        if (response.ok) {
+                            customJobs = await response.json();
+                        } else {
+                            throw new Error();
+                        }
+                    } catch (e) {
+                        customJobs = JSON.parse(localStorage.getItem('tg_custom_jobs') || '[]');
+                    }
+                } else {
+                    customJobs = JSON.parse(localStorage.getItem('tg_custom_jobs') || '[]');
+                }
+                const job = customJobs.find(j => String(j.id) === String(jobId));
+                if (job) {
+                    document.getElementById('jobId').value = job.id;
+                    document.getElementById('jobTitle').value = job.title;
+                    document.getElementById('jobEmployer').value = job.employerCompany || '';
+                    document.getElementById('jobIndustry').value = job.industry;
+                    document.getElementById('jobType').value = job.type;
+                    document.getElementById('jobLocation').value = job.location;
+                    document.getElementById('jobSalary').value = job.salary || '';
+                    document.getElementById('jobPlatform').value = job.platform || 'Indeed.com';
+                    document.getElementById('datePosted').value = job.datePosted || '';
+                    document.getElementById('dateClosing').value = job.dateClosing || '';
+                    document.getElementById('jobDescription').value = job.description || '';
+                    document.getElementById('jobAboutEmployer').value = job.aboutEmployer || '';
+                    document.getElementById('jobResponsibilities').value = Array.isArray(job.responsibilities) ? job.responsibilities.join('\n') : (job.responsibilities || '');
+                    document.getElementById('jobQualifications').value = Array.isArray(job.qualifications) ? job.qualifications.join('\n') : (job.qualifications || '');
+                    document.getElementById('jobImage').value = job.image || '';
+
+                    document.querySelector('#jobForm button[type="submit"]').textContent = 'Preview Draft (Edit Mode)';
+                    document.getElementById('createJobModal').style.display = 'flex';
+                }
+            } catch (error) {
+                console.error("Edit Job Error:", error);
+            }
+        }
+
+        async function deleteJob(jobId) {
+            if (!confirm('Are you sure you want to completely remove this job posting? This will securely remove it immediately.')) return;
+            
+            // Clean up corresponding LMT campaign entry if present
+            try {
+                let lmtData = JSON.parse(localStorage.getItem('tg_lmt_data') || '[]');
+                lmtData = lmtData.filter(i => i.id !== 'ext_' + jobId);
+                localStorage.setItem('tg_lmt_data', JSON.stringify(lmtData));
+            } catch (e) {
+                console.warn(e);
+            }
+
+            if (!useLiveCloud) {
                 let customJobs = JSON.parse(localStorage.getItem('tg_custom_jobs') || '[]');
-                customJobs = customJobs.filter(j => j.id !== jobId);
+                customJobs = customJobs.filter(j => String(j.id) !== String(jobId));
                 localStorage.setItem('tg_custom_jobs', JSON.stringify(customJobs));
                 loadCustomJobs();
+                return;
+            }
+
+            try {
+                const token = await getAuthToken();
+                const response = await fetch(`${API_BASE}/.netlify/functions/jobs-api`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ jobId: jobId })
+                });
+
+                if (!response.ok) throw new Error("Failed to securely delete job");
+
+                loadCustomJobs();
+            } catch (error) {
+                console.error("Delete Job Error:", error);
+                alert("Failed to securely delete the job.");
             }
         }
     </script>

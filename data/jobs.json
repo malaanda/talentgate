@@ -5,8 +5,26 @@
     "industry": "Agriculture",
     "location": "Regional NSW",
     "type": "Casual",
-    "description": "Experienced forklift driver needed for busy harvest season. Must have valid LO/LF licence.",
-    "posted": "2025-01-20"
+    "salary": "$28 – $34 per hour",
+    "employerCompany": "Confidential Agricultural Employer",
+    "aboutEmployer": "Our client is a well-established agricultural processing and logistics operation in Regional NSW, operating year-round with a peak during harvest season. They pride themselves on safe working practices and have a friendly, inclusive team culture.",
+    "description": "Experienced forklift driver needed for busy harvest season. Must have valid LO/LF licence. You will be responsible for moving, storing, and distributing agricultural produce within a busy warehouse environment.",
+    "responsibilities": [
+      "Safely operate forklift (LO/LF licensed) in a busy warehouse environment",
+      "Load and unload produce from trucks and storage areas",
+      "Conduct pre-start safety checks on the forklift daily",
+      "Maintain accurate stock movement records",
+      "Adhere to WHS policies and site-specific safety procedures"
+    ],
+    "qualifications": [
+      "Valid LO or LF Forklift Licence (mandatory)",
+      "Previous experience in agricultural or warehouse environments (preferred)",
+      "Ability to work in varying weather conditions",
+      "Strong attention to safety and detail",
+      "Reliable transport to regional work site"
+    ],
+    "posted": "2025-01-20",
+    "datePosted": "2025-01-20"
   },
   {
     "id": 2,
@@ -14,8 +32,28 @@
     "industry": "Healthcare",
     "location": "Sydney Metro",
     "type": "Full-time",
-    "description": "Passionate care worker required for residential facility. Certificate III in Individual Support essential.",
-    "posted": "2025-01-22"
+    "salary": "$58,000 – $66,000 per annum",
+    "employerCompany": "Confidential Residential Care Facility",
+    "aboutEmployer": "Our client is a reputable residential aged care facility located in the Sydney Metro area. They are committed to delivering high-quality, person-centred care and support to elderly residents, maintaining a compassionate and professional team environment.",
+    "description": "Passionate care worker required for residential facility. Certificate III in Individual Support essential. You will support elderly residents with daily living activities, ensure their comfort and dignity, and build meaningful relationships with residents and their families.",
+    "responsibilities": [
+      "Assist residents with personal care including bathing, dressing, and mobility",
+      "Administer medications under supervision (where qualified)",
+      "Monitor and report on resident health and wellbeing",
+      "Support activities of daily living and recreational programs",
+      "Maintain accurate care documentation and handover notes",
+      "Communicate effectively with residents, families, and healthcare professionals"
+    ],
+    "qualifications": [
+      "Certificate III in Individual Support (Ageing) – mandatory",
+      "Current First Aid and CPR certificate",
+      "National Police Check (or willingness to obtain)",
+      "NDIS Worker Screening Check (or willingness to obtain)",
+      "Strong empathy, patience, and communication skills",
+      "Ability to work rotating roster including weekends"
+    ],
+    "posted": "2025-01-22",
+    "datePosted": "2025-01-22"
   },
   {
     "id": 3,
@@ -23,16 +61,56 @@
     "industry": "Construction",
     "location": "Western Sydney",
     "type": "Contract",
-    "description": "General labourers wanted for large infrastructure project. White card and own PPE required.",
-    "posted": "2025-01-18"
+    "salary": "$30 – $38 per hour",
+    "employerCompany": "Confidential Infrastructure Contractor",
+    "aboutEmployer": "Our client is a leading civil infrastructure contractor engaged on a significant government-funded road and drainage project in Western Sydney. They maintain strong safety standards and offer a professional, structured site environment with a diverse and collaborative team.",
+    "description": "General labourers wanted for a large infrastructure project in Western Sydney. White card and own PPE required. You will support civil construction activities including excavation, concrete works, and general site maintenance under the supervision of a site foreman.",
+    "responsibilities": [
+      "Assist with excavation, concrete pours, and drainage installation",
+      "Operate hand tools and basic plant equipment as directed",
+      "Maintain site cleanliness and ensure materials are correctly stored",
+      "Follow all WHS and site-specific safety policies",
+      "Assist in traffic control setup and signage where required",
+      "Report hazards and near-misses to the site foreman promptly"
+    ],
+    "qualifications": [
+      "White Card (Construction Induction) – mandatory",
+      "Own appropriate PPE (hi-vis, steel cap boots, hard hat)",
+      "Previous civil construction or labouring experience preferred",
+      "Ability to work outdoors in varying weather conditions",
+      "Physical fitness to perform manual labour tasks",
+      "Reliable transport to Western Sydney site locations"
+    ],
+    "posted": "2025-01-18",
+    "datePosted": "2025-01-18"
   },
   {
     "id": 4,
     "title": "Chef de Partie",
     "industry": "Hospitality",
     "location": "Melbourne CBD",
-    "type": "Permanent",
-    "description": "Join an award-winning kitchen team. Minimum 2 years experience in a similar role.",
-    "posted": "2025-01-21"
+    "type": "Full-time",
+    "salary": "$65,000 – $75,000 per annum",
+    "employerCompany": "Confidential Award-Winning Restaurant Group",
+    "aboutEmployer": "Our client is a celebrated restaurant group operating multiple award-winning venues across Melbourne's CBD. Known for their innovative menus and exceptional dining experiences, they invest heavily in team development, offer a supportive kitchen culture, and are committed to the wellbeing and career growth of their chefs.",
+    "description": "Join an award-winning kitchen team as a Chef de Partie. You will manage a specific station in a high-volume fine-dining kitchen, mentor junior staff, and contribute creatively to seasonal menu development. Minimum 2 years of experience in a similar role is required.",
+    "responsibilities": [
+      "Take ownership and manage a designated kitchen station (e.g., grill, pastry, larder)",
+      "Prepare, cook, and present dishes to the highest standard",
+      "Supervise and mentor Commis and Demi-Chef team members",
+      "Assist the Sous Chef and Head Chef with menu development and specials",
+      "Ensure food safety, HACCP compliance, and kitchen hygiene standards",
+      "Manage mise en place efficiently during service periods"
+    ],
+    "qualifications": [
+      "Trade qualification in Commercial Cookery (or equivalent international qualification)",
+      "Minimum 2 years' experience as a Chef de Partie in a professional kitchen",
+      "Strong knowledge of modern cooking techniques and food trends",
+      "Food Safety Supervisor Certificate",
+      "Ability to work evenings, weekends, and split shifts",
+      "Excellent teamwork and communication skills under pressure"
+    ],
+    "posted": "2025-01-21",
+    "datePosted": "2025-01-21"
   }
 ]

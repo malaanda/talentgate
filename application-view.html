@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+    <script>
+        (function() {
+            if (localStorage.getItem('tg_admin_session') !== 'true') {
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Details - TalentGate</title>
@@ -132,7 +139,7 @@
 <body>
 
     <div class="print-actions">
-        <a href="admin.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        <a href="applications.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
         <button onclick="window.print()" class="btn-print"><i class="fas fa-print"></i> Print / Save
             Information</button>
     </div>
@@ -243,7 +250,21 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        const NETLIFY_PRODUCTION_URL = "https://talentgate.com.au";
+        const API_BASE = (window.location.protocol === 'file:') ? NETLIFY_PRODUCTION_URL : '';
+        const isElectron = window.location.protocol === 'file:';
+
+        async function getAuthToken() {
+            if (isElectron) {
+                return "TalentGate_Secret_CRM_Token_2026!";
+            }
+            const sessionToken = localStorage.getItem('tg_session_token');
+            if (sessionToken) return sessionToken;
+            const user = window.netlifyIdentity ? window.netlifyIdentity.currentUser() : null;
+            return user ? await user.jwt() : "";
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
 
@@ -252,11 +273,28 @@
                 return;
             }
 
-            const apps = JSON.parse(localStorage.getItem('tg_applications') || '[]');
-            const app = apps.find(a => a.id.toString() === id);
+            let apps = JSON.parse(localStorage.getItem('tg_applications') || '[]');
+            let app = apps.find(a => a.id.toString() === id.toString());
 
             if (!app) {
-                document.body.innerHTML = '<div class="container" style="text-align:center; padding: 2rem;"><h3>Error: Application not found.</h3><a href="admin.html">Go Back</a></div>';
+                // Try fetching live from backend
+                try {
+                    const token = await getAuthToken();
+                    const response = await fetch(`${API_BASE}/.netlify/functions/get-applications`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    if (response.ok) {
+                        apps = await response.json();
+                        localStorage.setItem('tg_applications', JSON.stringify(apps));
+                        app = apps.find(a => a.id.toString() === id.toString());
+                    }
+                } catch (err) {
+                    console.error("Failed to fetch fresh application:", err);
+                }
+            }
+
+            if (!app) {
+                document.body.innerHTML = '<div class="container" style="text-align:center; padding: 2rem;"><h3>Error: Application not found.</h3><a href="applications.html">Go Back</a></div>';
                 return;
             }
 
@@ -268,15 +306,21 @@
             setText('phone', app.phone);
             setText('location', app.location);
             setText('visaStatus', app.visaStatus);
-            setText('occupation', app.occupation);
-            setText('experienceYears', app.experienceYears + ' Years');
-            setText('skills', app.skills);
-            setText('recentJob', app.recentJob);
-            setText('interest', app.interest);
-            setText('resumeFile', app.resumeFile);
-            setText('certificatesFile', app.certificatesFile);
-            setText('licensesFile', app.licensesFile);
-            setText('referencesFile', app.referencesFile);
+            
+            // Format occupation/skills/interest
+            const rawData = app.rawForm || {};
+            setText('occupation', app.jobTitle || rawData.occupation || '-');
+            setText('experienceYears', (app.experienceYears || rawData.experienceYears || '0') + ' Years');
+            setText('skills', rawData.skills || '-');
+            setText('recentJob', rawData.recentJob || '-');
+            setText('interest', rawData.interest || rawData.whyFit || '-');
+            
+            // Document links
+            setDocLink('resumeFile', app.resumeUrl || rawData.resume);
+            setDocLink('certificatesFile', app.passportUrl || rawData.passport); // fallback/mapping
+            setDocLink('licensesFile', app.licensesUrls && app.licensesUrls[0]);
+            setDocLink('referencesFile', app.referencesUrls && app.referencesUrls[0]);
+            
             setText('jobTitle', app.jobTitle);
             setText('appId', app.id);
         });
@@ -284,6 +328,17 @@
         function setText(id, value) {
             const el = document.getElementById(id);
             if (el) el.textContent = value || '-';
+        }
+
+        function setDocLink(id, url) {
+            const el = document.getElementById(id);
+            if (el) {
+                if (url) {
+                    el.innerHTML = `<a href="${url}" target="_blank" class="link-text"><i class="fas fa-external-link-alt"></i> View Attachment</a>`;
+                } else {
+                    el.textContent = 'None';
+                }
+            }
         }
     </script>
 </body>

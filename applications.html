@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+    <script>
+        (function() {
+            if (localStorage.getItem('tg_admin_session') !== 'true') {
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - TalentGate</title>
@@ -117,31 +124,44 @@
 </head>
 
 <body style="background-color: #f4f7f6;">
-    <script>
-        // Simple Session Check
-        if (localStorage.getItem('tg_admin_session') !== 'true') {
-            window.location.href = 'login.html';
-        }
-    </script>
 
-    <header class="admin-header">
+    <header class="admin-header" style="background-color: var(--primary); color: white; padding: 1.5rem 0; margin-bottom: 2rem; border-bottom: 3px solid var(--accent);">
         <div class="container">
-            <h1>TG Application Dashboard</h1>
-            <p>View and manage incoming candidate applications (Draft Mode)</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h1 style="margin: 0; font-size: 1.8rem; font-weight: 700; color: white; font-family: 'Montserrat', sans-serif;">TalentGate <span style="color: var(--accent);">Portal</span></h1>
+                    <p style="margin: 3px 0 0 0; color: #94a3b8; font-size: 0.85rem;">Labor Market Testing & Candidate Management</p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                    <a href="applications.html" style="color: white; background: rgba(255,255,255,0.1); text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.2s;">
+                        <i class="fas fa-chart-line"></i> Dashboard
+                    </a>
+                    <a href="admin-stages.html" style="color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.color='white'; this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#cbd5e1'; this.style.background='transparent'">
+                        <i class="fas fa-columns"></i> Pipeline
+                    </a>
+                    <a href="admin-jobs.html" style="color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.color='white'; this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#cbd5e1'; this.style.background='transparent'">
+                        <i class="fas fa-briefcase"></i> Post Jobs
+                    </a>
+                    <a href="admin-lmt.html" style="color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.color='white'; this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#cbd5e1'; this.style.background='transparent'">
+                        <i class="fas fa-shield-halved"></i> LMT Vault
+                    </a>
+                    <a href="admin-emails.html" style="color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.color='white'; this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#cbd5e1'; this.style.background='transparent'">
+                        <i class="fas fa-envelope"></i> Mail Hub
+                    </a>
+                    <button onclick="localStorage.removeItem('tg_admin_session'); window.location.href='login.html';" style="background: transparent; border: 1px solid rgba(255,255,255,0.25); color: #cbd5e1; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-weight: 600; margin-left: 0.5rem; transition: all 0.2s;" onmouseover="this.style.color='white'; this.style.background='rgba(239,68,68,0.2)'; this.style.borderColor='rgba(239,68,68,0.4)'" onmouseout="this.style.color='#cbd5e1'; this.style.background='transparent'; this.style.borderColor='rgba(255,255,255,0.25)'">
+                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
     <div class="container">
-        <div class="action-bar">
+        <div class="action-bar" style="margin-bottom: 2rem;">
             <div style="display: flex; gap: 1rem;">
-                <button onclick="downloadCSV()" class="btn-download"><i class="fas fa-file-csv"></i> Download
-                    CSV</button>
-                <a href="admin-jobs.html" class="btn-download" style="background-color: #2e7d32;"><i
-                        class="fas fa-briefcase"></i> Post Jobs</a>
-                <a href="admin-stages.html" class="btn-download" style="background-color: var(--primary);"><i
-                        class="fas fa-stream"></i> Manage Pipeline</a>
+                <button onclick="downloadCSV()" class="btn-download" style="background-color: var(--primary);"><i class="fas fa-file-csv"></i> Download CSV</button>
             </div>
-            <button onclick="clearData()" class="btn-clear"><i class="fas fa-trash"></i> Clear All Data</button>
+            <button onclick="clearData()" class="btn-clear" style="background-color: #ef4444;"><i class="fas fa-trash"></i> Clear All Data</button>
         </div>
 
         <div class="dashboard-stats">
@@ -200,12 +220,97 @@
     </div>
 
     <script>
+        const NETLIFY_PRODUCTION_URL = "https://talentgate.com.au";
+        const API_BASE = (window.location.protocol === 'file:') ? NETLIFY_PRODUCTION_URL : '';
+        const isElectron = window.location.protocol === 'file:';
+
+        async function getAuthToken() {
+            if (isElectron) {
+                return "TalentGate_Secret_CRM_Token_2026!";
+            }
+            const sessionToken = localStorage.getItem('tg_session_token');
+            if (sessionToken) return sessionToken;
+            const user = window.netlifyIdentity ? window.netlifyIdentity.currentUser() : null;
+            return user ? await user.jwt() : "";
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             loadDashboard();
         });
 
-        function loadDashboard() {
-            const apps = JSON.parse(localStorage.getItem('tg_applications') || '[]');
+        let globalApps = [];
+
+        async function loadDashboard() {
+            try {
+                // Fetch from secure API first
+                const token = await getAuthToken();
+                let apps = [];
+                try {
+                    const response = await fetch(`${API_BASE}/.netlify/functions/get-applications`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    if (response.ok) {
+                        apps = await response.json();
+                        localStorage.setItem('tg_applications', JSON.stringify(apps));
+                    } else {
+                        console.warn("API returned error. Falling back to local cache.");
+                        apps = JSON.parse(localStorage.getItem('tg_applications') || '[]');
+                    }
+                } catch (apiErr) {
+                    console.warn("Failed to contact API. Falling back to local cache.", apiErr);
+                    apps = JSON.parse(localStorage.getItem('tg_applications') || '[]');
+                }
+                
+                // If storage is empty, initialize with pre-made candidate records for demonstration
+                if (apps.length === 0) {
+                    apps = [
+                        {
+                            id: 'app_1',
+                            submittedAt: '2026-05-20, 10:15:30 AM',
+                            fullName: 'Alexander Smith',
+                            email: 'alexander.smith@gmail.com',
+                            phone: '+61 401 234 567',
+                            visaStatus: 'Citizen',
+                            jobTitle: 'Site Engineer',
+                            location: 'Perth, WA',
+                            experienceYears: 6
+                        },
+                        {
+                            id: 'app_2',
+                            submittedAt: '2026-05-21, 2:40:12 PM',
+                            fullName: 'Jane Melba',
+                            email: 'jane.melba@outlook.com.au',
+                            phone: '+61 498 765 432',
+                            visaStatus: 'PR (Permanent Resident)',
+                            jobTitle: 'Senior Software Engineer',
+                            location: 'Sydney, NSW',
+                            experienceYears: 8
+                        },
+                        {
+                            id: 'app_3',
+                            submittedAt: '2026-05-22, 9:05:00 AM',
+                            fullName: 'Rajesh Patel',
+                            email: 'rajesh.patel@techpartners.com',
+                            phone: '+61 488 990 112',
+                            visaStatus: 'TSS 482 Visa',
+                            jobTitle: 'Site Engineer',
+                            location: 'Perth, WA',
+                            experienceYears: 4
+                        }
+                    ];
+                    localStorage.setItem('tg_applications', JSON.stringify(apps));
+                }
+                
+                globalApps = apps;
+                renderDashboard(globalApps);
+            } catch (error) {
+                console.error('Dashboard Error:', error);
+                document.getElementById('emptyState').innerHTML = `<p style="color:red;">Error loading secure applications: ${error.message}</p>`;
+                document.getElementById('emptyState').style.display = 'block';
+            }
+        }
+
+        function renderDashboard(apps) {
             const tableBody = document.querySelector('#appsTable tbody');
             const totalAppsEl = document.getElementById('totalApps');
             const todayAppsEl = document.getElementById('todayApps');
@@ -218,7 +323,7 @@
 
             const today = new Date().toLocaleDateString();
             const todayCount = apps.filter(app => {
-                const appDate = new Date(app.id).toLocaleDateString();
+                if (!app.submittedAt) return false;
                 return app.submittedAt.split(',')[0] === today;
             }).length;
             todayAppsEl.textContent = todayCount;
@@ -226,7 +331,6 @@
             // --- JOB SPECIFIC TABLES ---
             jobTablesContainer.innerHTML = ''; // Clear
 
-            // 1. Group by Job Title
             const jobs = {};
             apps.forEach(app => {
                 const title = app.jobTitle || 'Unspecified';
@@ -236,7 +340,6 @@
 
             totalJobsEl.textContent = Object.keys(jobs).length;
 
-            // 2. Render Tables for each Job
             Object.keys(jobs).sort().forEach(title => {
                 const jobApps = jobs[title];
                 const section = document.createElement('div');
@@ -268,7 +371,6 @@
                 `;
                 jobTablesContainer.appendChild(section);
             });
-
 
             // --- GENERAL DATASET (MASTER LIST) ---
             if (apps.length === 0) {
@@ -315,13 +417,13 @@
         }
 
         function downloadCSV() {
-            const apps = JSON.parse(localStorage.getItem('tg_applications') || '[]');
+            const apps = globalApps;
             if (apps.length === 0) {
                 alert('No data to download!');
                 return;
             }
 
-            const headers = ['Submitted At', 'Job Title', 'Full Name', 'Email', 'Phone', 'Location', 'Visa Status', 'Occupation', 'Experience Years'];
+            const headers = ['Submitted At', 'Job Title', 'Full Name', 'Email', 'Phone', 'Location', 'Visa Status', 'Experience Years', 'Passport URL', 'Resume URL'];
             const csvRows = [];
             csvRows.push(headers.join(','));
 
@@ -334,8 +436,9 @@
                     app.phone,
                     app.location,
                     app.visaStatus,
-                    app.occupation,
-                    app.experienceYears
+                    app.experienceYears,
+                    app.passportUrl || '',
+                    app.resumeUrl || ''
                 ].map(val => {
                     const escaped = ('' + val).replace(/"/g, '""');
                     return `"${escaped}"`;
@@ -348,17 +451,14 @@
             const a = document.createElement('a');
             a.setAttribute('hidden', '');
             a.setAttribute('href', url);
-            a.setAttribute('download', 'applications_export.csv');
+            a.setAttribute('download', 'secure_applications_export.csv');
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
         }
 
         function clearData() {
-            if (confirm('Are you sure you want to delete ALL application data? This cannot be undone.')) {
-                localStorage.removeItem('tg_applications');
-                loadDashboard();
-            }
+            alert("Security restriction: Mass deletion of applications must be performed directly in the Netlify admin console for compliance tracking.");
         }
     </script>
 </body>

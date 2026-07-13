@@ -1,15 +1,5 @@
+# Static site — no build, no functions. Headers live in _headers
+# (do not add headers here: netlify.toml values would override the
+# stricter CSP defined in _headers).
 [build]
   publish = "."
-  functions = "netlify/functions"
-
-[functions]
-  node_bundler = "esbuild"
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval' data:; frame-ancestors 'none';"
-    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"

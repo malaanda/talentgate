@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<title>Referral — Candidate Application — TalentGate</title>
+<meta name="description" content="Register with TalentGate — a free application for skilled and semi-skilled workers seeking employment, relocation and settlement in Australia.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TalentGate">
+<meta property="og:title" content="Referral — TalentGate">
+<meta property="og:description" content="Register your interest or apply for a current role. Real jobs, real support, real futures.">
+<meta property="og:url" content="https://talentgate.com.au/refer">
+<meta property="og:image" content="https://talentgate.com.au/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_AU">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Referral — TalentGate">
+<meta name="twitter:description" content="Register your interest or apply for a current role. Real jobs, real support, real futures.">
+<meta name="twitter:image" content="https://talentgate.com.au/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23143027'/%3E%3Cg stroke='%23E7C97A' stroke-width='4' stroke-linecap='round'%3E%3Cline x1='12' y1='19' x2='52' y2='19'/%3E%3Cline x1='15' y1='27' x2='49' y2='27'/%3E%3Cline x1='21' y1='21' x2='21' y2='48'/%3E%3Cline x1='43' y1='21' x2='43' y2='48'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ color-scheme: only light; }
+  :root{
+    --green:#143027; --green2:#1E4636; --gold:#B98A34; --gold-bright:#F2DF81; --gold-soft:#E7C97A;
+    --ivory:#F7F4EC; --ivory2:#EFE9DC; --ink:#20261F; --muted:#6B7A6F; --line:rgba(184,138,52,.30);
+    --display:'Fraunces',Georgia,serif; --body:'Inter',system-ui,sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html{ background:var(--ivory); }
+  body{ margin:0; font-family:var(--body); color:var(--ink); background:var(--ivory); line-height:1.55; font-size:15.5px; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+  main .wrap{ max-width:900px; }
+  #done{ max-width:852px; margin-left:auto; margin-right:auto; }
+  h1,h2{ font-family:var(--display); font-weight:500; line-height:1.16; margin:0; }
+  a{ color:var(--green2); }
+
+  header.band{ background:radial-gradient(120% 130% at 50% -30%, #1E4636 0%, var(--green) 60%, #0F241C 100%); color:var(--ivory); padding:32px 0 26px; }
+  header .top{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  header .mark{ font-family:var(--display); font-size:1.3rem; font-weight:600; color:#fff; }
+  header .mark small{ display:block; font-family:var(--body); font-size:.58rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold-soft); font-weight:600; margin-top:3px; }
+  .langbtn{ background:transparent; border:1.5px solid rgba(233,201,122,.5); color:var(--gold-soft); border-radius:999px; padding:7px 14px; font-family:var(--body); font-weight:600; font-size:.82rem; cursor:pointer; }
+  header h1{ color:#fff; font-size:clamp(1.5rem,4.6vw,2rem); margin:16px 0 6px; }
+  header .sub{ color:#CFDBD1; font-size:.92rem; max-width:640px; }
+
+  main{ padding:26px 0 20px; }
+  section.blk{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 18px 6px; margin:0 0 18px; }
+  h2{ color:var(--green); font-size:1.15rem; margin:0 0 12px; }
+  h2 .n{ color:var(--gold); font-weight:600; margin-right:8px; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:12px 14px; }
+  .field{ display:flex; flex-direction:column; margin-bottom:12px; }
+  .field.full{ grid-column:1 / -1; }
+  label{ font-size:.86rem; font-weight:600; color:#33403A; margin-bottom:5px; }
+  .req{ color:#9A2B2B; }
+  input,select,textarea{ font-family:var(--body); font-size:.98rem; padding:11px 12px; border:1.5px solid #D9D3C4; border-radius:10px; background:var(--ivory); color:var(--ink); width:100%; }
+  input[type=file]{ padding:9px; background:#fff; font-size:.85rem; }
+  input:focus,select:focus,textarea:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(185,138,52,.16); background:#fff; }
+  textarea{ min-height:74px; resize:vertical; }
+  .hint{ font-size:.76rem; color:var(--muted); margin-top:4px; }
+  .checks{ display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; }
+  .chk{ display:flex; gap:8px; align-items:flex-start; font-size:.9rem; font-weight:400; color:var(--ink); }
+  .chk input{ width:auto; margin-top:3px; }
+  @media(max-width:620px){ .grid2,.checks{ grid-template-columns:1fr; } }
+
+  .consent{ display:flex; gap:10px; align-items:flex-start; background:var(--ivory2); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:12px; }
+  .consent input{ width:auto; margin-top:3px; } .consent label{ font-weight:400; font-size:.9rem; margin:0; }
+  .btn{ display:inline-block; border:none; border-radius:999px; font-family:var(--body); font-weight:600; font-size:1rem; cursor:pointer; padding:14px 30px; background:linear-gradient(135deg,var(--gold-soft),var(--gold)); color:#2a2008; box-shadow:0 6px 18px rgba(0,0,0,.16); }
+  .btn:hover{ transform:translateY(-1px); }
+  .submitrow{ display:flex; flex-direction:column; align-items:center; gap:10px; margin:6px 0 30px; text-align:center; }
+  .err{ display:none; color:#9A2B2B; font-size:.88rem; font-weight:600; }
+  #done{ display:none; background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:12px; padding:20px 22px; margin:0 0 24px; }
+  #done h2{ margin-bottom:6px; }
+  footer{ border-top:2px solid var(--line); margin-top:20px; padding:22px 0 46px; color:var(--muted); font-size:.84rem; }
+  .tag{ font-family:var(--display); font-style:italic; color:var(--gold); }
+  form .field label::after{content:''} 
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap">
+    <div class="top">
+      <a href="/" style="text-decoration:none"><span class="mark">TalentGate<small>The gateway for Australia’s workforce solutions</small></span></a>
+      <nav style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+        <a href="/" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Home</a>
+        <a href="/jobs" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Jobs</a><a href="/insights" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Insights</a><a href="/employer-enquiry" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Employers</a>
+        <a href="/apply" style="color:#F2DF81;text-decoration:none;font-weight:700;font-size:.95rem;border-bottom:2px solid #F2DF81;padding-bottom:2px">Apply</a>
+      </nav>
+      <button class="langbtn" id="langbtn" onclick="toggleLang()">Tiếng Việt</button>
+    </div>
+    <h1 data-i18n="h1">Partner Candidate Submission</h1>
+    <p class="sub" data-i18n="sub">For authorised partner case managers submitting an application on a candidate’s behalf. Please complete your details first, then the candidate’s.</p>
+    <p id="refNote" style="display:none;margin-top:10px;background:rgba(242,223,129,.14);border:1px solid rgba(242,223,129,.35);color:#F2DF81;font-weight:600;padding:8px 14px;border-radius:10px;font-size:.95rem"></p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div id="done">
+      <h2 data-i18n="done_h">Application received</h2>
+      <p data-i18n="done_p">Thank you — your application has been sent to our team. We’ll be in touch.</p>
+    </div>
+
+    <form id="appform" novalidate>
+    <input type="text" name="company_website_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;opacity:0">
+
+      <!-- 1 · Referrer -->
+      <section class="blk" style="border:2px solid #B98A34">
+        <h2><span class="n">1</span><span data-i18n="s1">Your details — referral partner</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="rf_code">Referral partner code <span class="req">*</span></label>
+            <input name="Referrer code" id="rfCode" required autocomplete="off">
+            <div class="hint" data-i18n="rf_code_hint">As provided in your Partner Pack. Opening your own link fills this automatically — referrals through your link are recorded to your code under your agreement.</div></div>
+          <div class="field"><label data-i18n="rf_as">Referring as <span class="req">*</span></label>
+            <select name="Referring as" id="refAs" required>
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Individual" data-i18n="o_ind">Individual</option>
+              <option value="Business / organisation" data-i18n="o_biz">Business / organisation</option>
+            </select></div>
+          <div class="field"><label data-i18n="rf_name">Your full name (key contact person) <span class="req">*</span></label><input name="Referrer name" required></div>
+          <div class="field"><label data-i18n="rf_email">Email <span class="req">*</span></label><input type="email" name="Referrer email" autocomplete="email" inputmode="email" required></div>
+          <div class="field"><label data-i18n="rf_phone">Mobile / WhatsApp / Zalo <span class="req">*</span></label><input type="tel" name="Referrer phone" autocomplete="tel" inputmode="tel" required></div>
+          <div class="field"><label data-i18n="rf_ref">Your internal reference <span class="req">*</span></label><input name="Referrer reference" required placeholder="e.g. RF-2026-014"><div class="hint" data-i18n="rf_ref_hint">Your own tracking code for this referral — quote it in any follow-up with us.</div></div>
+          <div class="field" id="rfIndLoc" style="display:none"><label data-i18n="rf_loc">Your location — city &amp; country <span class="req">*</span></label><input name="Referrer location" placeholder="e.g. Sydney, Australia"></div>
+          <div class="field" id="rfBizName" style="display:none"><label data-i18n="b_name">Name of your Business / Organisation <span class="req">*</span></label><input name="Referrer business name"></div>
+          <div class="field full" id="rfBizAddr" style="display:none"><label data-i18n="b_addr">Business address — street, city &amp; country <span class="req">*</span></label><input name="Referrer business address" placeholder="e.g. 580 George St, Sydney NSW 2000, Australia"></div>
+          <div class="field" id="rfBizWeb" style="display:none"><label data-i18n="b_web">Website</label><input name="Referrer business website" placeholder="N/A if none"></div>
+          <div class="field" id="rfBizSoc" style="display:none"><label data-i18n="b_soc">Social media page (Facebook, LinkedIn…)</label><input name="Referrer business social" placeholder="N/A if none"></div>
+        </div>
+      </section>
+
+      <!-- 2 · Referral type -->
+      <section class="blk">
+        <h2><span class="n">2</span><span data-i18n="s2">Who are you referring?</span></h2>
+        <div class="field"><label data-i18n="t_type">Referral type <span class="req">*</span></label>
+          <select name="Referral type" id="refType" required>
+            <option value="" data-i18n="o_sel">Select…</option>
+            <option value="Employer" data-i18n="o_emp">An employer (business needing workers)</option>
+            <option value="Worker" data-i18n="o_wkr">A worker (candidate seeking work)</option>
+            <option value="Both" data-i18n="o_both">Both — an employer and a worker</option>
+          </select></div>
+      </section>
+
+      <!-- 3 · Employer lead -->
+      <section class="blk" id="secEmp" style="display:none">
+        <h2><span class="n">3</span><span data-i18n="s3">Employer you are referring</span></h2>
+        <p class="hint" data-i18n="e_note" style="margin:0 0 10px">A complete, pre-screened referral moves faster — the more background you provide, the sooner we can act on it.</p>
+        <div class="grid2">
+          <div class="field"><label data-i18n="e_biz">Business name <span class="req">*</span></label><input name="Lead employer business" autocomplete="off"></div>
+          <div class="field"><label data-i18n="e_person">Contact person <span class="req">*</span></label><input name="Lead employer contact"></div>
+          <div class="field"><label data-i18n="e_role2">Their position / title</label><input name="Lead employer contact title" placeholder="N/A if not known"></div>
+          <div class="field"><label data-i18n="e_phone">Contact phone <span class="req">*</span></label><input type="tel" name="Lead employer phone" inputmode="tel"></div>
+          <div class="field"><label data-i18n="e_email">Contact email</label><input name="Lead employer email" placeholder="N/A if not known"></div>
+          <div class="field"><label data-i18n="e_web">Website / Facebook page</label><input name="Lead employer website" placeholder="N/A if none"></div>
+          <div class="field"><label data-i18n="e_loc">Location — town &amp; state <span class="req">*</span></label><input name="Lead employer location" placeholder="e.g. Bunbury, WA"></div>
+          <div class="field"><label data-i18n="e_ind">Industry / sector <span class="req">*</span></label><input name="Lead employer industry" placeholder="e.g. Hospitality, Agriculture"></div>
+          <div class="field"><label data-i18n="e_size">Business size <span class="req">*</span></label>
+            <select name="Lead employer size">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="1–4 staff">1–4</option><option value="5–19 staff">5–19</option>
+              <option value="20–99 staff">20–99</option><option value="100+ staff">100+</option>
+              <option value="Not sure" data-i18n="o_notsure">Not sure</option>
+            </select></div>
+          <div class="field"><label data-i18n="e_when">When do they need workers? <span class="req">*</span></label>
+            <select name="Lead employer urgency">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Immediately" data-i18n="o_now">Immediately</option>
+              <option value="Within 1–3 months" data-i18n="o_13">Within 1–3 months</option>
+              <option value="Within 3–6 months" data-i18n="o_36">Within 3–6 months</option>
+              <option value="Planning ahead" data-i18n="o_plan">Planning ahead</option>
+            </select></div>
+          <div class="field full"><label data-i18n="e_need">Workforce needs — roles &amp; numbers <span class="req">*</span></label><input name="Lead employer needs" placeholder="e.g. 2 Cooks, 1 Chef, 1 Kitchenhand"></div>
+          <div class="field full"><label data-i18n="e_pay">Pay / conditions, if discussed</label><input name="Lead employer pay" placeholder="N/A if not discussed"></div>
+          <div class="field full"><label data-i18n="e_know">How do you know this employer, and what have you discussed with them? <span class="req">*</span></label><textarea name="Lead employer relationship"></textarea></div>
+          <div class="field full"><label data-i18n="e_ok">Has the employer agreed to be contacted by TalentGate? <span class="req">*</span></label>
+            <select name="Employer agreed to contact">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Yes" data-i18n="o_yes2">Yes — contact them directly</option>
+              <option value="Not yet — contact me first" data-i18n="o_meFirst">Not yet — please contact me first</option>
+            </select></div>
+        </div>
+      </section>
+
+      <!-- 4 · Worker lead -->
+      <section class="blk" id="secWkr" style="display:none">
+        <h2><span class="n">4</span><span data-i18n="s4">Worker you are referring</span></h2>
+        <p class="hint" data-i18n="w_note" style="margin:0 0 10px">This is a short pre-screen of the worker — a complete referral lets us contact them ready to help. They complete the full application later.</p>
+        <div class="grid2">
+          <div class="field"><label data-i18n="w_name">Worker full name <span class="req">*</span></label><input name="Lead worker name"></div>
+          <div class="field"><label data-i18n="w_yob">Year of birth <span class="req">*</span></label><input name="Lead worker year of birth" type="number" min="1945" max="2008" placeholder="YYYY"></div>
+          <div class="field"><label data-i18n="w_nat">Nationality <span class="req">*</span></label><input name="Lead worker nationality"></div>
+          <div class="field"><label data-i18n="w_gender">Gender <span class="req">*</span></label>
+            <select name="Lead worker gender">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Male" data-i18n="o_male">Male</option>
+              <option value="Female" data-i18n="o_female">Female</option>
+              <option value="X" data-i18n="o_x">X / other</option>
+            </select></div>
+          <div class="field"><label data-i18n="w_phone">Worker mobile / WhatsApp / Zalo <span class="req">*</span></label><input type="tel" name="Lead worker phone" inputmode="tel"></div>
+          <div class="field"><label data-i18n="w_email">Worker email</label><input name="Lead worker email" placeholder="N/A if not known"></div>
+          <div class="field"><label data-i18n="w_occ">Occupation / trade <span class="req">*</span></label><input name="Lead worker occupation" placeholder="e.g. Cook, Welder, Farm Worker"></div>
+          <div class="field"><label data-i18n="w_years">Years of experience <span class="req">*</span></label><input name="Lead worker years" inputmode="numeric" placeholder="e.g. 5"></div>
+          <div class="field"><label data-i18n="w_eng">English level <span class="req">*</span></label>
+            <select name="Lead worker English">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Basic" data-i18n="o_basic">Basic</option>
+              <option value="Conversational" data-i18n="o_conv">Conversational</option>
+              <option value="Fluent" data-i18n="o_fluent">Fluent</option>
+              <option value="Not sure" data-i18n="o_notsure">Not sure</option>
+            </select></div>
+          <div class="field"><label data-i18n="w_qual">Qualifications / licences</label><input name="Lead worker qualifications" placeholder="N/A if none known"></div>
+          <div class="field full"><label data-i18n="w_emp">Current / most recent employer &amp; role</label><input name="Lead worker current role" placeholder="N/A if not known"></div>
+          <div class="field"><label data-i18n="w_marital">Marital status <span class="req">*</span></label>
+            <select name="Lead worker marital">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Single" data-i18n="o_single">Single</option>
+              <option value="Married / De facto" data-i18n="o_marr">Married / De facto</option>
+              <option value="Not sure" data-i18n="o_notsure">Not sure</option>
+            </select></div>
+          <div class="field"><label data-i18n="w_kids">Number of children <span class="req">*</span></label><input name="Lead worker children" type="number" min="0" placeholder="0"></div>
+          <div class="field"><label data-i18n="w_loc">Current location — city &amp; country <span class="req">*</span></label><input name="Lead worker location" placeholder="e.g. Ho Chi Minh City, Vietnam"></div>
+          <div class="field"><label data-i18n="w_inau">Currently in Australia? <span class="req">*</span></label>
+            <select name="Lead worker in Australia" id="wkInAu">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Yes" data-i18n="o_yes">Yes</option>
+              <option value="No" data-i18n="o_no">No</option>
+            </select></div>
+          <div class="field" id="wkRightWrap" style="display:none"><label data-i18n="w_right">Right to work in Australia? <span class="req">*</span></label>
+            <select name="Lead worker right to work" id="wkRight">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Yes" data-i18n="o_yes">Yes</option>
+              <option value="No" data-i18n="o_no">No</option>
+              <option value="Not sure" data-i18n="o_notsure">Not sure</option>
+            </select></div>
+          <div class="field" id="wkRelocWrap" style="display:none"><label data-i18n="w_reloc">Willing to relocate to Australia? <span class="req">*</span></label>
+            <select name="Lead worker willing to relocate" id="wkReloc">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Yes" data-i18n="o_yes">Yes</option>
+              <option value="No" data-i18n="o_no">No</option>
+              <option value="Not sure" data-i18n="o_notsure">Not sure</option>
+            </select></div>
+          <div class="field full"><label data-i18n="w_seek">What work are they seeking, and where? <span class="req">*</span></label><input name="Lead worker seeking" placeholder="e.g. Cook role, WA or SA, available from August"></div>
+          <div class="field full"><label data-i18n="w_know">How do you know this worker, and how have you pre-screened them? <span class="req">*</span></label><textarea name="Lead worker relationship"></textarea></div>
+          <div class="field full"><label data-i18n="w_ok">Has the worker agreed to be contacted by TalentGate? <span class="req">*</span></label>
+            <select name="Worker agreed to contact">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Yes" data-i18n="o_yes2">Yes — contact them directly</option>
+              <option value="Not yet — contact me first" data-i18n="o_meFirst">Not yet — please contact me first</option>
+            </select></div>
+        </div>
+      </section>
+
+      <!-- 5 · Notes -->
+      <section class="blk">
+        <h2><span class="n">5</span><span data-i18n="s5">Anything else</span></h2>
+        <div class="field"><label data-i18n="n_notes">How you know them, timing, or anything useful</label><textarea name="Referral notes" required placeholder="N/A if nothing further"></textarea></div>
+      </section>
+
+      <!-- 6 · Declarations -->
+      <section class="blk">
+        <h2><span class="n">6</span><span data-i18n="s6">Declarations</span></h2>
+        <div class="consent"><input type="checkbox" id="d1" required><label for="d1" data-i18n="dec1">I declare this referral is genuine, that I have personally pre-screened the person or business referred, that the background provided is accurate to the best of my knowledge, and that I have honestly described my relationship with them.</label></div>
+        <div class="consent"><input type="checkbox" id="d2" required><label for="d2" data-i18n="dec2">I consent to TalentGate collecting, holding and using these details to follow up this referral, as set out in the <a href="/privacy" target="_blank">Privacy &amp; Collection Notice</a>. This referral is recorded to my partner code under my organisation&rsquo;s agreement with TalentGate. I understand TalentGate does not guarantee any particular outcome.</label></div>
+        <div class="consent" style="opacity:.92"><input type="checkbox" id="d3"><label for="d3" data-i18n="dec3">Yes — send me workforce news, opportunities and updates from TalentGate. Unsubscribe anytime. <span style="color:#8a927f">(optional)</span></label></div>
+      </section>
+
+      <div class="submit-wrap">
+        <div class="h-captcha" data-captcha="true" style="margin:0 0 14px"></div>
+        <button type="submit" class="btn" data-i18n="submit">Submit referral</button>
+        <p class="hint" id="formErrR" style="display:none;color:#a33;margin-top:10px"></p>
+      </div>
+  </form>
+
+  <div id="done" style="display:none;max-width:760px;margin:26px auto;padding:26px 22px;background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:16px;text-align:center">
+    <h2 style="font-family:Fraunces,Georgia,serif;color:#143027;margin:0 0 8px" data-i18n="done_h">Referral received</h2>
+    <p style="margin:0;color:#53605A" data-i18n="done_p">Thank you — your referral is recorded to your partner code with today&rsquo;s date and time. Our team will follow up within one business day and keep you informed. Questions any time: gm@talentgate.com.au.</p>
+  </div>
+
+<footer>
+      <p><b>TalentGate</b> — Talent Gate Australia Pty Ltd. Recruitment, workforce solutions, relocation and settlement support services.</p>
+      <p class="tag">The gateway for Australia’s workforce solutions.</p>
+      <p>© <span id="yr"></span> TalentGate. All rights reserved. · <a href="/" data-i18n="home">Back to home</a></p>
+    </footer>
+<script>
+(function(){
+  var T={
+    h1:{en:"Referral Partner Form",vi:"Phi\u1ebfu Gi\u1edbi Thi\u1ec7u (\u0110\u1ed1i T\u00e1c)"},
+    sub:{en:"For authorised referral partners. Refer an employer, a worker, or both \u2014 two minutes, recorded to your code.",vi:"D\u00e0nh cho \u0111\u1ed1i t\u00e1c gi\u1edbi thi\u1ec7u \u0111\u01b0\u1ee3c u\u1ef7 quy\u1ec1n. Gi\u1edbi thi\u1ec7u nh\u00e0 tuy\u1ec3n d\u1ee5ng, ng\u01b0\u1eddi lao \u0111\u1ed9ng, ho\u1eb7c c\u1ea3 hai \u2014 hai ph\u00fat, ghi nh\u1eadn theo m\u00e3 c\u1ee7a b\u1ea1n."},
+    home:{en:"Back to home",vi:"V\u1ec1 trang ch\u1ee7"},
+    o_sel:{en:"Select\u2026",vi:"Ch\u1ecdn\u2026"}, o_yes:{en:"Yes",vi:"C\u00f3"}, o_no:{en:"No",vi:"Kh\u00f4ng"},
+    s1:{en:"Your details \u2014 referral partner",vi:"Th\u00f4ng tin c\u1ee7a b\u1ea1n \u2014 \u0111\u1ed1i t\u00e1c gi\u1edbi thi\u1ec7u"},
+    rf_code:{en:"Referral partner code <span class='req'>*</span>",vi:"M\u00e3 \u0111\u1ed1i t\u00e1c gi\u1edbi thi\u1ec7u <span class='req'>*</span>"},
+    rf_code_hint:{en:"As provided in your Partner Pack. Opening your own link fills this automatically \u2014 referrals through your link are recorded to your code under your agreement.",vi:"Theo m\u00e3 trong G\u00f3i \u0110\u1ed1i T\u00e1c c\u1ee7a b\u1ea1n. M\u1edf \u0111\u00fang link c\u1ee7a b\u1ea1n s\u1ebd t\u1ef1 \u0111i\u1ec1n m\u00e3 \u2014 c\u00e1c gi\u1edbi thi\u1ec7u qua link \u0111\u01b0\u1ee3c ghi nh\u1eadn theo m\u00e3 c\u1ee7a b\u1ea1n theo tho\u1ea3 thu\u1eadn."},
+    rf_as:{en:"Referring as <span class='req'>*</span>",vi:"B\u1ea1n gi\u1edbi thi\u1ec7u v\u1edbi t\u01b0 c\u00e1ch <span class='req'>*</span>"},
+    o_ind:{en:"Individual",vi:"C\u00e1 nh\u00e2n"},
+    o_biz:{en:"Business / organisation",vi:"Doanh nghi\u1ec7p / t\u1ed5 ch\u1ee9c"},
+    rf_loc:{en:"Your location \u2014 city &amp; country <span class='req'>*</span>",vi:"N\u01a1i \u1edf c\u1ee7a b\u1ea1n \u2014 th\u00e0nh ph\u1ed1 &amp; qu\u1ed1c gia <span class='req'>*</span>"},
+    b_name:{en:"Name of your Business / Organisation <span class='req'>*</span>",vi:"T\u00ean Doanh nghi\u1ec7p / T\u1ed5 ch\u1ee9c c\u1ee7a b\u1ea1n <span class='req'>*</span>"},
+    b_addr:{en:"Business address \u2014 street, city &amp; country <span class='req'>*</span>",vi:"\u0110\u1ecba ch\u1ec9 doanh nghi\u1ec7p \u2014 s\u1ed1 nh\u00e0/\u0111\u01b0\u1eddng, th\u00e0nh ph\u1ed1 &amp; qu\u1ed1c gia <span class='req'>*</span>"},
+    b_web:{en:"Website",vi:"Website"},
+    b_soc:{en:"Social media page (Facebook, LinkedIn\u2026)",vi:"Trang m\u1ea1ng x\u00e3 h\u1ed9i (Facebook, LinkedIn\u2026)"},
+    rf_name:{en:"Your full name (key contact person) <span class='req'>*</span>",vi:"H\u1ecd t\u00ean \u0111\u1ea7y \u0111\u1ee7 c\u1ee7a b\u1ea1n (ng\u01b0\u1eddi li\u00ean h\u1ec7 ch\u00ednh) <span class='req'>*</span>"},
+    rf_email:{en:"Email <span class='req'>*</span>",vi:"Email <span class='req'>*</span>"},
+    rf_phone:{en:"Mobile / WhatsApp / Zalo <span class='req'>*</span>",vi:"Di \u0111\u1ed9ng / WhatsApp / Zalo <span class='req'>*</span>"},
+    rf_ref:{en:"Your internal reference <span class='req'>*</span>",vi:"M\u00e3 tham chi\u1ebfu n\u1ed9i b\u1ed9 c\u1ee7a b\u1ea1n <span class='req'>*</span>"}, rf_ref_hint:{en:"Your own tracking code for this referral \u2014 quote it in any follow-up with us.",vi:"M\u00e3 theo d\u00f5i ri\u00eang c\u1ee7a b\u1ea1n cho gi\u1edbi thi\u1ec7u n\u00e0y \u2014 vui l\u00f2ng n\u00eau m\u00e3 khi trao \u0111\u1ed5i v\u1edbi ch\u00fang t\u00f4i."},
+    s2:{en:"Who are you referring?",vi:"B\u1ea1n gi\u1edbi thi\u1ec7u ai?"},
+    t_type:{en:"Referral type <span class='req'>*</span>",vi:"Lo\u1ea1i gi\u1edbi thi\u1ec7u <span class='req'>*</span>"},
+    o_emp:{en:"An employer (business needing workers)",vi:"Nh\u00e0 tuy\u1ec3n d\u1ee5ng (doanh nghi\u1ec7p c\u1ea7n nh\u00e2n l\u1ef1c)"},
+    o_wkr:{en:"A worker (candidate seeking work)",vi:"Ng\u01b0\u1eddi lao \u0111\u1ed9ng (\u1ee9ng vi\u00ean t\u00ecm vi\u1ec7c)"},
+    o_both:{en:"Both \u2014 an employer and a worker",vi:"C\u1ea3 hai \u2014 nh\u00e0 tuy\u1ec3n d\u1ee5ng v\u00e0 ng\u01b0\u1eddi lao \u0111\u1ed9ng"},
+    e_note:{en:"A complete, pre-screened referral moves faster \u2014 the more background you provide, the sooner we can act on it.",vi:"Gi\u1edbi thi\u1ec7u \u0111\u1ea7y \u0111\u1ee7, \u0111\u00e3 s\u00e0ng l\u1ecdc s\u1ebd \u0111\u01b0\u1ee3c x\u1eed l\u00fd nhanh h\u01a1n \u2014 c\u00e0ng nhi\u1ec1u th\u00f4ng tin n\u1ec1n, ch\u00fang t\u00f4i c\u00e0ng h\u00e0nh \u0111\u1ed9ng s\u1edbm."},
+    e_role2:{en:"Their position / title",vi:"Ch\u1ee9c v\u1ee5 c\u1ee7a h\u1ecd"},
+    e_phone:{en:"Contact phone <span class='req'>*</span>",vi:"\u0110i\u1ec7n tho\u1ea1i li\u00ean h\u1ec7 <span class='req'>*</span>"},
+    e_email:{en:"Contact email",vi:"Email li\u00ean h\u1ec7"},
+    e_web:{en:"Website / Facebook page",vi:"Website / Trang Facebook"},
+    e_ind:{en:"Industry / sector <span class='req'>*</span>",vi:"Ng\u00e0nh / l\u0129nh v\u1ef1c <span class='req'>*</span>"},
+    e_size:{en:"Business size <span class='req'>*</span>",vi:"Quy m\u00f4 doanh nghi\u1ec7p <span class='req'>*</span>"},
+    e_when:{en:"When do they need workers? <span class='req'>*</span>",vi:"Khi n\u00e0o h\u1ecd c\u1ea7n nh\u00e2n l\u1ef1c? <span class='req'>*</span>"},
+    o_now:{en:"Immediately",vi:"Ngay l\u1eadp t\u1ee9c"}, o_13:{en:"Within 1\u20133 months",vi:"Trong 1\u20133 th\u00e1ng"}, o_36:{en:"Within 3\u20136 months",vi:"Trong 3\u20136 th\u00e1ng"}, o_plan:{en:"Planning ahead",vi:"K\u1ebf ho\u1ea1ch d\u00e0i h\u1ea1n"},
+    o_notsure:{en:"Not sure",vi:"Kh\u00f4ng ch\u1eafc"},
+    e_pay:{en:"Pay / conditions, if discussed",vi:"L\u01b0\u01a1ng / \u0111i\u1ec1u ki\u1ec7n, n\u1ebfu \u0111\u00e3 trao \u0111\u1ed5i"},
+    e_know:{en:"How do you know this employer, and what have you discussed with them? <span class='req'>*</span>",vi:"B\u1ea1n quen nh\u00e0 tuy\u1ec3n d\u1ee5ng n\u00e0y th\u1ebf n\u00e0o, v\u00e0 \u0111\u00e3 trao \u0111\u1ed5i nh\u1eefng g\u00ec? <span class='req'>*</span>"},
+    w_note:{en:"This is a short pre-screen of the worker \u2014 a complete referral lets us contact them ready to help. They complete the full application later.",vi:"\u0110\u00e2y l\u00e0 s\u00e0ng l\u1ecdc ng\u1eafn v\u1ec1 ng\u01b0\u1eddi lao \u0111\u1ed9ng \u2014 gi\u1edbi thi\u1ec7u \u0111\u1ea7y \u0111\u1ee7 gi\u00fap ch\u00fang t\u00f4i li\u00ean h\u1ec7 v\u1edbi s\u1ef1 chu\u1ea9n b\u1ecb t\u1ed1t nh\u1ea5t. H\u1ecd s\u1ebd \u0111i\u1ec1n \u0111\u01a1n \u0111\u1ea7y \u0111\u1ee7 sau."},
+    w_yob:{en:"Year of birth <span class='req'>*</span>",vi:"N\u0103m sinh <span class='req'>*</span>"},
+    w_nat:{en:"Nationality <span class='req'>*</span>",vi:"Qu\u1ed1c t\u1ecbch <span class='req'>*</span>"},
+    w_gender:{en:"Gender <span class='req'>*</span>",vi:"Gi\u1edbi t\u00ednh <span class='req'>*</span>"},
+    o_male:{en:"Male",vi:"Nam"}, o_female:{en:"Female",vi:"N\u1eef"}, o_x:{en:"X / other",vi:"X / kh\u00e1c"},
+    w_years:{en:"Years of experience <span class='req'>*</span>",vi:"S\u1ed1 n\u0103m kinh nghi\u1ec7m <span class='req'>*</span>"},
+    w_eng:{en:"English level <span class='req'>*</span>",vi:"Tr\u00ecnh \u0111\u1ed9 ti\u1ebfng Anh <span class='req'>*</span>"},
+    o_basic:{en:"Basic",vi:"C\u01a1 b\u1ea3n"}, o_conv:{en:"Conversational",vi:"Giao ti\u1ebfp"}, o_fluent:{en:"Fluent",vi:"Th\u00e0nh th\u1ea1o"},
+    w_qual:{en:"Qualifications / licences",vi:"B\u1eb1ng c\u1ea5p / gi\u1ea5y ph\u00e9p"},
+    w_emp:{en:"Current / most recent employer &amp; role",vi:"N\u01a1i l\u00e0m hi\u1ec7n t\u1ea1i / g\u1ea7n nh\u1ea5t &amp; v\u1ecb tr\u00ed"},
+    w_marital:{en:"Marital status <span class='req'>*</span>",vi:"T\u00ecnh tr\u1ea1ng h\u00f4n nh\u00e2n <span class='req'>*</span>"},
+    o_single:{en:"Single",vi:"\u0110\u1ed9c th\u00e2n"}, o_marr:{en:"Married / De facto",vi:"\u0110\u00e3 k\u1ebft h\u00f4n / S\u1ed1ng chung"},
+    w_kids:{en:"Number of children <span class='req'>*</span>",vi:"S\u1ed1 con <span class='req'>*</span>"},
+    w_right:{en:"Right to work in Australia? <span class='req'>*</span>",vi:"C\u00f3 quy\u1ec1n l\u00e0m vi\u1ec7c t\u1ea1i \u00dac? <span class='req'>*</span>"},
+    w_reloc:{en:"Willing to relocate to Australia? <span class='req'>*</span>",vi:"S\u1eb5n s\u00e0ng chuy\u1ec3n \u0111\u1ebfn \u00dac? <span class='req'>*</span>"},
+    w_seek:{en:"What work are they seeking, and where? <span class='req'>*</span>",vi:"H\u1ecd t\u00ecm c\u00f4ng vi\u1ec7c g\u00ec, \u1edf \u0111\u00e2u? <span class='req'>*</span>"},
+    w_know:{en:"How do you know this worker, and how have you pre-screened them? <span class='req'>*</span>",vi:"B\u1ea1n quen ng\u01b0\u1eddi lao \u0111\u1ed9ng n\u00e0y th\u1ebf n\u00e0o, v\u00e0 \u0111\u00e3 s\u00e0ng l\u1ecdc h\u1ecd ra sao? <span class='req'>*</span>"},
+    s3:{en:"Employer you are referring",vi:"Nh\u00e0 tuy\u1ec3n d\u1ee5ng b\u1ea1n gi\u1edbi thi\u1ec7u"},
+    e_biz:{en:"Business name <span class='req'>*</span>",vi:"T\u00ean doanh nghi\u1ec7p <span class='req'>*</span>"},
+    e_person:{en:"Contact person <span class='req'>*</span>",vi:"Ng\u01b0\u1eddi li\u00ean h\u1ec7 <span class='req'>*</span>"},
+    e_reach:{en:"Contact phone or email <span class='req'>*</span>",vi:"\u0110i\u1ec7n tho\u1ea1i ho\u1eb7c email li\u00ean h\u1ec7 <span class='req'>*</span>"},
+    e_loc:{en:"Location \u2014 town &amp; state <span class='req'>*</span>",vi:"\u0110\u1ecba \u0111i\u1ec3m \u2014 th\u1ecb tr\u1ea5n &amp; bang <span class='req'>*</span>"},
+    e_need:{en:"Workforce needs \u2014 roles &amp; rough numbers <span class='req'>*</span>",vi:"Nhu c\u1ea7u nh\u00e2n l\u1ef1c \u2014 v\u1ecb tr\u00ed &amp; s\u1ed1 l\u01b0\u1ee3ng \u01b0\u1edbc t\u00ednh <span class='req'>*</span>"},
+    e_ok:{en:"Has the employer agreed to be contacted by TalentGate? <span class='req'>*</span>",vi:"Nh\u00e0 tuy\u1ec3n d\u1ee5ng \u0111\u00e3 \u0111\u1ed3ng \u00fd \u0111\u1ec3 TalentGate li\u00ean h\u1ec7 ch\u01b0a? <span class='req'>*</span>"},
+    o_yes2:{en:"Yes \u2014 contact them directly",vi:"R\u1ed3i \u2014 li\u00ean h\u1ec7 tr\u1ef1c ti\u1ebfp"},
+    o_meFirst:{en:"Not yet \u2014 please contact me first",vi:"Ch\u01b0a \u2014 vui l\u00f2ng li\u00ean h\u1ec7 t\u00f4i tr\u01b0\u1edbc"},
+    s4:{en:"Worker you are referring",vi:"Ng\u01b0\u1eddi lao \u0111\u1ed9ng b\u1ea1n gi\u1edbi thi\u1ec7u"},
+    w_name:{en:"Worker full name <span class='req'>*</span>",vi:"H\u1ecd t\u00ean ng\u01b0\u1eddi lao \u0111\u1ed9ng <span class='req'>*</span>"},
+    w_phone:{en:"Worker mobile / WhatsApp / Zalo <span class='req'>*</span>",vi:"Di \u0111\u1ed9ng / WhatsApp / Zalo c\u1ee7a ng\u01b0\u1eddi lao \u0111\u1ed9ng <span class='req'>*</span>"},
+    w_email:{en:"Worker email",vi:"Email c\u1ee7a ng\u01b0\u1eddi lao \u0111\u1ed9ng"},
+    w_occ:{en:"Occupation / trade <span class='req'>*</span>",vi:"Ngh\u1ec1 nghi\u1ec7p / tay ngh\u1ec1 <span class='req'>*</span>"},
+    w_loc:{en:"Current location \u2014 city &amp; country <span class='req'>*</span>",vi:"N\u01a1i \u1edf hi\u1ec7n t\u1ea1i \u2014 th\u00e0nh ph\u1ed1 &amp; qu\u1ed1c gia <span class='req'>*</span>"},
+    w_inau:{en:"Currently in Australia? <span class='req'>*</span>",vi:"Hi\u1ec7n \u0111ang \u1edf \u00dac? <span class='req'>*</span>"},
+    w_ok:{en:"Has the worker agreed to be contacted by TalentGate? <span class='req'>*</span>",vi:"Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u00e3 \u0111\u1ed3ng \u00fd \u0111\u1ec3 TalentGate li\u00ean h\u1ec7 ch\u01b0a? <span class='req'>*</span>"},
+    s5:{en:"Anything else",vi:"Th\u00f4ng tin th\u00eam"},
+    n_notes:{en:"How you know them, timing, or anything useful",vi:"B\u1ea1n quen h\u1ecd th\u1ebf n\u00e0o, th\u1eddi \u0111i\u1ec3m, ho\u1eb7c th\u00f4ng tin h\u1eefu \u00edch kh\u00e1c"},
+    s6:{en:"Declarations",vi:"Cam k\u1ebft"},
+    dec1:{en:"I declare this referral is genuine, that I have personally pre-screened the person or business referred, that the background provided is accurate to the best of my knowledge, and that I have honestly described my relationship with them.",vi:"T\u00f4i cam \u0111oan gi\u1edbi thi\u1ec7u n\u00e0y l\u00e0 th\u1eadt, r\u1eb1ng t\u00f4i \u0111\u00e3 tr\u1ef1c ti\u1ebfp s\u00e0ng l\u1ecdc ng\u01b0\u1eddi ho\u1eb7c doanh nghi\u1ec7p \u0111\u01b0\u1ee3c gi\u1edbi thi\u1ec7u, r\u1eb1ng th\u00f4ng tin n\u1ec1n cung c\u1ea5p l\u00e0 ch\u00ednh x\u00e1c theo hi\u1ec3u bi\u1ebft t\u1ed1t nh\u1ea5t c\u1ee7a t\u00f4i, v\u00e0 t\u00f4i \u0111\u00e3 m\u00f4 t\u1ea3 trung th\u1ef1c m\u1ed1i quan h\u1ec7 v\u1edbi h\u1ecd"},
+    dec2:{en:"I consent to TalentGate collecting, holding and using these details to follow up this referral, as set out in the <a href='/privacy' target='_blank'>Privacy & Collection Notice</a>. This referral is recorded to my partner code under my organisation's agreement with TalentGate. I understand TalentGate does not guarantee any particular outcome.",vi:"T\u00f4i \u0111\u1ed3ng \u00fd \u0111\u1ec3 TalentGate thu th\u1eadp, l\u01b0u gi\u1eef v\u00e0 s\u1eed d\u1ee5ng c\u00e1c th\u00f4ng tin n\u00e0y \u0111\u1ec3 theo d\u00f5i gi\u1edbi thi\u1ec7u, theo <a href='/privacy' target='_blank'>Th\u00f4ng b\u00e1o Quy\u1ec1n ri\u00eang t\u01b0 & Thu th\u1eadp</a>. Gi\u1edbi thi\u1ec7u n\u00e0y \u0111\u01b0\u1ee3c ghi nh\u1eadn theo m\u00e3 \u0111\u1ed1i t\u00e1c c\u1ee7a t\u00f4i theo tho\u1ea3 thu\u1eadn gi\u1eefa t\u1ed5 ch\u1ee9c t\u00f4i v\u00e0 TalentGate. T\u00f4i hi\u1ec3u TalentGate kh\u00f4ng b\u1ea3o \u0111\u1ea3m b\u1ea5t k\u1ef3 k\u1ebft qu\u1ea3 c\u1ee5 th\u1ec3 n\u00e0o."},
+    dec3:{en:"Yes \u2014 send me workforce news, opportunities and updates from TalentGate. Unsubscribe anytime. <span style='color:#8a927f'>(optional)</span>",vi:"C\u00f3 \u2014 g\u1eedi cho t\u00f4i tin t\u1ee9c nh\u00e2n l\u1ef1c, c\u01a1 h\u1ed9i v\u00e0 c\u1eadp nh\u1eadt t\u1eeb TalentGate. C\u00f3 th\u1ec3 hu\u1ef7 \u0111\u0103ng k\u00fd b\u1ea5t c\u1ee9 l\u00fac n\u00e0o. <span style='color:#8a927f'>(kh\u00f4ng b\u1eaft bu\u1ed9c)</span>"},
+    submit:{en:"Submit referral",vi:"G\u1eedi gi\u1edbi thi\u1ec7u"},
+    done_h:{en:"Referral received",vi:"\u0110\u00e3 nh\u1eadn gi\u1edbi thi\u1ec7u"},
+    done_p:{en:"Thank you \u2014 your referral is recorded to your partner code with today's date and time. Our team will follow up within one business day and keep you informed. Questions any time: gm@talentgate.com.au.",vi:"C\u1ea3m \u01a1n \u2014 gi\u1edbi thi\u1ec7u c\u1ee7a b\u1ea1n \u0111\u00e3 \u0111\u01b0\u1ee3c ghi nh\u1eadn theo m\u00e3 \u0111\u1ed1i t\u00e1c v\u1edbi ng\u00e0y gi\u1edd h\u00f4m nay. \u0110\u1ed9i ng\u0169 ch\u00fang t\u00f4i s\u1ebd theo d\u00f5i trong v\u00f2ng m\u1ed9t ng\u00e0y l\u00e0m vi\u1ec7c v\u00e0 th\u00f4ng tin cho b\u1ea1n. Li\u00ean h\u1ec7: gm@talentgate.com.au."}
+  };
+  var lang='en';
+  function applyLang(){
+    document.documentElement.lang=lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){ var k=el.getAttribute('data-i18n'); if(T[k]){ el.innerHTML=T[k][lang]; } });
+    var b=document.getElementById('langbtn'); if(b){ b.textContent=(lang==='en')?'Ti\u1ebfng Vi\u1ec7t':'English'; }
+  }
+  window.toggleLang=function(){ lang=(lang==='en')?'vi':'en'; applyLang(); };
+  applyLang();
+
+  var ACCESS_KEY='da1d315b-110e-4d96-a448-20e8bf1bd278';
+  var form=document.getElementById('appform');
+  var PAGE_LOADED_AT=Date.now();
+
+  var q=new URLSearchParams(location.search);
+  var SRC=(q.get('src')||'').trim().slice(0,20);
+  var REF=(q.get('ref')||'').trim().slice(0,40);
+  if(SRC){ var co=document.getElementById('rfCode'); if(co){ co.value=SRC.toUpperCase(); co.readOnly=true; co.style.background='#efe9da'; } }
+
+  // referring-as conditionals: individual = simple location; business = full identity
+  var refAs=document.getElementById('refAs');
+  var IND=['rfIndLoc'], BIZ=['rfBizName','rfBizAddr','rfBizWeb','rfBizSoc'];
+  function setWraps(ids,on){
+    ids.forEach(function(id){
+      var w=document.getElementById(id); if(!w) return;
+      w.style.display=on?'':'none';
+      var e=w.querySelector('input,select'); if(e){ e.required=on; if(!on){ e.value=''; } }
+    });
+  }
+  function refreshAs(){
+    var v=(refAs&&refAs.value)||'';
+    setWraps(IND, v==='Individual');
+    setWraps(BIZ, v==='Business / organisation');
+  }
+  if(refAs){ refAs.addEventListener('change',refreshAs); refreshAs(); }
+
+  // referral-type conditionals
+  var rt=document.getElementById('refType');
+  function setSec(id,on){
+    var s=document.getElementById(id); if(!s) return;
+    s.style.display=on?'':'none';
+    s.querySelectorAll('input,select,textarea').forEach(function(e){
+      e.required=on;
+      if(!on){ e.value=''; }
+    });
+    if(id==='secWkr'){ refreshWkrLoc(); }
+  }
+  function refreshWkrLoc(){
+    var sec=document.getElementById('secWkr');
+    var active=sec && sec.style.display!=='none';
+    var v=(document.getElementById('wkInAu')||{}).value||'';
+    var onsh=active && v==='Yes', offsh=active && v==='No';
+    var rw=document.getElementById('wkRightWrap'), rl=document.getElementById('wkRelocWrap');
+    var rs=document.getElementById('wkRight'), ls=document.getElementById('wkReloc');
+    if(rw){ rw.style.display=onsh?'':'none'; } if(rs){ rs.required=onsh; if(!onsh){ rs.value=''; } }
+    if(rl){ rl.style.display=offsh?'':'none'; } if(ls){ ls.required=offsh; if(!offsh){ ls.value=''; } }
+  }
+  document.addEventListener('change',function(ev){ if(ev.target && ev.target.id==='wkInAu'){ refreshWkrLoc(); } });
+  function refreshType(){
+    var v=(rt&&rt.value)||'';
+    setSec('secEmp', v==='Employer'||v==='Both');
+    setSec('secWkr', v==='Worker'||v==='Both');
+  }
+  if(rt){ rt.addEventListener('change',refreshType); refreshType(); }
+
+  document.querySelectorAll('input[type="number"]').forEach(function(e){ e.setAttribute('inputmode','numeric'); });
+
+  // renumber visible sections dynamically
+  function renumber(){ var i=1; document.querySelectorAll('section.blk').forEach(function(s){ if(s.style.display!=='none'){ var n=s.querySelector('h2 .n'); if(n){ n.textContent=(i++); } } }); }
+  if(rt){ rt.addEventListener('change',renumber); } renumber();
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=form.checkValidity() && document.getElementById('d1').checked && document.getElementById('d2').checked;
+    if(!ok){ form.reportValidity(); return; }
+    if(!((rt&&rt.value))){ form.reportValidity(); return; }
+
+    var hp=form.querySelector('[name="company_website_url"]');
+    if((hp&&hp.value) || (Date.now()-PAGE_LOADED_AT<8000)){ showDone(); return; }
+
+    var capW=document.querySelector('.h-captcha');
+    if(capW && capW.querySelector('iframe')){
+      var tok=form.querySelector('[name="h-captcha-response"]');
+      if(!tok || !tok.value){
+        alert(lang==='vi' ? 'Vui l\u00f2ng x\u00e1c nh\u1eadn b\u1ea1n l\u00e0 ng\u01b0\u1eddi th\u1eadt b\u1eb1ng c\u00e1ch ho\u00e0n th\u00e0nh \u00f4 x\u00e1c minh ph\u00eda tr\u00ean n\u00fat g\u1eedi.' : 'Please confirm you are human by completing the verification box above the submit button.');
+        capW.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+    }
+
+    var fd=new FormData(form);
+    fd.delete('company_website_url');
+    var ORG=fd.get('Referrer code')||SRC||'';
+    var TYPE=fd.get('Referral type')||'';
+    var who=[];
+    if(fd.get('Lead employer business')){ who.push('Employer \u2014 '+fd.get('Lead employer business')); }
+    if(fd.get('Lead worker name')){ who.push('Worker \u2014 '+fd.get('Lead worker name')+(fd.get('Lead worker occupation')?' ('+fd.get('Lead worker occupation')+')':'')); }
+    fd.append('access_key', ACCESS_KEY);
+    if(REF){ fd.append('ref', REF); }
+    if(SRC){ fd.append('src', SRC); }
+    fd.append('subject','TalentGate \u2014 Referral'+(ORG?' ['+ORG+']':'')+(REF?' ['+REF+']':'')+': '+(who.join(' + ')||TYPE)+' (by '+(fd.get('Referrer name')||'')+(fd.get('Referrer business name')?', '+fd.get('Referrer business name'):'')+')');
+    fd.append('Marketing consent', document.getElementById('d3')&&document.getElementById('d3').checked?'Yes':'No');
+    fd.append('Submitted at', new Date().toLocaleString('en-AU',{timeZone:'Australia/Sydney',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})+' AEST/AEDT');
+
+    if(ACCESS_KEY.indexOf('REPLACE_WITH_')===0){ showDone(); return; }
+
+    var err=document.getElementById('formErrR');
+    fetch('https://api.web3forms.com/submit',{method:'POST',body:fd})
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if(j&&j.success){ showDone(); } else { showFail(); } })
+      .catch(showFail);
+    function showFail(){ err.style.display='block';
+      err.innerHTML=(lang==='vi')?'Kh\u00f4ng g\u1eedi \u0111\u01b0\u1ee3c l\u00fac n\u00e0y. Vui l\u00f2ng th\u1eed l\u1ea1i, ho\u1eb7c email tr\u1ef1c ti\u1ebfp <a href="mailto:gm@talentgate.com.au">gm@talentgate.com.au</a>.':'We could not send just now. Please try again, or email <a href="mailto:gm@talentgate.com.au">gm@talentgate.com.au</a> directly.'; }
+  });
+  function showDone(){ document.getElementById('done').style.display='block'; form.style.display='none'; window.scrollTo({top:0,behavior:'smooth'}); }
+})();
+</script>
+<script src="https://web3forms.com/client/script.js" async defer></script>
+
+</body>
+</html>

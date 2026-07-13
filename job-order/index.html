@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<title>Job Order — Candidate Application — TalentGate</title>
+<meta name="description" content="Register with TalentGate — a free application for skilled and semi-skilled workers seeking employment, relocation and settlement in Australia.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TalentGate">
+<meta property="og:title" content="Job Order — TalentGate">
+<meta property="og:description" content="Register your interest or apply for a current role. Real jobs, real support, real futures.">
+<meta property="og:url" content="https://talentgate.com.au/job-order">
+<meta property="og:image" content="https://talentgate.com.au/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_AU">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Job Order — TalentGate">
+<meta name="twitter:description" content="Register your interest or apply for a current role. Real jobs, real support, real futures.">
+<meta name="twitter:image" content="https://talentgate.com.au/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23143027'/%3E%3Cg stroke='%23E7C97A' stroke-width='4' stroke-linecap='round'%3E%3Cline x1='12' y1='19' x2='52' y2='19'/%3E%3Cline x1='15' y1='27' x2='49' y2='27'/%3E%3Cline x1='21' y1='21' x2='21' y2='48'/%3E%3Cline x1='43' y1='21' x2='43' y2='48'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ color-scheme: only light; }
+  :root{
+    --green:#143027; --green2:#1E4636; --gold:#B98A34; --gold-bright:#F2DF81; --gold-soft:#E7C97A;
+    --ivory:#F7F4EC; --ivory2:#EFE9DC; --ink:#20261F; --muted:#6B7A6F; --line:rgba(184,138,52,.30);
+    --display:'Fraunces',Georgia,serif; --body:'Inter',system-ui,sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html{ background:var(--ivory); }
+  body{ margin:0; font-family:var(--body); color:var(--ink); background:var(--ivory); line-height:1.55; font-size:15.5px; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+  main .wrap{ max-width:900px; }
+  #done{ max-width:852px; margin-left:auto; margin-right:auto; }
+  h1,h2{ font-family:var(--display); font-weight:500; line-height:1.16; margin:0; }
+  a{ color:var(--green2); }
+
+  header.band{ background:radial-gradient(120% 130% at 50% -30%, #1E4636 0%, var(--green) 60%, #0F241C 100%); color:var(--ivory); padding:32px 0 26px; }
+  header .top{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  header .mark{ font-family:var(--display); font-size:1.3rem; font-weight:600; color:#fff; }
+  header .mark small{ display:block; font-family:var(--body); font-size:.58rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold-soft); font-weight:600; margin-top:3px; }
+  .langbtn{ background:transparent; border:1.5px solid rgba(233,201,122,.5); color:var(--gold-soft); border-radius:999px; padding:7px 14px; font-family:var(--body); font-weight:600; font-size:.82rem; cursor:pointer; }
+  header h1{ color:#fff; font-size:clamp(1.5rem,4.6vw,2rem); margin:16px 0 6px; }
+  header .sub{ color:#CFDBD1; font-size:.92rem; max-width:640px; }
+
+  main{ padding:26px 0 20px; }
+  section.blk{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 18px 6px; margin:0 0 18px; }
+  h2{ color:var(--green); font-size:1.15rem; margin:0 0 12px; }
+  h2 .n{ color:var(--gold); font-weight:600; margin-right:8px; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:12px 14px; }
+  .field{ display:flex; flex-direction:column; margin-bottom:12px; }
+  .field.full{ grid-column:1 / -1; }
+  label{ font-size:.86rem; font-weight:600; color:#33403A; margin-bottom:5px; }
+  .req{ color:#9A2B2B; }
+  input,select,textarea{ font-family:var(--body); font-size:.98rem; padding:11px 12px; border:1.5px solid #D9D3C4; border-radius:10px; background:var(--ivory); color:var(--ink); width:100%; }
+  input[type=file]{ padding:9px; background:#fff; font-size:.85rem; }
+  input:focus,select:focus,textarea:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(185,138,52,.16); background:#fff; }
+  textarea{ min-height:74px; resize:vertical; }
+  .hint{ font-size:.76rem; color:var(--muted); margin-top:4px; }
+  .checks{ display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; }
+  .chk{ display:flex; gap:8px; align-items:flex-start; font-size:.9rem; font-weight:400; color:var(--ink); }
+  .chk input{ width:auto; margin-top:3px; }
+  @media(max-width:620px){ .grid2,.checks{ grid-template-columns:1fr; } }
+
+  .consent{ display:flex; gap:10px; align-items:flex-start; background:var(--ivory2); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:12px; }
+  .consent input{ width:auto; margin-top:3px; } .consent label{ font-weight:400; font-size:.9rem; margin:0; }
+  .btn{ display:inline-block; border:none; border-radius:999px; font-family:var(--body); font-weight:600; font-size:1rem; cursor:pointer; padding:14px 30px; background:linear-gradient(135deg,var(--gold-soft),var(--gold)); color:#2a2008; box-shadow:0 6px 18px rgba(0,0,0,.16); }
+  .btn:hover{ transform:translateY(-1px); }
+  .submitrow{ display:flex; flex-direction:column; align-items:center; gap:10px; margin:6px 0 30px; text-align:center; }
+  .err{ display:none; color:#9A2B2B; font-size:.88rem; font-weight:600; }
+  #done{ display:none; background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:12px; padding:20px 22px; margin:0 0 24px; }
+  #done h2{ margin-bottom:6px; }
+  footer{ border-top:2px solid var(--line); margin-top:20px; padding:22px 0 46px; color:var(--muted); font-size:.84rem; }
+  .tag{ font-family:var(--display); font-style:italic; color:var(--gold); }
+  form .field label::after{content:''} 
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap">
+    <div class="top">
+      <a href="/" style="text-decoration:none"><span class="mark">TalentGate<small>The gateway for Australia’s workforce solutions</small></span></a>
+      <nav style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+        <a href="/" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Home</a>
+        <a href="/jobs" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Jobs</a><a href="/insights" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Insights</a><a href="/employer-enquiry" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Employers</a>
+        <a href="/apply" style="color:#F2DF81;text-decoration:none;font-weight:700;font-size:.95rem;border-bottom:2px solid #F2DF81;padding-bottom:2px">Apply</a>
+      </nav>
+      <button class="langbtn" id="langbtn" onclick="toggleLang()">Tiếng Việt</button>
+    </div>
+    <h1 data-i18n="h1">Partner Candidate Submission</h1>
+    <p class="sub" data-i18n="sub">For authorised partner case managers submitting an application on a candidate’s behalf. Please complete your details first, then the candidate’s.</p>
+    <p id="refNote" style="display:none;margin-top:10px;background:rgba(242,223,129,.14);border:1px solid rgba(242,223,129,.35);color:#F2DF81;font-weight:600;padding:8px 14px;border-radius:10px;font-size:.95rem"></p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div id="done">
+      <h2 data-i18n="done_h">Application received</h2>
+      <p data-i18n="done_p">Thank you — your application has been sent to our team. We’ll be in touch.</p>
+    </div>
+
+    <form id="appform" novalidate>
+    <input type="text" name="company_website_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;opacity:0">
+
+      <!-- 0 · Submitted by -->
+      <section class="blk" style="border:2px solid #B4612A;border-color:#B98A34">
+        <h2><span class="n">1</span><span data-i18n="s0">Submitted by — partner contact</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="cm_org">Partner organisation code <span class="req">*</span></label>
+            <input name="Partner code" id="cmOrg" required autocomplete="off">
+            <div class="hint" data-i18n="cm_org_hint">As provided in your Partner Pack. Opening your organisation&rsquo;s own link fills this automatically.</div></div>
+          <div class="field"><label data-i18n="cm_name">Contact person <span class="req">*</span></label><input name="Partner contact" required></div>
+          <div class="field"><label data-i18n="cm_email">Contact email <span class="req">*</span></label><input type="email" name="Partner contact email" autocomplete="email" inputmode="email" required placeholder="e.g. name@yourcompany.com"></div>
+          <div class="field"><label data-i18n="cm_phone">Contact mobile / WhatsApp <span class="req">*</span></label><input type="tel" name="Partner contact phone" autocomplete="tel" inputmode="tel" required></div>
+          <div class="field"><label data-i18n="cm_ref">Your internal order reference</label><input name="Partner order reference" required placeholder="N/A if not applicable"></div>
+        </div>
+        <label class="chk" style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;font-size:.95rem">
+          <input type="checkbox" id="d0" required style="margin-top:4px">
+          <span data-i18n="cm_consent">I am authorised by my organisation to place this job order, and the employer named below has agreed for its details to be provided to TalentGate for workforce sourcing.</span>
+        </label>
+      </section>
+
+      <!-- 1 · Employer / client -->
+      <section class="blk">
+        <h2><span class="n">2</span><span data-i18n="s1">Employer / client business</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="e_name">Employer business name <span class="req">*</span></label><input name="Employer business name" autocomplete="organization" required></div>
+          <div class="field"><label data-i18n="e_abn">ABN</label><input name="Employer ABN" inputmode="numeric" required placeholder="N/A if not known"><div class="hint" id="abnHint" style="display:none;color:#a33" data-i18n="e_abn_hint">This ABN doesn&rsquo;t look valid — please double-check.</div></div>
+          <div class="field"><label data-i18n="e_industry">Industry / sector <span class="req">*</span></label><input name="Industry" required placeholder="e.g. Hospitality, Agriculture, Manufacturing"></div>
+          <div class="field"><label data-i18n="e_web">Website / Facebook page</label><input name="Website or Facebook" required placeholder="N/A if none"></div>
+          <div class="field"><label data-i18n="e_contact">Employer contact person &amp; phone</label><input name="Employer contact" required placeholder="N/A if managed by us"></div>
+          <div class="field full"><label data-i18n="e_engage">Engagement type <span class="req">*</span></label>
+            <select name="Engagement type" required>
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Direct employment with the employer" data-i18n="o_direct">Direct employment with the employer</option>
+              <option value="On-hire / labour hire through our organisation" data-i18n="o_onhire">On-hire / labour hire through our organisation</option>
+              <option value="To be confirmed" data-i18n="o_tbc">To be confirmed</option>
+            </select></div>
+        </div>
+      </section>
+
+      <!-- 2 · Role details -->
+      <section class="blk">
+        <h2><span class="n">3</span><span data-i18n="s2">Roles &amp; positions</span></h2>
+        <p class="hint" data-i18n="s2_note" style="margin:0 0 10px">One order can include several roles — e.g. 1 Cook, 1 Chef, 1 Kitchenhand, 1 Barista. Add each role below.</p>
+        <div class="grid2">
+          <div class="field"><label data-i18n="r_role">Role / occupation <span class="req">*</span></label>
+            <input name="Role" list="roleList" required placeholder="e.g. Cook, Metal Fabricator, Aged Care Worker, Truck Driver">
+            <datalist id="roleList">
+              <option value="Cook"></option><option value="Chef"></option><option value="Kitchenhand"></option>
+              <option value="Metal Fabricator"></option><option value="Welder"></option><option value="Motor Mechanic"></option>
+              <option value="Painter"></option><option value="Joiner"></option><option value="Carpenter"></option>
+              <option value="Farm Worker"></option><option value="Production Horticulturalist"></option><option value="Machinery Operator"></option>
+              <option value="Aged Care Worker"></option><option value="Disability Support Worker"></option><option value="Registered Nurse"></option>
+              <option value="Truck Driver"></option><option value="Forklift Operator"></option><option value="Warehouse Worker"></option>
+              <option value="Cleaner"></option><option value="Housekeeper"></option><option value="Sales Assistant"></option>
+            </datalist></div>
+          <div class="field"><label data-i18n="r_num">Number of positions <span class="req">*</span></label><input name="Number of positions" type="number" min="1" required placeholder="e.g. 4"></div>
+          <div class="field"><label data-i18n="r_type">Employment type <span class="req">*</span></label>
+            <select name="Employment type" required>
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Full-time" data-i18n="o_ft">Full-time</option>
+              <option value="Part-time" data-i18n="o_pt">Part-time</option>
+              <option value="Casual" data-i18n="o_cas">Casual</option>
+              <option value="Seasonal / contract" data-i18n="o_seas">Seasonal / contract</option>
+            </select></div>
+          <div class="field"><label data-i18n="r_exp">Experience required (years) <span class="req">*</span></label><input name="Experience required" required placeholder="e.g. 3"></div>
+          <div class="field full"><label data-i18n="r_duties">Key duties / overview <span class="req">*</span></label><textarea name="Key duties" required></textarea></div>
+          <div class="field"><label data-i18n="r_quals">Qualifications / licences required</label><input name="Qualifications required" required placeholder="N/A if none"></div>
+          <div class="field"><label data-i18n="r_eng">English requirement</label>
+            <select name="English requirement" required>
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Basic" data-i18n="o_basic">Basic</option>
+              <option value="Conversational" data-i18n="o_conv">Conversational</option>
+              <option value="Fluent" data-i18n="o_fluent">Fluent</option>
+              <option value="Not critical" data-i18n="o_notcrit">Not critical</option>
+            </select></div>
+</div>
+        <div class="role-extra" id="roleX2" style="display:none;border-top:1px dashed rgba(184,138,52,.4);margin-top:16px;padding-top:14px">
+          <h3 style="font-family:Fraunces,Georgia,serif;color:#143027;font-size:1.05rem;margin:0 0 8px"><span data-i18n="rx_head">Role</span> 2 <a class="rx-remove" data-rx="2" style="float:right;font-family:Inter,system-ui,sans-serif;font-size:.82rem;color:#a33;cursor:pointer;text-decoration:underline" data-i18n="rx_remove">remove</a></h3>
+          <div class="grid2">
+            <div class="field"><label data-i18n="rx_role">Role / occupation <span class="req">*</span></label><input name="Role 2" list="roleList" placeholder="e.g. Kitchenhand"></div>
+            <div class="field"><label data-i18n="rx_num">Number of positions <span class="req">*</span></label><input name="Number of positions 2" type="number" min="1" placeholder="e.g. 1"></div>
+            <div class="field"><label data-i18n="rx_type">Employment type</label>
+              <select name="Employment type 2">
+                <option value="" data-i18n="o_sel">Select…</option>
+                <option value="Full-time" data-i18n="o_ft">Full-time</option>
+                <option value="Part-time" data-i18n="o_pt">Part-time</option>
+                <option value="Casual" data-i18n="o_cas">Casual</option>
+                <option value="Seasonal / contract" data-i18n="o_seas">Seasonal / contract</option>
+              </select></div>
+            <div class="field"><label data-i18n="rx_pay">Pay rate / salary</label><input name="Pay rate 2" placeholder="N/A if same as Role 1"></div>
+            <div class="field"><label data-i18n="rx_site">Worksite location</label><input name="Worksite location 2" placeholder="N/A if same as Role 1"></div>
+            <div class="field"><label data-i18n="rx_eng">English requirement</label>
+              <select name="English requirement 2">
+                <option value="" data-i18n="o_same">Same as Role 1</option>
+                <option value="Basic" data-i18n="o_basic">Basic</option>
+                <option value="Conversational" data-i18n="o_conv">Conversational</option>
+                <option value="Fluent" data-i18n="o_fluent">Fluent</option>
+                <option value="Not critical" data-i18n="o_notcrit">Not critical</option>
+              </select></div>
+            <div class="field full"><label data-i18n="rx_req">Key requirements (one line)</label><input name="Key requirements 2" placeholder="N/A if none"></div>
+          </div>
+        </div>
+        <div class="role-extra" id="roleX3" style="display:none;border-top:1px dashed rgba(184,138,52,.4);margin-top:16px;padding-top:14px">
+          <h3 style="font-family:Fraunces,Georgia,serif;color:#143027;font-size:1.05rem;margin:0 0 8px"><span data-i18n="rx_head">Role</span> 3 <a class="rx-remove" data-rx="3" style="float:right;font-family:Inter,system-ui,sans-serif;font-size:.82rem;color:#a33;cursor:pointer;text-decoration:underline" data-i18n="rx_remove">remove</a></h3>
+          <div class="grid2">
+            <div class="field"><label data-i18n="rx_role">Role / occupation <span class="req">*</span></label><input name="Role 3" list="roleList" placeholder="e.g. Kitchenhand"></div>
+            <div class="field"><label data-i18n="rx_num">Number of positions <span class="req">*</span></label><input name="Number of positions 3" type="number" min="1" placeholder="e.g. 1"></div>
+            <div class="field"><label data-i18n="rx_type">Employment type</label>
+              <select name="Employment type 3">
+                <option value="" data-i18n="o_sel">Select…</option>
+                <option value="Full-time" data-i18n="o_ft">Full-time</option>
+                <option value="Part-time" data-i18n="o_pt">Part-time</option>
+                <option value="Casual" data-i18n="o_cas">Casual</option>
+                <option value="Seasonal / contract" data-i18n="o_seas">Seasonal / contract</option>
+              </select></div>
+            <div class="field"><label data-i18n="rx_pay">Pay rate / salary</label><input name="Pay rate 3" placeholder="N/A if same as Role 1"></div>
+            <div class="field"><label data-i18n="rx_site">Worksite location</label><input name="Worksite location 3" placeholder="N/A if same as Role 1"></div>
+            <div class="field"><label data-i18n="rx_eng">English requirement</label>
+              <select name="English requirement 3">
+                <option value="" data-i18n="o_same">Same as Role 1</option>
+                <option value="Basic" data-i18n="o_basic">Basic</option>
+                <option value="Conversational" data-i18n="o_conv">Conversational</option>
+                <option value="Fluent" data-i18n="o_fluent">Fluent</option>
+                <option value="Not critical" data-i18n="o_notcrit">Not critical</option>
+              </select></div>
+            <div class="field full"><label data-i18n="rx_req">Key requirements (one line)</label><input name="Key requirements 3" placeholder="N/A if none"></div>
+          </div>
+        </div>
+        <div class="role-extra" id="roleX4" style="display:none;border-top:1px dashed rgba(184,138,52,.4);margin-top:16px;padding-top:14px">
+          <h3 style="font-family:Fraunces,Georgia,serif;color:#143027;font-size:1.05rem;margin:0 0 8px"><span data-i18n="rx_head">Role</span> 4 <a class="rx-remove" data-rx="4" style="float:right;font-family:Inter,system-ui,sans-serif;font-size:.82rem;color:#a33;cursor:pointer;text-decoration:underline" data-i18n="rx_remove">remove</a></h3>
+          <div class="grid2">
+            <div class="field"><label data-i18n="rx_role">Role / occupation <span class="req">*</span></label><input name="Role 4" list="roleList" placeholder="e.g. Kitchenhand"></div>
+            <div class="field"><label data-i18n="rx_num">Number of positions <span class="req">*</span></label><input name="Number of positions 4" type="number" min="1" placeholder="e.g. 1"></div>
+            <div class="field"><label data-i18n="rx_type">Employment type</label>
+              <select name="Employment type 4">
+                <option value="" data-i18n="o_sel">Select…</option>
+                <option value="Full-time" data-i18n="o_ft">Full-time</option>
+                <option value="Part-time" data-i18n="o_pt">Part-time</option>
+                <option value="Casual" data-i18n="o_cas">Casual</option>
+                <option value="Seasonal / contract" data-i18n="o_seas">Seasonal / contract</option>
+              </select></div>
+            <div class="field"><label data-i18n="rx_pay">Pay rate / salary</label><input name="Pay rate 4" placeholder="N/A if same as Role 1"></div>
+            <div class="field"><label data-i18n="rx_site">Worksite location</label><input name="Worksite location 4" placeholder="N/A if same as Role 1"></div>
+            <div class="field"><label data-i18n="rx_eng">English requirement</label>
+              <select name="English requirement 4">
+                <option value="" data-i18n="o_same">Same as Role 1</option>
+                <option value="Basic" data-i18n="o_basic">Basic</option>
+                <option value="Conversational" data-i18n="o_conv">Conversational</option>
+                <option value="Fluent" data-i18n="o_fluent">Fluent</option>
+                <option value="Not critical" data-i18n="o_notcrit">Not critical</option>
+              </select></div>
+            <div class="field full"><label data-i18n="rx_req">Key requirements (one line)</label><input name="Key requirements 4" placeholder="N/A if none"></div>
+          </div>
+        </div>
+        <div class="role-extra" id="roleX5" style="display:none;border-top:1px dashed rgba(184,138,52,.4);margin-top:16px;padding-top:14px">
+          <h3 style="font-family:Fraunces,Georgia,serif;color:#143027;font-size:1.05rem;margin:0 0 8px"><span data-i18n="rx_head">Role</span> 5 <a class="rx-remove" data-rx="5" style="float:right;font-family:Inter,system-ui,sans-serif;font-size:.82rem;color:#a33;cursor:pointer;text-decoration:underline" data-i18n="rx_remove">remove</a></h3>
+          <div class="grid2">
+            <div class="field"><label data-i18n="rx_role">Role / occupation <span class="req">*</span></label><input name="Role 5" list="roleList" placeholder="e.g. Kitchenhand"></div>
+            <div class="field"><label data-i18n="rx_num">Number of positions <span class="req">*</span></label><input name="Number of positions 5" type="number" min="1" placeholder="e.g. 1"></div>
+            <div class="field"><label data-i18n="rx_type">Employment type</label>
+              <select name="Employment type 5">
+                <option value="" data-i18n="o_sel">Select…</option>
+                <option value="Full-time" data-i18n="o_ft">Full-time</option>
+                <option value="Part-time" data-i18n="o_pt">Part-time</option>
+                <option value="Casual" data-i18n="o_cas">Casual</option>
+                <option value="Seasonal / contract" data-i18n="o_seas">Seasonal / contract</option>
+              </select></div>
+            <div class="field"><label data-i18n="rx_pay">Pay rate / salary</label><input name="Pay rate 5" placeholder="N/A if same as Role 1"></div>
+            <div class="field"><label data-i18n="rx_site">Worksite location</label><input name="Worksite location 5" placeholder="N/A if same as Role 1"></div>
+            <div class="field"><label data-i18n="rx_eng">English requirement</label>
+              <select name="English requirement 5">
+                <option value="" data-i18n="o_same">Same as Role 1</option>
+                <option value="Basic" data-i18n="o_basic">Basic</option>
+                <option value="Conversational" data-i18n="o_conv">Conversational</option>
+                <option value="Fluent" data-i18n="o_fluent">Fluent</option>
+                <option value="Not critical" data-i18n="o_notcrit">Not critical</option>
+              </select></div>
+            <div class="field full"><label data-i18n="rx_req">Key requirements (one line)</label><input name="Key requirements 5" placeholder="N/A if none"></div>
+          </div>
+        </div>
+        <div style="margin-top:14px">
+          <button type="button" id="addRole" style="background:#fff;border:1.5px solid #B98A34;color:#143027;font-weight:700;border-radius:10px;padding:10px 18px;cursor:pointer;font-family:Inter,system-ui,sans-serif" data-i18n="rx_add">+ Add another role</button>
+        </div>
+
+      </section>
+
+      <!-- 3 · Location & conditions -->
+      <section class="blk">
+        <h2><span class="n">4</span><span data-i18n="s3">Location &amp; conditions</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="l_site">Primary worksite — town / suburb &amp; state <span class="req">*</span></label><input name="Worksite location" required placeholder="e.g. Perth, WA"><div class="hint" data-i18n="l_site_hint">If roles are at different locations (e.g. a Chef in Perth and a Cook in Bunbury), set each role&rsquo;s worksite in its own block above.</div></div>
+          <div class="field"><label data-i18n="l_type">Location type <span class="req">*</span></label>
+            <select name="Location type" id="locType" required>
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Metropolitan" data-i18n="o_metro">Metropolitan</option>
+              <option value="Regional" data-i18n="o_reg">Regional</option>
+              <option value="Remote" data-i18n="o_rem">Remote</option>
+              <option value="Multiple sites" data-i18n="o_multi">Multiple sites</option>
+            </select></div>
+          <div class="field" id="accomWrap"><label data-i18n="l_accom">Accommodation assistance available?</label>
+            <select name="Accommodation" id="accomSel">
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Yes" data-i18n="o_yes">Yes</option>
+              <option value="No" data-i18n="o_no">No</option>
+              <option value="To be discussed" data-i18n="o_disc">To be discussed</option>
+            </select></div>
+          <div class="field"><label data-i18n="l_pay">Pay rate / salary range <span class="req">*</span></label><input name="Pay rate" required placeholder="e.g. $32–36/hr or $71,550 p.a."></div>
+          <div class="field"><label data-i18n="l_award">Award / classification (if known)</label><input name="Award" required placeholder="N/A if not known"></div>
+          <div class="field"><label data-i18n="l_hours">Hours / roster <span class="req">*</span></label><input name="Hours roster" required placeholder="e.g. 38 hrs, Mon–Fri + weekend roster"></div>
+        </div>
+      </section>
+
+      <!-- 4 · Timing & pipeline -->
+      <section class="blk">
+        <h2><span class="n">5</span><span data-i18n="s4">Timing &amp; pipeline</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="t_when">When are workers needed? <span class="req">*</span></label>
+            <select name="When needed" required>
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Immediately" data-i18n="o_now">Immediately</option>
+              <option value="Within 1–3 months" data-i18n="o_13">Within 1–3 months</option>
+              <option value="Within 3–6 months" data-i18n="o_36">Within 3–6 months</option>
+              <option value="Planning ahead (6+ months)" data-i18n="o_6p">Planning ahead (6+ months)</option>
+            </select></div>
+          <div class="field"><label data-i18n="t_dur">Duration <span class="req">*</span></label>
+            <select name="Duration" required>
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Ongoing / permanent need" data-i18n="o_ongoing">Ongoing / permanent need</option>
+              <option value="Fixed term" data-i18n="o_fixed">Fixed term</option>
+              <option value="Seasonal" data-i18n="o_season">Seasonal</option>
+            </select></div>
+          <div class="field"><label data-i18n="t_more">Projected further hires (6–12 months)</label><input name="Projected hires" required placeholder="N/A if none"></div>
+          <div class="field"><label data-i18n="t_cand">Candidate location preference <span class="req">*</span></label>
+            <select name="Candidate preference" required>
+              <option value="" data-i18n="o_sel">Select…</option>
+              <option value="Onshore (already in Australia)" data-i18n="o_onsh">Onshore (already in Australia)</option>
+              <option value="Overseas candidates welcome" data-i18n="o_offsh">Overseas candidates welcome</option>
+              <option value="Either" data-i18n="o_either">Either</option>
+            </select></div>
+        </div>
+      </section>
+
+      <!-- 5 · Additional -->
+      <section class="blk">
+        <h2><span class="n">6</span><span data-i18n="s5">Anything else</span></h2>
+        <div class="field"><label data-i18n="a_notes">Additional requirements or context</label><textarea name="Additional notes" required placeholder="N/A if nothing further"></textarea></div>
+      </section>
+
+      <!-- 6 · Declarations -->
+      <section class="blk">
+        <h2><span class="n">7</span><span data-i18n="s6">Declarations</span></h2>
+        <div class="consent"><input type="checkbox" id="d1" required><label for="d1" data-i18n="dec1">I declare the information in this job order is accurate to the best of my knowledge.</label></div>
+        <div class="consent"><input type="checkbox" id="d2" required><label for="d2" data-i18n="dec2">I consent to TalentGate collecting, holding and using these details for workforce sourcing and placement purposes, as set out in the <a href="/privacy" target="_blank">Privacy &amp; Collection Notice</a> — including sharing role details with prospective candidates and relevant service partners as part of the recruitment and placement process. I understand TalentGate does not guarantee any particular outcome.</label></div>
+        <div class="consent" style="opacity:.92"><input type="checkbox" id="d3"><label for="d3" data-i18n="dec3">Yes — send our organisation workforce news, hiring insights and updates from TalentGate. Unsubscribe anytime. <span style="color:#8a927f">(optional)</span></label></div>
+      </section>
+
+      <div class="submit-wrap">
+        <div class="h-captcha" data-captcha="true" style="margin:0 0 14px"></div>
+        <button type="submit" class="btn" data-i18n="submit">Submit job order</button>
+        <p class="hint" id="formErrJ" style="display:none;color:#a33;margin-top:10px"></p>
+      </div>
+  </form>
+
+  <div id="done" style="display:none;max-width:760px;margin:26px auto;padding:26px 22px;background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:16px;text-align:center">
+    <h2 style="font-family:Fraunces,Georgia,serif;color:#143027;margin:0 0 8px" data-i18n="done_h">Job order received</h2>
+    <p style="margin:0;color:#53605A" data-i18n="done_p">Thank you — your job order has reached our team. We&rsquo;ll respond within one business day to confirm next steps and timelines. If it&rsquo;s urgent, email gm@talentgate.com.au.</p>
+  </div>
+
+<footer>
+      <p><b>TalentGate</b> — Talent Gate Australia Pty Ltd. Recruitment, workforce solutions, relocation and settlement support services.</p>
+      <p class="tag">The gateway for Australia’s workforce solutions.</p>
+      <p>© <span id="yr"></span> TalentGate. All rights reserved. · <a href="/" data-i18n="home">Back to home</a></p>
+    </footer>
+<script>
+(function(){
+  var T={
+    h1:{en:"Partner Job Order",vi:"Phiếu Đặt Hàng Nhân Lực (Đối Tác)"},
+    home:{en:"Back to home",vi:"Về trang chủ"},
+    o_sel:{en:"Select…",vi:"Chọn…"}, o_yes:{en:"Yes",vi:"Có"}, o_no:{en:"No",vi:"Không"},
+    sub:{en:"For authorised employer-side partners placing a workforce order. Complete your details first, then the employer and role.",vi:"Dành cho đối tác phía nhà tuyển dụng được uỷ quyền đặt hàng nhân lực. Vui lòng điền thông tin của bạn trước, sau đó đến nhà tuyển dụng và vị trí."},
+    s0:{en:"Submitted by — partner contact",vi:"Người gửi — đầu mối của đối tác"},
+    cm_org:{en:"Partner organisation code <span class='req'>*</span>",vi:"Mã tổ chức đối tác <span class='req'>*</span>"},
+    cm_org_hint:{en:"As provided in your Partner Pack. Opening your organisation&rsquo;s own link fills this automatically.",vi:"Theo mã trong Gói Đối Tác của bạn. Mở đúng đường link của tổ chức bạn sẽ tự điền mã này."},
+    cm_name:{en:"Contact person <span class='req'>*</span>",vi:"Người liên hệ <span class='req'>*</span>"},
+    cm_email:{en:"Contact email <span class='req'>*</span>",vi:"Email liên hệ <span class='req'>*</span>"},
+    cm_phone:{en:"Contact mobile / WhatsApp <span class='req'>*</span>",vi:"Di động / WhatsApp <span class='req'>*</span>"},
+    cm_ref:{en:"Your internal order reference",vi:"Mã đơn hàng nội bộ của bạn"},
+    cm_consent:{en:"I am authorised by my organisation to place this job order, and the employer named below has agreed for its details to be provided to TalentGate for workforce sourcing.",vi:"Tôi được tổ chức của mình uỷ quyền đặt đơn hàng nhân lực này, và nhà tuyển dụng nêu dưới đây đã đồng ý cung cấp thông tin cho TalentGate để tìm nguồn nhân lực."},
+    s1:{en:"Employer / client business",vi:"Doanh nghiệp nhà tuyển dụng / khách hàng"},
+    e_name:{en:"Employer business name <span class='req'>*</span>",vi:"Tên doanh nghiệp nhà tuyển dụng <span class='req'>*</span>"},
+    e_abn:{en:"ABN",vi:"Số ABN"},
+    e_abn_hint:{en:"This ABN doesn&rsquo;t look valid — please double-check.",vi:"Số ABN có vẻ chưa đúng — vui lòng kiểm tra lại."},
+    e_industry:{en:"Industry / sector <span class='req'>*</span>",vi:"Ngành / lĩnh vực <span class='req'>*</span>"},
+    e_contact:{en:"Employer contact person &amp; phone",vi:"Người liên hệ &amp; điện thoại của nhà tuyển dụng"},
+    e_engage:{en:"Engagement type <span class='req'>*</span>",vi:"Hình thức tuyển dụng <span class='req'>*</span>"},
+    o_direct:{en:"Direct employment with the employer",vi:"Tuyển dụng trực tiếp với nhà tuyển dụng"},
+    o_onhire:{en:"On-hire / labour hire through our organisation",vi:"Cho thuê lại lao động qua tổ chức của chúng tôi"},
+    o_tbc:{en:"To be confirmed",vi:"Sẽ xác nhận sau"},
+    s2:{en:"Roles &amp; positions",vi:"Các vị trí &amp; số lượng"},
+    s2_note:{en:"One order can include several roles — e.g. 1 Cook, 1 Chef, 1 Kitchenhand, 1 Barista. Add each role below.",vi:"Một đơn hàng có thể gồm nhiều vị trí — ví dụ: 1 Đầu bếp nấu, 1 Bếp trưởng, 1 Phụ bếp, 1 Pha chế. Thêm từng vị trí bên dưới."},
+    e_web:{en:"Website / Facebook page",vi:"Website / Trang Facebook"},
+    rx_head:{en:"Role",vi:"Vị trí"}, rx_remove:{en:"remove",vi:"xoá"},
+    rx_role:{en:"Role / occupation <span class='req'>*</span>",vi:"Vị trí / nghề nghiệp <span class='req'>*</span>"},
+    rx_num:{en:"Number of positions <span class='req'>*</span>",vi:"Số lượng vị trí <span class='req'>*</span>"},
+    rx_type:{en:"Employment type",vi:"Loại hình việc làm"},
+    rx_pay:{en:"Pay rate / salary",vi:"Mức lương"},
+    rx_req:{en:"Key requirements (one line)",vi:"Yêu cầu chính (một dòng)"},
+    rx_add:{en:"+ Add another role",vi:"+ Thêm vị trí khác"},
+    r_role:{en:"Role / occupation <span class='req'>*</span>",vi:"Vị trí / nghề nghiệp <span class='req'>*</span>"},
+    r_num:{en:"Number of positions <span class='req'>*</span>",vi:"Số lượng vị trí <span class='req'>*</span>"},
+    r_type:{en:"Employment type <span class='req'>*</span>",vi:"Loại hình việc làm <span class='req'>*</span>"},
+    o_ft:{en:"Full-time",vi:"Toàn thời gian"}, o_pt:{en:"Part-time",vi:"Bán thời gian"}, o_cas:{en:"Casual",vi:"Thời vụ (casual)"}, o_seas:{en:"Seasonal / contract",vi:"Theo mùa / hợp đồng"},
+    r_exp:{en:"Experience required (years) <span class='req'>*</span>",vi:"Kinh nghiệm yêu cầu (năm) <span class='req'>*</span>"},
+    r_duties:{en:"Key duties / overview <span class='req'>*</span>",vi:"Nhiệm vụ chính / mô tả <span class='req'>*</span>"},
+    r_quals:{en:"Qualifications / licences required",vi:"Bằng cấp / giấy phép yêu cầu"},
+    r_eng:{en:"English requirement",vi:"Yêu cầu tiếng Anh"},
+    o_basic:{en:"Basic",vi:"Cơ bản"}, o_conv:{en:"Conversational",vi:"Giao tiếp"}, o_fluent:{en:"Fluent",vi:"Thành thạo"}, o_notcrit:{en:"Not critical",vi:"Không quan trọng"},
+    s3:{en:"Location &amp; conditions",vi:"Địa điểm &amp; điều kiện"},
+    l_site:{en:"Primary worksite — town / suburb &amp; state <span class='req'>*</span>",vi:"Nơi làm việc chính — thị trấn / khu vực &amp; bang <span class='req'>*</span>"},
+    l_site_hint:{en:"If roles are at different locations (e.g. a Chef in Perth and a Cook in Bunbury), set each role&rsquo;s worksite in its own block above.",vi:"Nếu các vị trí ở địa điểm khác nhau (ví dụ: Bếp trưởng ở Perth và Đầu bếp ở Bunbury), hãy ghi nơi làm việc của từng vị trí trong khối tương ứng ở trên."},
+    rx_site:{en:"Worksite location",vi:"Nơi làm việc"},
+    rx_eng:{en:"English requirement",vi:"Yêu cầu tiếng Anh"},
+    o_same:{en:"Same as Role 1",vi:"Giống Vị trí 1"},
+    l_type:{en:"Location type <span class='req'>*</span>",vi:"Loại địa điểm <span class='req'>*</span>"},
+    o_metro:{en:"Metropolitan",vi:"Đô thị"}, o_reg:{en:"Regional",vi:"Vùng regional"}, o_rem:{en:"Remote",vi:"Vùng xa"}, o_multi:{en:"Multiple sites",vi:"Nhiều địa điểm"},
+    l_accom:{en:"Accommodation assistance available?",vi:"Có hỗ trợ chỗ ở không?"},
+    o_disc:{en:"To be discussed",vi:"Sẽ trao đổi"},
+    l_pay:{en:"Pay rate / salary range <span class='req'>*</span>",vi:"Mức lương / khoảng lương <span class='req'>*</span>"},
+    l_award:{en:"Award / classification (if known)",vi:"Award / phân loại (nếu biết)"},
+    l_hours:{en:"Hours / roster <span class='req'>*</span>",vi:"Giờ làm / lịch làm việc <span class='req'>*</span>"},
+    s4:{en:"Timing &amp; pipeline",vi:"Thời gian &amp; kế hoạch"},
+    t_when:{en:"When are workers needed? <span class='req'>*</span>",vi:"Khi nào cần nhân lực? <span class='req'>*</span>"},
+    o_now:{en:"Immediately",vi:"Ngay lập tức"}, o_13:{en:"Within 1–3 months",vi:"Trong 1–3 tháng"}, o_36:{en:"Within 3–6 months",vi:"Trong 3–6 tháng"}, o_6p:{en:"Planning ahead (6+ months)",vi:"Kế hoạch dài hạn (6+ tháng)"},
+    t_dur:{en:"Duration <span class='req'>*</span>",vi:"Thời hạn <span class='req'>*</span>"},
+    o_ongoing:{en:"Ongoing / permanent need",vi:"Nhu cầu liên tục / lâu dài"}, o_fixed:{en:"Fixed term",vi:"Có thời hạn"}, o_season:{en:"Seasonal",vi:"Theo mùa"},
+    t_more:{en:"Projected further hires (6–12 months)",vi:"Dự kiến tuyển thêm (6–12 tháng)"},
+    t_cand:{en:"Candidate location preference <span class='req'>*</span>",vi:"Ưu tiên ứng viên ở đâu <span class='req'>*</span>"},
+    o_onsh:{en:"Onshore (already in Australia)",vi:"Đang ở Úc"}, o_offsh:{en:"Overseas candidates welcome",vi:"Chào đón ứng viên ở nước ngoài"}, o_either:{en:"Either",vi:"Cả hai"},
+    s5:{en:"Anything else",vi:"Thông tin thêm"},
+    a_notes:{en:"Additional requirements or context",vi:"Yêu cầu hoặc bối cảnh bổ sung"},
+    s6:{en:"Declarations",vi:"Cam kết"},
+    dec1:{en:"I declare the information in this job order is accurate to the best of my knowledge.",vi:"Tôi cam đoan thông tin trong đơn hàng nhân lực này là chính xác theo hiểu biết tốt nhất của tôi."},
+    dec2:{en:"I consent to TalentGate collecting, holding and using these details for workforce sourcing and placement purposes, as set out in the <a href='/privacy' target='_blank'>Privacy & Collection Notice</a> — including sharing role details with prospective candidates and relevant service partners as part of the recruitment and placement process. I understand TalentGate does not guarantee any particular outcome.",vi:"Tôi đồng ý để TalentGate thu thập, lưu giữ và sử dụng các thông tin này cho mục đích tìm nguồn và bố trí nhân lực, theo <a href='/privacy' target='_blank'>Thông báo Quyền riêng tư & Thu thập</a> — bao gồm chia sẻ chi tiết vị trí với các ứng viên tiềm năng và đối tác dịch vụ liên quan trong quá trình tuyển dụng và bố trí. Tôi hiểu TalentGate không bảo đảm bất kỳ kết quả cụ thể nào."},
+    dec3:{en:"Yes — send our organisation workforce news, hiring insights and updates from TalentGate. Unsubscribe anytime. <span style='color:#8a927f'>(optional)</span>",vi:"Có — gửi cho tổ chức chúng tôi tin tức nhân lực, thông tin tuyển dụng và cập nhật từ TalentGate. Có thể huỷ đăng ký bất cứ lúc nào. <span style='color:#8a927f'>(không bắt buộc)</span>"},
+    submit:{en:"Submit job order",vi:"Gửi đơn hàng nhân lực"},
+    done_h:{en:"Job order received",vi:"Đã nhận đơn hàng nhân lực"},
+    done_p:{en:"Thank you — your job order has reached our team. We&rsquo;ll respond within one business day to confirm next steps and timelines. If it&rsquo;s urgent, email gm@talentgate.com.au.",vi:"Cảm ơn — đơn hàng nhân lực của bạn đã đến đội ngũ chúng tôi. Chúng tôi sẽ phản hồi trong vòng một ngày làm việc để xác nhận các bước tiếp theo và thời gian. Nếu gấp, vui lòng email gm@talentgate.com.au."}
+  };
+  var lang='en';
+  function applyLang(){
+    document.documentElement.lang=lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var k=el.getAttribute('data-i18n'); if(T[k]){ el.innerHTML=T[k][lang]; }
+    });
+    var b=document.getElementById('langbtn'); if(b){ b.textContent=(lang==='en')?'Tiếng Việt':'English'; }
+  }
+  window.toggleLang=function(){ lang=(lang==='en')?'vi':'en'; applyLang(); };
+  applyLang();
+
+  var ACCESS_KEY='da1d315b-110e-4d96-a448-20e8bf1bd278';
+  var form=document.getElementById('appform');
+  var PAGE_LOADED_AT=Date.now();
+
+  // partner code + ref from link (locked; no codes in source)
+  var q=new URLSearchParams(location.search);
+  var SRC=(q.get('src')||'').trim().slice(0,20);
+  var REF=(q.get('ref')||'').trim().slice(0,40);
+  var ROLE=(q.get('role')||'').trim().slice(0,60);
+  if(SRC){ var co=document.getElementById('cmOrg'); if(co){ co.value=SRC.toUpperCase(); co.readOnly=true; co.style.background='#efe9da'; } }
+  if(ROLE){ var ri=form.querySelector('[name="Role"]'); if(ri){ ri.value=ROLE; } }
+
+  // ABN soft checksum (never blocks)
+  var abnEl=form.querySelector('[name="Employer ABN"]'), abnHint=document.getElementById('abnHint');
+  function abnValid(v){ var d=(v||'').replace(/\D/g,''); if(d.length!==11) return false;
+    var w=[10,1,3,5,7,9,11,13,15,17,19],s=0; for(var i=0;i<11;i++){ s+=(parseInt(d[i],10)-(i===0?1:0))*w[i]; } return s%89===0; }
+  if(abnEl&&abnHint){ abnEl.addEventListener('blur',function(){ var v=abnEl.value.trim();
+    abnHint.style.display=(v && !/^n\/?a$/i.test(v) && !abnValid(v))?'block':'none'; }); }
+
+  // accommodation relevant for regional/remote/multiple
+  var locT=document.getElementById('locType'), accW=document.getElementById('accomWrap'), accS=document.getElementById('accomSel');
+  function refreshAccom(){ var v=(locT&&locT.value)||'';
+    var show=(v===''||/Regional|Remote|Multiple/.test(v));
+    if(accW){ accW.style.display=show?'':'none'; } if(accS){ accS.required=show; if(!show){ accS.value=''; } } }
+  if(locT){ locT.addEventListener('change',refreshAccom); refreshAccom(); }
+
+  // multi-role blocks: reveal up to 4 additional roles
+  var rxIds=[2,3,4,5];
+  function rxSetReq(i,on){
+    ['Role '+i,'Number of positions '+i].forEach(function(n){ var e=form.querySelector('[name="'+n+'"]'); if(e){ e.required=on; } });
+    if(!on){ ['Role '+i,'Number of positions '+i,'Employment type '+i,'Pay rate '+i,'Worksite location '+i,'English requirement '+i,'Key requirements '+i].forEach(function(n){ var e=form.querySelector('[name="'+n+'"]'); if(e){ e.value=''; } }); }
+  }
+  function rxVisible(){ return rxIds.filter(function(i){ var b=document.getElementById('roleX'+i); return b && b.style.display!=='none'; }); }
+  var addB=document.getElementById('addRole');
+  if(addB){ addB.addEventListener('click',function(){
+    for(var k=0;k<rxIds.length;k++){ var i=rxIds[k], b=document.getElementById('roleX'+i);
+      if(b && b.style.display==='none'){ b.style.display=''; rxSetReq(i,true); b.scrollIntoView({behavior:'smooth',block:'center'}); break; } }
+    if(rxVisible().length===rxIds.length){ addB.style.display='none'; }
+  }); }
+  document.querySelectorAll('.rx-remove').forEach(function(a){ a.addEventListener('click',function(){
+    var i=parseInt(a.getAttribute('data-rx'),10), b=document.getElementById('roleX'+i);
+    if(b){ b.style.display='none'; rxSetReq(i,false); if(addB){ addB.style.display=''; } }
+  }); });
+
+  // numeric keypads
+  document.querySelectorAll('input[type="number"]').forEach(function(e){ e.setAttribute('inputmode','numeric'); });
+
+  // visible * on compulsory fields
+  document.querySelectorAll('.field').forEach(function(fw){
+    var ctl=fw.querySelector('input,select,textarea'); var lab=fw.querySelector('label');
+    if(ctl&&lab&&ctl.required&&!lab.querySelector('.req')&&ctl.type!=='hidden'){
+      var sp=document.createElement('span'); sp.className='req'; sp.textContent=' *'; lab.appendChild(sp); }
+  });
+
+  // renumber
+  (function(){ var i=1; document.querySelectorAll('section.blk h2 .n').forEach(function(el){ el.textContent=(i++); }); })();
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=form.checkValidity() && document.getElementById('d1').checked && document.getElementById('d2').checked && document.getElementById('d0').checked;
+    if(!ok){ form.reportValidity(); return; }
+
+    var hp=form.querySelector('[name="company_website_url"]');
+    if((hp&&hp.value) || (Date.now()-PAGE_LOADED_AT<8000)){ showDone(); return; }
+
+    var capW=document.querySelector('.h-captcha');
+    if(capW && capW.querySelector('iframe')){
+      var tok=form.querySelector('[name="h-captcha-response"]');
+      if(!tok || !tok.value){
+        alert(lang==='vi' ? 'Vui lòng xác nhận bạn là người thật bằng cách hoàn thành ô xác minh phía trên nút gửi.' : 'Please confirm you are human by completing the verification box above the submit button.');
+        capW.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+    }
+
+    var fd=new FormData(form);
+    fd.delete('company_website_url');
+    var ORG=fd.get('Partner code')||SRC||'';
+    var parts=[]; var r1=fd.get('Role')||'', n1=fd.get('Number of positions')||'';
+    if(r1){ parts.push(r1+(n1?' ×'+n1:'')); }
+    [2,3,4,5].forEach(function(i){ var r=fd.get('Role '+i)||'', n=fd.get('Number of positions '+i)||'';
+      if(r){ parts.push(r+(n?' ×'+n:'')); } });
+    var ROLE=parts.join('; '); var N='';
+    fd.append('access_key', ACCESS_KEY);
+    if(REF){ fd.append('ref', REF); }
+    if(SRC){ fd.append('src', SRC); }
+    fd.append('subject','TalentGate — Job Order'+(ORG?' ['+ORG+']':'')+(REF?' ['+REF+']':'')+': '+ROLE+' (by '+(fd.get('Partner contact')||'')+')');
+    fd.append('Marketing consent', document.getElementById('d3')&&document.getElementById('d3').checked?'Yes':'No');
+    fd.append('Submitted at', new Date().toLocaleString('en-AU',{timeZone:'Australia/Sydney',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})+' AEST/AEDT');
+
+    if(ACCESS_KEY.indexOf('REPLACE_WITH_')===0){ showDone(); return; } // preview mode
+
+    var err=document.getElementById('formErrJ');
+    fetch('https://api.web3forms.com/submit',{method:'POST',body:fd})
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if(j&&j.success){ showDone(); } else { showFail(); } })
+      .catch(showFail);
+    function showFail(){ err.style.display='block';
+      err.innerHTML=(lang==='vi')?'Không gửi được lúc này. Vui lòng thử lại, hoặc email trực tiếp <a href="mailto:gm@talentgate.com.au">gm@talentgate.com.au</a>.':'We could not send just now. Please try again, or email <a href="mailto:gm@talentgate.com.au">gm@talentgate.com.au</a> directly.'; }
+  });
+  function showDone(){ document.getElementById('done').style.display='block'; form.style.display='none';
+    window.scrollTo({top:0,behavior:'smooth'}); }
+})();
+</script>
+<script src="https://web3forms.com/client/script.js" async defer></script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.hcaptcha.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.hcaptcha.com; script-src 'self' 'unsafe-inline' https://web3forms.com https://*.hcaptcha.com; connect-src 'self' https://api.web3forms.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com; form-action 'self' https://api.web3forms.com; base-uri 'self'; frame-ancestors 'none'
+
+/refer/*
+  X-Robots-Tag: noindex
+
+/partner-submission/*
+  X-Robots-Tag: noindex
+
+/job-order/*
+  X-Robots-Tag: noindex

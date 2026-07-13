@@ -1,0 +1,10 @@
+# Old v1 URLs -> v2 equivalents (v1 retired 2026-07)
+/application.html            /apply/     301
+/jobs.html                   /jobs/      301
+/blog.html                   /insights/  301
+/article.html                /insights/  301
+/resources.html              /insights/  301
+/industry-aged-care.html     /           301
+/industry-construction.html  /           301
+/industry-horticulture.html  /           301
+/industry-hospitality.html   /           301

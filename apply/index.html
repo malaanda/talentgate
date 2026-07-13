@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<title>TalentGate Candidate Application</title>
+<meta name="description" content="Register with TalentGate — a free application for skilled and semi-skilled workers seeking employment, relocation and settlement in Australia.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TalentGate">
+<meta property="og:title" content="TalentGate Candidate Application">
+<meta property="og:description" content="Register your interest or apply for a current role. Real jobs, real support, real futures.">
+<meta property="og:url" content="https://talentgate.com.au/apply">
+<meta property="og:image" content="https://talentgate.com.au/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_AU">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TalentGate Candidate Application">
+<meta name="twitter:description" content="Register your interest or apply for a current role. Real jobs, real support, real futures.">
+<meta name="twitter:image" content="https://talentgate.com.au/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23143027'/%3E%3Cg stroke='%23E7C97A' stroke-width='4' stroke-linecap='round'%3E%3Cline x1='12' y1='19' x2='52' y2='19'/%3E%3Cline x1='15' y1='27' x2='49' y2='27'/%3E%3Cline x1='21' y1='21' x2='21' y2='48'/%3E%3Cline x1='43' y1='21' x2='43' y2='48'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ color-scheme: only light; }
+  :root{
+    --green:#143027; --green2:#1E4636; --gold:#B98A34; --gold-bright:#F2DF81; --gold-soft:#E7C97A;
+    --ivory:#F7F4EC; --ivory2:#EFE9DC; --ink:#20261F; --muted:#6B7A6F; --line:rgba(184,138,52,.30);
+    --display:'Fraunces',Georgia,serif; --body:'Inter',system-ui,sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html{ background:var(--ivory); }
+  body{ margin:0; font-family:var(--body); color:var(--ink); background:var(--ivory); line-height:1.55; font-size:15.5px; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+  main .wrap{ max-width:900px; }
+  #done{ max-width:852px; margin-left:auto; margin-right:auto; }
+  h1,h2{ font-family:var(--display); font-weight:500; line-height:1.16; margin:0; }
+  a{ color:var(--green2); }
+
+  header.band{ background:radial-gradient(120% 130% at 50% -30%, #1E4636 0%, var(--green) 60%, #0F241C 100%); color:var(--ivory); padding:32px 0 26px; }
+  header .top{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  header .mark{ font-family:var(--display); font-size:1.3rem; font-weight:600; color:#fff; }
+  header .mark small{ display:block; font-family:var(--body); font-size:.58rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold-soft); font-weight:600; margin-top:3px; }
+  .langbtn{ background:transparent; border:1.5px solid rgba(233,201,122,.5); color:var(--gold-soft); border-radius:999px; padding:7px 14px; font-family:var(--body); font-weight:600; font-size:.82rem; cursor:pointer; }
+  header h1{ color:#fff; font-size:clamp(1.5rem,4.6vw,2rem); margin:16px 0 6px; }
+  header .sub{ color:#CFDBD1; font-size:.92rem; max-width:640px; }
+
+  main{ padding:26px 0 20px; }
+  section.blk{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 18px 6px; margin:0 0 18px; }
+  h2{ color:var(--green); font-size:1.15rem; margin:0 0 12px; }
+  h2 .n{ color:var(--gold); font-weight:600; margin-right:8px; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:12px 14px; }
+  .field{ display:flex; flex-direction:column; margin-bottom:12px; }
+  .field.full{ grid-column:1 / -1; }
+  label{ font-size:.86rem; font-weight:600; color:#33403A; margin-bottom:5px; }
+  .req{ color:#9A2B2B; }
+  input,select,textarea{ font-family:var(--body); font-size:.98rem; padding:11px 12px; border:1.5px solid #D9D3C4; border-radius:10px; background:var(--ivory); color:var(--ink); width:100%; }
+  input[type=file]{ padding:9px; background:#fff; font-size:.85rem; }
+  input:focus,select:focus,textarea:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(185,138,52,.16); background:#fff; }
+  textarea{ min-height:74px; resize:vertical; }
+  .hint{ font-size:.76rem; color:var(--muted); margin-top:4px; }
+  .checks{ display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; }
+  .chk{ display:flex; gap:8px; align-items:flex-start; font-size:.9rem; font-weight:400; color:var(--ink); }
+  .chk input{ width:auto; margin-top:3px; }
+  @media(max-width:620px){ .grid2,.checks{ grid-template-columns:1fr; } }
+
+  .consent{ display:flex; gap:10px; align-items:flex-start; background:var(--ivory2); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:12px; }
+  .consent input{ width:auto; margin-top:3px; } .consent label{ font-weight:400; font-size:.9rem; margin:0; }
+  .btn{ display:inline-block; border:none; border-radius:999px; font-family:var(--body); font-weight:600; font-size:1rem; cursor:pointer; padding:14px 30px; background:linear-gradient(135deg,var(--gold-soft),var(--gold)); color:#2a2008; box-shadow:0 6px 18px rgba(0,0,0,.16); }
+  .btn:hover{ transform:translateY(-1px); }
+  .submitrow{ display:flex; flex-direction:column; align-items:center; gap:10px; margin:6px 0 30px; text-align:center; }
+  .err{ display:none; color:#9A2B2B; font-size:.88rem; font-weight:600; }
+  #done{ display:none; background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:12px; padding:20px 22px; margin:0 0 24px; }
+  #done h2{ margin-bottom:6px; }
+  footer{ border-top:2px solid var(--line); margin-top:20px; padding:22px 0 46px; color:var(--muted); font-size:.84rem; }
+  .tag{ font-family:var(--display); font-style:italic; color:var(--gold); }
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap">
+    <div class="top">
+      <a href="/" style="text-decoration:none"><span class="mark">TalentGate<small>The gateway for Australia’s workforce solutions</small></span></a>
+      <nav style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+        <a href="/" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Home</a>
+        <a href="/jobs" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Jobs</a><a href="/insights" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Insights</a><a href="/employer-enquiry" style="color:#E7C97A;text-decoration:none;font-weight:600;font-size:.95rem">Employers</a>
+        <a href="/apply" style="color:#F2DF81;text-decoration:none;font-weight:700;font-size:.95rem;border-bottom:2px solid #F2DF81;padding-bottom:2px">Apply</a>
+      </nav>
+      <button class="langbtn" id="langbtn" onclick="toggleLang()">Tiếng Việt</button>
+    </div>
+    <h1 data-i18n="h1">Candidate Application</h1>
+    <p class="sub" data-i18n="sub">Complete this application so we can match you with the right opportunities. Registering is always free.</p>
+    <p id="refNote" style="display:none;margin-top:10px;background:rgba(242,223,129,.14);border:1px solid rgba(242,223,129,.35);color:#F2DF81;font-weight:600;padding:8px 14px;border-radius:10px;font-size:.95rem"></p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div id="done">
+      <h2 data-i18n="done_h">Application received</h2>
+      <p data-i18n="done_p">Thank you — your application has been sent to our team. We’ll be in touch.</p>
+    </div>
+
+    <form id="appform" novalidate>
+    <input type="text" name="company_website_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;opacity:0">
+
+      <!-- 1 -->
+      <section class="blk">
+        <h2><span class="n">1</span><span data-i18n="s1">Personal details</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="l_name">Full name <span class="req">*</span></label><input name="Full name" required></div>
+          <div class="field"><label data-i18n="l_nat">Nationality / passport country <span class="req">*</span></label><input name="Nationality" required></div>
+          <div class="field"><label data-i18n="l_email">Email <span class="req">*</span></label><input name="Email" type="email" required></div>
+          <div class="field"><label data-i18n="l_phone">Phone / WhatsApp <span class="req">*</span></label><input type="tel" name="Phone" autocomplete="tel" inputmode="tel" required></div>
+          <div class="field"><label data-i18n="l_dob">Date of birth <span class="req">*</span></label><input name="Date of birth" type="text" inputmode="numeric" maxlength="10" placeholder="DD/MM/YYYY" autocomplete="bday" required></div>
+          <div class="field"><label data-i18n="l_gender">Gender (as per passport) <span class="req">*</span></label><select name="Gender" required><option value="" data-i18n="o_sel">Select…</option><option value="Male" data-i18n="o_male">Male</option><option value="Female" data-i18n="o_female">Female</option><option value="X" data-i18n="o_x">X / other</option></select></div>
+          <div class="field full"><label data-i18n="l_loc">Current location (City / State / Country) <span class="req">*</span></label><input name="Current location" required></div>
+          <div class="field"><label data-i18n="l_inau">Are you currently in Australia?</label><select name="Currently in Australia" id="inAu" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="No" data-i18n="o_no">No</option></select></div>
+          <div class="field full" id="relocWrap"><label data-i18n="l_reloc">If not in Australia, are you willing to relocate?</label><select name="Willing to relocate" id="relocSel"><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="No" data-i18n="o_no">No</option></select></div>
+        </div>
+      </section>
+
+
+      <!-- 1b · Migration & visa history -->
+      <section class="blk">
+        <h2><span class="n">2</span><span data-i18n="sM">Migration &amp; visa history</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="v_held">Have you ever held an Australian visa? <span class="req">*</span></label><select name="Held Australian visa" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="No" data-i18n="o_no">No</option></select></div>
+          <div class="field"><label data-i18n="v_held_d">If yes — which visa(s) and years</label><input name="Australian visa details" required placeholder="N/A if not applicable"></div>
+          <div class="field"><label data-i18n="v_ref">Any visa refusal or cancellation — Australia or any other country? <span class="req">*</span></label><select name="Visa refusal or cancellation" required><option value="" data-i18n="o_sel">Select…</option><option value="No" data-i18n="o_no">No</option><option value="Yes" data-i18n="o_yes">Yes</option></select></div>
+          <div class="field"><label data-i18n="v_ref_d">If yes — country, year and brief details</label><input name="Refusal details" required placeholder="N/A if not applicable"></div>
+          <div class="field"><label data-i18n="v_over">Have you ever overstayed a visa — Australia or any other country? <span class="req">*</span></label><select name="Visa overstay" required><option value="" data-i18n="o_sel">Select…</option><option value="No" data-i18n="o_no">No</option><option value="Yes" data-i18n="o_yes">Yes</option></select></div>
+          <div class="field"><label data-i18n="v_over_d">If yes — country, period and brief details</label><input name="Overstay details" required placeholder="N/A if not applicable"></div>
+        </div>
+      </section>
+      <!-- 2 -->
+      <section class="blk" id="secWR">
+        <h2><span class="n">3</span><span data-i18n="s2">Work rights &amp; current visa (if in Australia)</span></h2>
+        <p class="hint" data-i18n="s2_note" style="margin:0 0 10px">Applies when you are currently in Australia.</p>
+        <div class="grid2">
+          <div class="field"><label data-i18n="l_wr">Right to work in Australia?</label><select name="Right to work" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="No" data-i18n="o_no">No</option><option value="Unsure" data-i18n="o_unsure">Unsure</option></select></div>
+          <div class="field"><label data-i18n="l_visa">Visa status</label><select name="Visa status" required><option value="" data-i18n="o_sel">Select…</option><option value="Citizen" data-i18n="o_cit">Citizen</option><option value="Permanent Resident" data-i18n="o_pr">Permanent Resident</option><option value="Student" data-i18n="o_stu">Student</option><option value="Working Holiday" data-i18n="o_whv">Working Holiday</option><option value="Skills in Demand / 482" data-i18n="o_sid">Skills in Demand / 482</option><option value="Other" data-i18n="o_oth">Other</option></select></div>
+          <div class="field"><label data-i18n="l_visadetail">Visa / status detail (subclass if known)</label><input name="Visa detail" required placeholder="N/A if not applicable"></div>
+          <div class="field"><label data-i18n="l_visaexp">Current visa / status expiry (if applicable)</label><input name="Visa expiry" required placeholder="N/A if not applicable"></div>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="blk">
+        <h2><span class="n">3</span><span data-i18n="s3">Skills &amp; experience</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="l_occ">Primary trade or occupation <span class="req">*</span></label><input name="Occupation" required data-ph="ph_occ" placeholder="e.g. Motor Mechanic"></div>
+          <div class="field"><label data-i18n="l_years">Years of experience</label><select name="Years of experience" required><option value="" data-i18n="o_sel">Select…</option><option>0–1</option><option>2–3</option><option>4–5</option><option>6+</option></select></div>
+          <div class="field full"><label data-i18n="l_skills">Trade / skill area (optional)</label><textarea name="Key skills" placeholder="e.g. cooking, welding, farm work, aged care, truck driving"></textarea><div class="hint" data-i18n="l_skills_hint">In your own words — what work are you good at?</div></div>
+          <div class="field full"><label data-i18n="l_recent">Most recent relevant job (employer, role, dates, duties)</label><textarea name="Most recent job" required></textarea></div>
+          <div class="field"><label data-i18n="l_auwork">Experience on Australian worksites?</label><input name="Australian worksite experience" data-ph="ph_desc" placeholder="Yes / No / describe" required></div>
+          <div class="field"><label data-i18n="l_austd">Familiar with Australian standards / safety?</label><input name="Australian standards" data-ph="ph_desc" placeholder="Yes / No / describe" required></div>
+        </div>
+      </section>
+
+
+      <!-- 3b · Employment history -->
+      <section class="blk">
+        <h2><span class="n">4</span><span data-i18n="sH">Employment history</span></h2>
+        <p class="hint" data-i18n="sH_note" style="margin:0 0 10px">Most recent first. Full history helps us assess suitability quickly.</p>
+        <div class="grid2">
+          <div class="field"><label data-i18n="h1_emp">Employer 1 — company <span class="req">*</span></label><input name="History 1 employer" required></div>
+          <div class="field"><label data-i18n="h1_role">Employer 1 — position <span class="req">*</span></label><input name="History 1 position" required></div>
+          <div class="field"><label data-i18n="h1_dates">Employer 1 — from / to <span class="req">*</span></label><input name="History 1 dates" placeholder="MM/YYYY – MM/YYYY" required></div>
+          <div class="field"><label data-i18n="h1_duties">Employer 1 — key duties</label><input name="History 1 duties" required></div>
+          <div class="field"><label data-i18n="h2_emp">Employer 2 — company</label><input name="History 2 employer" required placeholder="N/A if not applicable"></div>
+          <div class="field"><label data-i18n="h2_role">Employer 2 — position</label><input name="History 2 position" required placeholder="N/A if not applicable"></div>
+          <div class="field"><label data-i18n="h2_dates">Employer 2 — from / to</label><input name="History 2 dates" required placeholder="N/A if not applicable"></div>
+          <div class="field"><label data-i18n="h2_duties">Employer 2 — key duties</label><input name="History 2 duties" required placeholder="N/A if not applicable"></div>
+        </div>
+        <div class="field"><label data-i18n="h_more">Earlier roles (employer · position · dates, one per line)</label><textarea name="Earlier history" required placeholder="N/A if not applicable"></textarea></div>
+        <div class="field"><label data-i18n="h_years">Total years of experience in the nominated occupation <span class="req">*</span></label><input name="Years in occupation" required placeholder="e.g. 6"></div>
+      </section>
+      <!-- 4 -->
+      <section class="blk">
+        <h2><span class="n">4</span><span data-i18n="s4">Qualifications &amp; licences</span></h2>
+        <div class="field"><label data-i18n="l_qual">Highest qualification achieved</label><select name="Highest qualification" required><option value="" data-i18n="o_sel">Select…</option><option value="High School" data-i18n="o_hs">High School</option><option value="Certificate" data-i18n="o_cert">Certificate</option><option value="Diploma" data-i18n="o_dip">Diploma</option><option value="Degree" data-i18n="o_deg">Degree</option><option value="Other" data-i18n="o_oth">Other</option></select></div>
+        <div class="grid2">
+          <div class="field"><label data-i18n="q_name">Qualification name</label><input name="Qualification name" required placeholder="N/A if not applicable"></div>
+          <div class="field"><label data-i18n="q_inst">Institution &amp; country</label><input name="Qualification institution" required placeholder="N/A if not applicable"></div>
+          <div class="field"><label data-i18n="q_year">Year completed</label><input name="Qualification year" required placeholder="N/A if not applicable"></div>
+        </div>
+        <label style="margin-bottom:8px" data-i18n="l_hold">Do you hold any of the following? (tick all that apply)</label>
+        <div class="checks">
+          <label class="chk"><input type="checkbox" name="White Card" value="Yes"> <span data-i18n="k_white">White Card</span></label>
+          <label class="chk"><input type="checkbox" name="Trade certificate" value="Yes"> <span data-i18n="k_trade">Trade / skill certificate</span></label>
+          <label class="chk"><input type="checkbox" name="Forklift/EWP" value="Yes"> <span data-i18n="k_fork">Forklift / EWP / other licence</span></label>
+          <label class="chk"><input type="checkbox" name="Driver licence" value="Yes"> <span data-i18n="k_drive">Driver’s licence</span></label>
+          <label class="chk"><input type="checkbox" name="First Aid" value="Yes"> <span data-i18n="k_aid">First Aid certificate</span></label>
+          <label class="chk"><input type="checkbox" name="Other licence" value="Yes"> <span data-i18n="k_oth">Other</span></label>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section class="blk">
+        <h2><span class="n">5</span><span data-i18n="s5">English proficiency</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="l_eng">English proficiency</label><select name="English level" required><option value="" data-i18n="o_sel">Select…</option><option value="Fluent" data-i18n="o_flu">Fluent</option><option value="Good" data-i18n="o_good">Good</option><option value="Basic" data-i18n="o_basic">Basic</option><option value="Limited" data-i18n="o_lim">Limited</option></select></div>
+          <div class="field"><label data-i18n="l_engtest">English test taken? (score &amp; date)</label><input name="English test" required></div>
+          <div class="field full"><label data-i18n="l_engwork">Comfortable communicating in English at work?</label><select name="Comfortable in English" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="No" data-i18n="o_no">No</option></select></div>
+        </div>
+      </section>
+
+
+      <!-- 5b · Health & work screening -->
+      <section class="blk">
+        <h2><span class="n">7</span><span data-i18n="sW">Health &amp; work screening</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="w_fit">Fit to perform the physical requirements of the role? <span class="req">*</span></label><select name="Fit for work" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="With adjustments" data-i18n="o_adj">With adjustments</option><option value="Unsure" data-i18n="o_unsure">Unsure</option></select></div>
+          <div class="field"><label data-i18n="w_police">Police clearance available on request? <span class="req">*</span></label><select name="Police clearance" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="Can obtain" data-i18n="o_can">Can obtain</option><option value="No" data-i18n="o_no">No</option></select></div>
+          <div class="field full"><label data-i18n="w_note">Anything relevant to safe work or reasonable adjustments</label><input name="Work screening notes" required placeholder="N/A if not applicable"></div>
+        </div>
+      </section>
+
+      <!-- 5c · Family & relocation -->
+      <section class="blk">
+        <h2><span class="n">8</span><span data-i18n="sF">Family &amp; relocation planning</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="f_marital">Marital status <span class="req">*</span></label><select name="Marital status" id="marital" required><option value="" data-i18n="o_sel">Select…</option><option value="Single" data-i18n="o_single">Single</option><option value="Married" data-i18n="o_married">Married</option><option value="De facto" data-i18n="o_defacto">De facto partner</option><option value="Other" data-i18n="o_oth">Other</option></select></div>
+          <div class="field"><label data-i18n="f_sp_given" id="spGivenLab">Spouse / partner — first name</label><input name="Spouse first name" id="spGiven"></div>
+          <div class="field"><label data-i18n="f_sp_sur" id="spSurLab">Spouse / partner — surname</label><input name="Spouse surname" id="spSur"></div>
+          <div class="field"><label data-i18n="f_sp_yob" id="spYobLab">Spouse / partner — year of birth</label><input name="Spouse year of birth" id="spYob" type="number" min="1940" max="2012" placeholder="YYYY"></div>
+          <div class="field"><label data-i18n="f_kids">Number of children <span class="req">*</span></label><input name="Number of children" type="number" min="0" required placeholder="0"></div>
+          <div class="field"><label data-i18n="f_kids_age">Children's ages</label><input name="Children ages" placeholder="e.g. 4, 9, 15"><div class="hint" data-i18n="f_kids_hint">Required if any children — for schooling and housing planning.</div></div>
+          <div class="field full"><label data-i18n="f_need">Settlement support needs (housing, schooling, transport…)</label><input name="Settlement needs" required placeholder="N/A if not applicable"></div>
+        </div>
+      </section>
+      <!-- 6 -->
+      <section class="blk">
+        <h2><span class="n">6</span><span data-i18n="s6">Availability &amp; preferences</span></h2>
+        <div class="grid2">
+          <div class="field"><label data-i18n="l_start">When can you start?</label><input name="Start date" data-ph="ph_start" placeholder="e.g. Immediately, or a date" required></div>
+          <div class="field"><label data-i18n="l_pref">Preferred work location(s) / state</label><input name="Preferred locations" required placeholder="e.g. NSW, WA, SA"></div>
+          <div class="field"><label data-i18n="l_region">Open to regional / remote placements?</label><select name="Regional/remote" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="No" data-i18n="o_no">No</option></select></div>
+          <div class="field"><label data-i18n="l_ot">Willing to work overtime / weekends?</label><select name="Overtime/weekends" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="No" data-i18n="o_no">No</option></select></div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="blk">
+        <h2><span class="n">7</span><span data-i18n="s7">Additional information</span></h2>
+        <div class="field"><label data-i18n="l_train">Open to further training or upskilling?</label><select name="Open to training" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="No" data-i18n="o_no">No</option></select></div>
+        <div class="field"><label data-i18n="l_adjust">Any support or workplace adjustments you’d like us to be aware of? (optional)</label><input name="Adjustments" required><div class="hint" data-i18n="hint_adjust">Optional — only so we can arrange reasonable adjustments if needed.</div></div>
+        <div class="field"><label data-i18n="l_why">Why are you interested in this opportunity?</label><textarea name="Why interested" required></textarea></div>
+        <div class="field"><label data-i18n="l_more">Additional comments</label><textarea name="Additional comments" required></textarea></div>
+      </section>
+
+      <!-- 8 -->
+      <section class="blk">
+        <h2><span class="n">8</span><span data-i18n="s8">Documents</span></h2>
+        <p class="hint" data-i18n="doc_lead" style="font-size:.98rem;margin:0 0 10px">Tick the documents included with your application. Documents are not attached to this form — this protects your personal information. Upload them using the secure upload button below, or the interim channel shown.</p>
+        <div class="checks">
+          <label class="chk"><input type="checkbox" name="Doc — Passport bio page" value="Included"> <span data-i18n="dc_pass">Passport bio page</span></label>
+          <label class="chk"><input type="checkbox" name="Doc — CV / Resume" value="Included"> <span data-i18n="dc_cv">CV / Resume</span></label>
+          <label class="chk"><input type="checkbox" name="Doc — Qualifications" value="Included"> <span data-i18n="dc_qual">Qualifications &amp; transcripts</span></label>
+          <label class="chk"><input type="checkbox" name="Doc — English test" value="Included"> <span data-i18n="dc_eng">English test result</span></label>
+          <label class="chk"><input type="checkbox" name="Doc — Licences" value="Included"> <span data-i18n="dc_lic">Licences / tickets</span></label>
+          <label class="chk"><input type="checkbox" name="Doc — References" value="Included"> <span data-i18n="dc_ref">Employment references</span></label>
+          <label class="chk"><input type="checkbox" name="Doc — Photo" value="Included"> <span data-i18n="dc_photo">Photo</span></label>
+        </div>
+        <div style="margin-top:12px">
+          <a id="uploadBtn" href="#" target="_blank" rel="noopener" style="display:none;background:#143027;color:#F2DF81;text-decoration:none;font-weight:700;border-radius:10px;padding:12px 20px" data-i18n="dc_btn">Open secure document upload</a>
+          <div id="uploadPending" style="display:none;background:#FBF6E8;border:1px solid #E7D9A8;border-radius:10px;padding:11px 13px;font-size:.92rem" data-i18n="dc_pending">The secure upload link is being activated. In the meantime, send your documents to <b>jobs@talentgate.com.au</b> after submitting, using the file naming below.</div>
+          <div style="background:#EFE9DC;border:1px solid rgba(184,138,52,.3);border-radius:10px;padding:11px 13px;font-size:.88rem;margin-top:8px" data-i18n="dc_naming">Name each file with your full name and the document type — for example: <b>Nguyen Van A - Passport.pdf</b>, <b>Nguyen Van A - CV.pdf</b>. This helps us match your documents to your application quickly.</div>
+          <p id="uploadNote" class="hint" style="margin-top:8px" data-i18n="dc_note2">Name each file: YourSurname_DocType (e.g. TRAN_Passport.pdf).</p>
+        </div>
+      </section>
+
+      <!-- 9 -->
+      <section class="blk">
+        <h2><span class="n">9</span><span data-i18n="s9">Declaration &amp; consent</span></h2>
+        <div class="consent"><input type="checkbox" id="d1" required><label for="d1" data-i18n="dec1">I declare the information provided is true and correct.</label></div>
+        <div class="consent"><input type="checkbox" id="d2" required><label for="d2" data-i18n="dec2">I consent to TalentGate collecting, holding and using my details for recruitment and placement purposes, as set out in the <a href="/privacy" target="_blank">Privacy &amp; Collection Notice</a> — including sharing my details with prospective employers and relevant service partners as part of the recruitment and placement process. I understand TalentGate does not guarantee any particular outcome.</label></div>
+        <div class="consent" style="opacity:.92"><input type="checkbox" id="d3"><label for="d3" data-i18n="dec3">Yes — please send me job opportunities, news and industry insights from TalentGate. I can unsubscribe at any time. <span style="color:#8a927f">(optional)</span></label></div>
+      </section>
+
+      <div class="submitrow">
+        <div class="err" id="err" data-i18n="err">Please complete the required fields and both declarations.</div>
+        <div class="h-captcha" data-captcha="true" style="margin:0 0 14px"></div>
+      <button type="submit" class="btn" data-i18n="submit">Submit application</button>
+        <span class="hint" data-i18n="free">Free, always. We’ll be in touch.</span>
+      </div>
+    </form>
+
+    <footer>
+      <p><b>TalentGate</b> — Talent Gate Australia Pty Ltd. Recruitment, workforce solutions, relocation and settlement support services.</p>
+      <p class="tag">The gateway for Australia’s workforce solutions.</p>
+      <p>© <span id="yr"></span> TalentGate. All rights reserved. · <a href="/" data-i18n="home">Back to home</a></p>
+    </footer>
+
+  </div>
+</main>
+
+<script>
+  // ==== FORM DELIVERY ====
+  // Get a free access key at web3forms.com (2 min, no server), set the recipient (Web3Forms account email) to jobs@talentgate.com.au,
+  // then paste it below. Until then the form validates but will not send.
+  var ACCESS_KEY = "04f3131a-244a-4713-8205-65d202bad37d"; // jobs@talentgate.com.au (confirmed by Malanda 06.07.2026)
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Capture the job reference passed from the Jobs board (/apply?ref=TGA-JO.26.xxxx)
+  var REF = (new URLSearchParams(location.search).get('ref') || '').trim().slice(0,40);
+  var ROLE = (new URLSearchParams(location.search).get('role') || '').trim().slice(0,80);
+  var SRC = (new URLSearchParams(location.search).get('src') || '').trim().slice(0,20);
+  function refLabel(){ return ROLE ? (ROLE + (REF ? ' (' + REF + ')' : '')) : REF; }
+  function renderRefNote(){
+    var rn = document.getElementById('refNote');
+    if(rn && (REF || ROLE)){ rn.textContent = (document.documentElement.lang==='vi'?'Ứng tuyển vị trí: ':'Applying for role: ') + refLabel(); rn.style.display='block'; }
+  }
+  renderRefNote();
+
+  var form = document.getElementById('appform');
+  var PAGE_LOADED_AT = Date.now();
+
+  // worker secure document upload (OneDrive/SharePoint File Request — paste at setup)
+  var UPLOAD_LINK = "https://talentgateau-my.sharepoint.com/:f:/g/personal/jobs_talentgate_com_au/IgDCCVHPjXnKQJ_sqshfeBUpAQigUJTHTbM0EwAPs_2ktrY";
+  (function(){
+    var btn=document.getElementById('uploadBtn'), pend=document.getElementById('uploadPending');
+    if(btn && UPLOAD_LINK.indexOf('REPLACE_WITH_')!==0){ btn.href=UPLOAD_LINK; btn.style.display='inline-block'; }
+    else if(pend){ pend.style.display='block'; }
+  })();
+
+  // spouse fields required only when Married / De facto (with visible *)
+  var maritalEl=document.getElementById('marital');
+  function refreshSpouse(){
+    var v=(maritalEl&&maritalEl.value)||''; var need=(v==='Married'||v==='De facto');
+    ['spGiven','spSur','spYob'].forEach(function(id){ var e=document.getElementById(id); if(e){ e.required=need; } });
+    ['spGivenLab','spSurLab','spYobLab'].forEach(function(id){ var l=document.getElementById(id); if(l){
+      l.style.fontWeight=need?'700':'';
+      var star=l.querySelector('.req');
+      if(need && !star){ var sp=document.createElement('span'); sp.className='req'; sp.textContent=' *'; l.appendChild(sp); }
+      if(!need && star){ star.remove(); }
+    } });
+  }
+  if(maritalEl){ maritalEl.addEventListener('change',refreshSpouse); refreshSpouse(); }
+
+  // onshore/offshore: work-rights section only when in Australia; relocate only when offshore
+  var inAu=document.getElementById('inAu');
+  function refreshOnshore(){
+    var v=(inAu&&inAu.value)||''; var wr=document.getElementById('secWR');
+    var onshore=(v!=='No');
+    if(wr){ wr.style.display=onshore?'':'none'; wr.querySelectorAll('input,select,textarea').forEach(function(e){ e.required=onshore; }); }
+    var rw=document.getElementById('relocWrap'), rs=document.getElementById('relocSel');
+    var offshore=(v==='No');
+    if(rw){ rw.style.display=offshore?'':'none'; }
+    if(rs){ rs.required=offshore; if(!offshore){ rs.value=''; } }
+  }
+  if(inAu){ inAu.addEventListener('change',refreshOnshore); refreshOnshore(); }
+
+  // numeric keypads on phones for pure-number fields
+  document.querySelectorAll('input[type="number"]').forEach(function(e){ e.setAttribute('inputmode','numeric'); });
+  var yio=document.querySelector('[name="Years in occupation"]'); if(yio){ yio.setAttribute('inputmode','numeric'); }
+
+  // visible * on every compulsory field
+  document.querySelectorAll('.field').forEach(function(fw){
+    var ctl=fw.querySelector('input,select,textarea'); var lab=fw.querySelector('label');
+    if(ctl&&lab&&ctl.required&&!lab.querySelector('.req')&&ctl.type!=='hidden'){
+      var sp=document.createElement('span'); sp.className='req'; sp.textContent=' *'; lab.appendChild(sp);
+    }
+  });
+
+  // numeric keypad on phones for all number fields
+  document.querySelectorAll('input[type="number"]').forEach(function(e){ e.setAttribute('inputmode','numeric'); });
+
+
+  // DD/MM/YYYY typed date (reliable in all browsers incl. in-app webviews, unlike native date pickers)
+  function dobMask(sel){
+    var el=document.querySelector(sel); if(!el) return;
+    el.addEventListener('input',function(){
+      var d=el.value.replace(/\D/g,'').slice(0,8);
+      var out=d.slice(0,2); if(d.length>2) out+='/'+d.slice(2,4); if(d.length>4) out+='/'+d.slice(4,8);
+      el.value=out;
+    });
+    function check(){
+      var m=el.value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+      var okd=false;
+      if(m){ var dd=+m[1],mm=+m[2],yy=+m[3];
+        var dt=new Date(yy,mm-1,dd);
+        okd = dt.getFullYear()===yy && dt.getMonth()===mm-1 && dt.getDate()===dd && yy>=1940 && yy<=2012;
+      }
+      el.setCustomValidity(el.value && !okd ? ((document.documentElement.lang==='vi')?'Vui lòng nhập ngày sinh hợp lệ (NN/TT/NNNN)':'Please enter a valid date of birth (DD/MM/YYYY)') : '');
+    }
+    el.addEventListener('blur',check); el.addEventListener('input',check);
+  }
+  dobMask('[name="Date of birth"]');
+
+  // renumber sections in visual order
+  (function(){ var i=1; document.querySelectorAll('section.blk h2 .n').forEach(function(el){ el.textContent=(i++); }); })();
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var ok = form.checkValidity() && document.getElementById('d1').checked && document.getElementById('d2').checked;
+    document.getElementById('err').style.display = ok ? 'none' : 'block';
+    if(!ok){ form.reportValidity(); return; }
+
+    // anti-bot: honeypot filled or machine-speed submission -> silent fake success
+    var hp=form.querySelector('[name="company_website_url"]');
+    if((hp&&hp.value) || (Date.now()-PAGE_LOADED_AT<8000)){
+      document.getElementById('done').style.display='block'; form.style.display='none'; return;
+    }
+    // human verification gate: if the captcha has rendered, a token is required before sending
+    var capW=document.querySelector('.h-captcha');
+    if(capW && capW.querySelector('iframe')){
+      var tok=form.querySelector('[name="h-captcha-response"]');
+      if(!tok || !tok.value){
+        alert(document.documentElement.lang==='vi' ? 'Vui lòng xác nhận bạn là người thật bằng cách hoàn thành ô xác minh phía trên nút gửi.' : 'Please confirm you are human by completing the verification box above the submit button.');
+        capW.scrollIntoView({behavior:'smooth',block:'center'}); return;
+      }
+    }
+
+    // children ages required when children > 0
+    var kidsN=parseInt((new FormData(form)).get('Number of children')||'0',10);
+    var kEl=form.querySelector('[name="Children ages"]');
+    if(kEl){ kEl.required = kidsN>0; if(kidsN>0 && !kEl.value.trim()){ form.reportValidity(); return; } }
+
+    // minimum documents: passport bio page + CV
+    var fdChk=new FormData(form);
+    if(!(fdChk.get('Doc — Passport bio page') && fdChk.get('Doc — CV / Resume'))){
+      alert(document.documentElement.lang==='vi'
+        ? 'Vui lòng đính kèm tối thiểu: Trang thông tin hộ chiếu và CV (đánh dấu vào danh mục tài liệu).'
+        : 'Minimum documents required: Passport bio page and CV / Resume (tick them in the documents checklist).');
+      return;
+    }
+
+    var fd = new FormData(form);
+    fd.delete('company_website_url');
+    fd.append('Marketing consent', document.getElementById('d3') && document.getElementById('d3').checked ? 'Yes' : 'No');
+    fd.append('Submitted at', new Date().toLocaleString('en-AU',{timeZone:'Australia/Sydney',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) + ' AEST/AEDT');
+    fd.append('access_key', ACCESS_KEY);
+    if(REF){ fd.append('ref', REF); }
+    if(SRC){ fd.append('src', SRC); }
+    fd.append('subject', 'TalentGate' + (curLang==='vi' ? ' (Tiếng Việt)' : '') + ' — Application' + (ROLE ? ' — '+ROLE : '') + (REF ? ' ['+REF+']' : '') + ': ' + (fd.get('Full name')||''));
+    fd.append('from_name', 'TalentGate Application Form');
+    if(ROLE){ fd.append('Job title', ROLE); }
+    fd.append('Language', curLang==='vi' ? 'Vietnamese' : 'English');
+    fd.append('Job reference', REF || 'General application (no job ref)');
+
+    if(ACCESS_KEY === "REPLACE_WITH_WEB3FORMS_ACCESS_KEY"){
+      document.getElementById('done').style.display='block';
+      form.style.display='none';
+      window.scrollTo({top:0,behavior:'smooth'});
+      return; // preview mode — no key set yet
+    }
+
+    fetch('https://api.web3forms.com/submit', { method:'POST', body: fd })
+      .then(function(r){ return r.json(); })
+      .then(function(){
+        document.getElementById('done').style.display='block';
+        form.style.display='none';
+        window.scrollTo({top:0,behavior:'smooth'});
+      })
+      .catch(function(){ document.getElementById('err').textContent = (curLang==='en'?'Something went wrong — please email your application to jobs@talentgate.com.au':'Đã xảy ra lỗi — vui lòng gửi đơn qua email jobs@talentgate.com.au'); document.getElementById('err').style.display='block'; });
+  });
+
+  // ==== BILINGUAL ====
+  var T = {
+    h1:{en:"Candidate Application",vi:"Đơn Đăng Ký Ứng Viên"},
+    sub:{en:"Complete this application so we can match you with the right opportunities. Registering is always free.",vi:"Hoàn tất đơn này để chúng tôi kết nối bạn với công việc phù hợp. Đăng ký luôn miễn phí."},
+    done_h:{en:"Application received",vi:"Đã nhận đơn"}, done_p:{en:"Thank you — your application has been sent to our team. We’ll be in touch.",vi:"Cảm ơn bạn — đơn của bạn đã được gửi tới đội ngũ của chúng tôi. Chúng tôi sẽ liên hệ."},
+    s1:{en:"Personal details",vi:"Thông tin cá nhân"},
+    l_nat:{en:"Nationality / passport country <span class='req'>*</span>",vi:"Quốc tịch / quốc gia hộ chiếu <span class='req'>*</span>"},
+    l_gender:{en:"Gender (as per passport) <span class='req'>*</span>",vi:"Giới tính (theo hộ chiếu) <span class='req'>*</span>"},
+    o_male:{en:"Male",vi:"Nam"}, o_female:{en:"Female",vi:"Nữ"}, o_x:{en:"X / other",vi:"X / khác"},
+    sM:{en:"Migration &amp; visa history",vi:"Lịch sử di trú &amp; visa"},
+    v_held:{en:"Have you ever held an Australian visa? <span class='req'>*</span>",vi:"Bạn đã từng có visa Úc chưa? <span class='req'>*</span>"},
+    v_held_d:{en:"If yes — which visa(s) and years",vi:"Nếu có — loại visa và năm"},
+    v_ref:{en:"Any visa refusal or cancellation — Australia or any other country? <span class='req'>*</span>",vi:"Đã từng bị từ chối hoặc huỷ visa — ở Úc hoặc bất kỳ quốc gia nào? <span class='req'>*</span>"},
+    v_ref_d:{en:"If yes — country, year and brief details",vi:"Nếu có — quốc gia, năm và chi tiết ngắn gọn"},
+    v_over:{en:"Have you ever overstayed a visa — Australia or any other country? <span class='req'>*</span>",vi:"Bạn đã từng ở quá hạn visa — ở Úc hoặc bất kỳ quốc gia nào? <span class='req'>*</span>"},
+    v_over_d:{en:"If yes — country, period and brief details",vi:"Nếu có — quốc gia, thời gian và chi tiết ngắn gọn"},
+    s2_note:{en:"Applies when you are currently in Australia.",vi:"Áp dụng khi bạn đang ở Úc."},
+    l_visadetail:{en:"Visa / status detail (subclass if known)",vi:"Chi tiết visa / tình trạng (mã loại nếu biết)"},
+    l_visaexp:{en:"Current visa / status expiry (if applicable)",vi:"Ngày hết hạn visa / tình trạng hiện tại (nếu có)"},
+    sH:{en:"Employment history",vi:"Quá trình làm việc"},
+    sH_note:{en:"Most recent first. Full history helps us assess suitability quickly.",vi:"Gần nhất trước. Lịch sử đầy đủ giúp chúng tôi đánh giá nhanh mức độ phù hợp."},
+    h1_emp:{en:"Employer 1 — company <span class='req'>*</span>",vi:"Nơi làm 1 — công ty <span class='req'>*</span>"}, h1_role:{en:"Employer 1 — position <span class='req'>*</span>",vi:"Nơi làm 1 — vị trí <span class='req'>*</span>"}, h1_dates:{en:"Employer 1 — from / to <span class='req'>*</span>",vi:"Nơi làm 1 — từ / đến <span class='req'>*</span>"}, h1_duties:{en:"Employer 1 — key duties",vi:"Nơi làm 1 — nhiệm vụ chính"},
+    h2_emp:{en:"Employer 2 — company",vi:"Nơi làm 2 — công ty"}, h2_role:{en:"Employer 2 — position",vi:"Nơi làm 2 — vị trí"}, h2_dates:{en:"Employer 2 — from / to",vi:"Nơi làm 2 — từ / đến"}, h2_duties:{en:"Employer 2 — key duties",vi:"Nơi làm 2 — nhiệm vụ chính"},
+    h_more:{en:"Earlier roles (employer · position · dates, one per line)",vi:"Các nơi làm trước (công ty · vị trí · thời gian, mỗi dòng một nơi)"},
+    h_years:{en:"Total years of experience in the nominated occupation <span class='req'>*</span>",vi:"Tổng số năm kinh nghiệm trong nghề <span class='req'>*</span>"},
+    q_name:{en:"Qualification name",vi:"Tên bằng cấp"}, q_inst:{en:"Institution &amp; country",vi:"Trường / tổ chức &amp; quốc gia"}, q_year:{en:"Year completed",vi:"Năm hoàn thành"},
+    sW:{en:"Health &amp; work screening",vi:"Sức khoẻ &amp; sàng lọc công việc"},
+    w_fit:{en:"Fit to perform the physical requirements of the role? <span class='req'>*</span>",vi:"Đủ sức khoẻ đáp ứng yêu cầu thể chất của công việc? <span class='req'>*</span>"},
+    o_adj:{en:"With adjustments",vi:"Cần điều chỉnh phù hợp"}, o_can:{en:"Can obtain",vi:"Có thể xin cấp"},
+    w_police:{en:"Police clearance available on request? <span class='req'>*</span>",vi:"Có thể cung cấp lý lịch tư pháp khi được yêu cầu? <span class='req'>*</span>"},
+    w_note:{en:"Anything relevant to safe work or reasonable adjustments",vi:"Thông tin liên quan đến an toàn lao động hoặc điều chỉnh hợp lý"},
+    sF:{en:"Family &amp; relocation planning",vi:"Gia đình &amp; kế hoạch chuyển nơi ở"},
+    f_marital:{en:"Marital status <span class='req'>*</span>",vi:"Tình trạng hôn nhân <span class='req'>*</span>"},
+    o_single:{en:"Single",vi:"Độc thân"}, o_married:{en:"Married",vi:"Đã kết hôn"}, o_defacto:{en:"De facto partner",vi:"Sống chung như vợ chồng"},
+    f_sp_given:{en:"Spouse / partner — first name",vi:"Vợ / chồng — tên"},
+    f_sp_sur:{en:"Spouse / partner — surname",vi:"Vợ / chồng — họ"},
+    f_sp_yob:{en:"Spouse / partner — year of birth",vi:"Vợ / chồng — năm sinh"},
+    f_kids:{en:"Number of children <span class='req'>*</span>",vi:"Số con <span class='req'>*</span>"},
+    f_kids_age:{en:"Children's ages",vi:"Tuổi các con"},
+    f_kids_hint:{en:"Required if any children — for schooling and housing planning.",vi:"Bắt buộc nếu có con — để lên kế hoạch trường học và nhà ở."},
+    f_need:{en:"Settlement support needs (housing, schooling, transport…)",vi:"Nhu cầu hỗ trợ an cư (nhà ở, trường học, đi lại…)"},
+    doc_lead:{en:"Tick the documents included with your application. Documents are not attached to this form — this protects your personal information. Upload them using the secure upload button below, or the interim channel shown.",vi:"Đánh dấu các tài liệu kèm theo hồ sơ của bạn. Tài liệu không đính kèm vào biểu mẫu — để bảo vệ thông tin cá nhân của bạn. Vui lòng tải lên bằng nút tải bảo mật bên dưới, hoặc kênh tạm thời được hiển thị."},
+    dc_pass:{en:"Passport bio page",vi:"Trang thông tin hộ chiếu"}, dc_cv:{en:"CV / Resume",vi:"CV / Sơ yếu lý lịch"}, dc_qual:{en:"Qualifications &amp; transcripts",vi:"Bằng cấp &amp; bảng điểm"}, dc_eng:{en:"English test result",vi:"Kết quả thi tiếng Anh"}, dc_lic:{en:"Licences / tickets",vi:"Giấy phép / chứng chỉ hành nghề"}, dc_ref:{en:"Employment references",vi:"Thư giới thiệu / xác nhận công việc"}, dc_photo:{en:"Photo",vi:"Ảnh"},
+    dc_btn:{en:"Open secure document upload",vi:"Mở kênh tải tài liệu bảo mật"},
+    dc_pending:{en:"The secure upload link is being activated. In the meantime, send your documents to <b>jobs@talentgate.com.au</b> after submitting, using the file naming below.",vi:"Link tải bảo mật đang được kích hoạt. Trong thời gian này, vui lòng gửi tài liệu đến <b>jobs@talentgate.com.au</b> sau khi nộp, đặt tên tệp theo hướng dẫn bên dưới."},
+    dc_naming:{en:"Name each file with your full name and the document type — for example: <b>Nguyen Van A - Passport.pdf</b>, <b>Nguyen Van A - CV.pdf</b>. This helps us match your documents to your application quickly.",vi:"Đặt tên mỗi tệp gồm họ tên đầy đủ và loại tài liệu — ví dụ: <b>Nguyen Van A - Passport.pdf</b>, <b>Nguyen Van A - CV.pdf</b>. Điều này giúp chúng tôi ghép tài liệu với hồ sơ của bạn nhanh chóng."},
+    dc_note2:{en:"Name each file: YourSurname_DocType (e.g. TRAN_Passport.pdf).",vi:"Đặt tên tệp: HọCủaBạn_LoạiTàiLiệu (ví dụ: TRAN_Passport.pdf)."}, s2:{en:"Work rights &amp; current visa (if in Australia)",vi:"Quyền làm việc &amp; visa hiện tại (nếu đang ở Úc)"}, s3:{en:"Skills & experience",vi:"Kỹ năng & kinh nghiệm"}, s4:{en:"Qualifications & licences",vi:"Bằng cấp & chứng chỉ"}, s5:{en:"English proficiency",vi:"Trình độ tiếng Anh"}, s6:{en:"Availability & preferences",vi:"Thời gian & nguyện vọng"}, s7:{en:"Additional information",vi:"Thông tin thêm"}, s8:{en:"Documents",vi:"Tài liệu"}, s9:{en:"Declaration & consent",vi:"Cam kết & đồng ý"},
+    l_name:{en:"Full name <span class='req'>*</span>",vi:"Họ và tên <span class='req'>*</span>"}, l_email:{en:"Email <span class='req'>*</span>",vi:"Email <span class='req'>*</span>"}, l_phone:{en:"Phone / WhatsApp <span class='req'>*</span>",vi:"Điện thoại / WhatsApp <span class='req'>*</span>"}, l_dob:{en:"Date of birth",vi:"Ngày sinh"}, l_loc:{en:"Current location (City / State / Country) <span class='req'>*</span>",vi:"Nơi ở hiện tại (Thành phố / Bang / Quốc gia) <span class='req'>*</span>"}, l_inau:{en:"Are you currently in Australia?",vi:"Bạn hiện có ở Úc không?"},
+    l_wr:{en:"Right to work in Australia?",vi:"Có quyền làm việc tại Úc?"}, l_visa:{en:"Visa status",vi:"Tình trạng visa"}, l_reloc:{en:"If not in Australia, are you willing to relocate?",vi:"Nếu chưa ở Úc, bạn có sẵn sàng chuyển đến?"},
+    l_occ:{en:"Primary trade or occupation <span class='req'>*</span>",vi:"Nghề nghiệp chính <span class='req'>*</span>"}, l_years:{en:"Years of experience",vi:"Số năm kinh nghiệm"}, l_skills:{en:"Trade / skill area (optional)",vi:"Lĩnh vực nghề / kỹ năng (không bắt buộc)"}, l_skills_hint:{en:"In your own words — what work are you good at?",vi:"Bằng lời của bạn — bạn làm tốt công việc gì?"}, l_recent:{en:"Most recent relevant job (employer, role, dates, duties)",vi:"Công việc gần nhất liên quan (nơi làm, vị trí, thời gian, nhiệm vụ)"}, l_auwork:{en:"Experience on Australian worksites?",vi:"Kinh nghiệm làm việc tại công trường ở Úc?"}, l_austd:{en:"Familiar with Australian standards / safety?",vi:"Quen với tiêu chuẩn / an toàn của Úc?"},
+    l_qual:{en:"Highest qualification achieved",vi:"Bằng cấp cao nhất"}, l_hold:{en:"Do you hold any of the following? (tick all that apply)",vi:"Bạn có những giấy tờ nào sau đây? (chọn tất cả phù hợp)"},
+    k_white:{en:"White Card",vi:"White Card"}, k_trade:{en:"Trade / skill certificate",vi:"Chứng chỉ nghề / kỹ năng"}, k_fork:{en:"Forklift / EWP / other licence",vi:"Bằng lái xe nâng / EWP / khác"}, k_drive:{en:"Driver’s licence",vi:"Bằng lái xe"}, k_aid:{en:"First Aid certificate",vi:"Chứng chỉ Sơ cấp cứu"}, k_oth:{en:"Other",vi:"Khác"},
+    l_eng:{en:"English proficiency",vi:"Trình độ tiếng Anh"}, l_engtest:{en:"English test taken? (score & date)",vi:"Đã thi tiếng Anh? (điểm & ngày)"}, l_engwork:{en:"Comfortable communicating in English at work?",vi:"Tự tin giao tiếp tiếng Anh khi làm việc?"},
+    l_start:{en:"When can you start?",vi:"Khi nào bạn có thể bắt đầu?"}, l_pref:{en:"Preferred work location(s) / state",vi:"Nơi làm việc mong muốn / bang"}, l_region:{en:"Open to regional / remote placements?",vi:"Sẵn sàng làm ở vùng regional / xa?"}, l_ot:{en:"Willing to work overtime / weekends?",vi:"Sẵn sàng làm thêm giờ / cuối tuần?"},
+    l_train:{en:"Open to further training or upskilling?",vi:"Sẵn sàng học thêm / nâng cao tay nghề?"}, l_adjust:{en:"Any support or workplace adjustments you’d like us to be aware of? (optional)",vi:"Có hỗ trợ hay điều chỉnh nơi làm việc nào bạn muốn chúng tôi biết? (không bắt buộc)"}, hint_adjust:{en:"Optional — only so we can arrange reasonable adjustments if needed.",vi:"Không bắt buộc — chỉ để chúng tôi sắp xếp điều chỉnh hợp lý nếu cần."}, l_why:{en:"Why are you interested in this opportunity?",vi:"Vì sao bạn quan tâm đến cơ hội này?"}, l_more:{en:"Additional comments",vi:"Ý kiến thêm"},
+    l_id:{en:"Passport or national ID",vi:"Hộ chiếu hoặc CMND/CCCD"}, hint_files:{en:"PDF, JPG or PNG. Max 5MB.",vi:"PDF, JPG hoặc PNG. Tối đa 5MB."}, l_cv:{en:"Resume / CV",vi:"Hồ sơ / CV"}, hint_cv:{en:"PDF, DOC or DOCX. Max 5MB.",vi:"PDF, DOC hoặc DOCX. Tối đa 5MB."}, l_certs:{en:"Qualification certificates / licences (optional)",vi:"Bằng cấp / chứng chỉ (không bắt buộc)"},
+    dec1:{en:"I declare the information provided is true and correct.",vi:"Tôi cam kết thông tin cung cấp là đúng sự thật."}, dec3:{en:"Yes — please send me job opportunities, news and industry insights from TalentGate. I can unsubscribe at any time. <span style='color:#8a927f'>(optional)</span>",vi:"Có — vui lòng gửi cho tôi các cơ hội việc làm, tin tức và thông tin ngành từ TalentGate. Tôi có thể huỷ đăng ký bất cứ lúc nào. <span style='color:#8a927f'>(không bắt buộc)</span>"}, dec2:{en:"I consent to TalentGate collecting, holding and using my details for recruitment and placement purposes, as set out in the <a href='/privacy' target='_blank'>Privacy & Collection Notice</a> — including sharing my details with prospective employers and relevant service partners as part of the recruitment and placement process. I understand TalentGate does not guarantee any particular outcome.",vi:"Tôi đồng ý để TalentGate thu thập, lưu giữ và sử dụng thông tin của tôi cho mục đích tuyển dụng và bố trí việc làm, theo <a href='/privacy' target='_blank'>Thông báo Quyền riêng tư & Thu thập</a> — bao gồm việc chia sẻ thông tin của tôi với các nhà tuyển dụng tiềm năng và đối tác dịch vụ liên quan trong quá trình tuyển dụng và bố trí việc làm. Tôi hiểu TalentGate không bảo đảm bất kỳ kết quả cụ thể nào."},
+    err:{en:"Please complete the required fields and both declarations.",vi:"Vui lòng điền các trường bắt buộc và cả hai cam kết."}, submit:{en:"Submit application",vi:"Gửi đơn đăng ký"}, free:{en:"Free, always. We’ll be in touch.",vi:"Luôn miễn phí. Chúng tôi sẽ liên hệ."}, home:{en:"Back to home",vi:"Về trang chủ"},
+    o_sel:{en:"Select…",vi:"Chọn…"}, o_yes:{en:"Yes",vi:"Có"}, o_no:{en:"No",vi:"Không"}, o_unsure:{en:"Unsure",vi:"Chưa chắc"},
+    o_cit:{en:"Citizen",vi:"Công dân"}, o_pr:{en:"Permanent Resident",vi:"Thường trú nhân"}, o_stu:{en:"Student",vi:"Du học sinh"}, o_whv:{en:"Working Holiday",vi:"Working Holiday"}, o_sid:{en:"Skills in Demand / 482",vi:"Skills in Demand / 482"}, o_oth:{en:"Other",vi:"Khác"},
+    o_hs:{en:"High School",vi:"Trung học"}, o_cert:{en:"Certificate",vi:"Chứng chỉ"}, o_dip:{en:"Diploma",vi:"Cao đẳng"}, o_deg:{en:"Degree",vi:"Đại học"},
+    o_flu:{en:"Fluent",vi:"Thành thạo"}, o_good:{en:"Good",vi:"Khá"}, o_basic:{en:"Basic",vi:"Cơ bản"}, o_lim:{en:"Limited",vi:"Hạn chế"},
+    ph_occ:{en:"e.g. Motor Mechanic",vi:"vd. Thợ sửa ô tô"}, ph_desc:{en:"Yes / No / describe",vi:"Có / Không / mô tả"}, ph_start:{en:"e.g. Immediately, or a date",vi:"vd. Ngay lập tức, hoặc một ngày"}
+  };
+  var curLang='en';
+  function setLang(l){
+    curLang=l; document.documentElement.lang=l;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){ var k=el.getAttribute('data-i18n'); if(T[k]&&T[k][l]!=null){ el.innerHTML=T[k][l]; } });
+    document.querySelectorAll('[data-ph]').forEach(function(el){ var k=el.getAttribute('data-ph'); if(T[k]&&T[k][l]!=null){ el.placeholder=T[k][l]; } });
+    document.getElementById('langbtn').textContent = (l==='en') ? 'Tiếng Việt' : 'English';
+    renderRefNote();
+  }
+  function toggleLang(){ setLang(curLang==='en'?'vi':'en'); }
+</script>
+<script src="https://web3forms.com/client/script.js" async defer></script>
+</body>
+</html>

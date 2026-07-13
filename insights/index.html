@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<title>TalentGate — Industry &amp; Workforce Insights</title>
+<meta name="description" content="News and analysis on Australia's labour market — the workforce shortages, sectors and trends shaping how employers hire and how workers build careers here.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TalentGate">
+<meta property="og:title" content="Industry & Workforce Insights — TalentGate">
+<meta property="og:description" content="News and analysis on Australia's labour market — the shortages, sectors and trends shaping hiring and careers.">
+<meta property="og:url" content="https://talentgate.com.au/insights">
+<meta property="og:image" content="https://talentgate.com.au/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_AU">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Industry & Workforce Insights — TalentGate">
+<meta name="twitter:description" content="News and analysis on Australia's labour market — the shortages, sectors and trends shaping hiring and careers.">
+<meta name="twitter:image" content="https://talentgate.com.au/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23143027'/%3E%3Cg stroke='%23E7C97A' stroke-width='4' stroke-linecap='round'%3E%3Cline x1='12' y1='19' x2='52' y2='19'/%3E%3Cline x1='15' y1='27' x2='49' y2='27'/%3E%3Cline x1='21' y1='21' x2='21' y2='48'/%3E%3Cline x1='43' y1='21' x2='43' y2='48'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ color-scheme: only light; }
+  :root{
+    --green:#143027; --green2:#1E4636; --gold:#B98A34; --gold-bright:#F2DF81; --gold-soft:#E7C97A;
+    --ivory:#F7F4EC; --ivory2:#EFE9DC; --ink:#20261F; --muted:#6B7A6F; --line:rgba(184,138,52,.28);
+    --display:'Fraunces',Georgia,serif; --body:'Inter',system-ui,sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html{ background:var(--ivory); scroll-behavior:smooth; }
+  body{ margin:0; font-family:var(--body); color:var(--ink); background:var(--ivory); line-height:1.62; font-size:16px; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 22px; }
+  h1,h2,h3{ font-family:var(--display); font-weight:500; line-height:1.18; margin:0; }
+  a{ color:var(--green2); }
+
+  header.band{ background:radial-gradient(120% 120% at 50% -30%, #1E4636 0%, var(--green) 60%, #0F241C 100%); color:var(--ivory); padding:38px 0 34px; }
+  .topbar{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  .mark{ font-family:var(--display); font-size:1.5rem; font-weight:600; color:var(--ivory); }
+  .mark small{ display:block; font-family:var(--body); font-size:.62rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gold-soft); font-weight:600; margin-top:4px; }
+  nav.links{ display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+  nav.links a{ color:#E7C97A; text-decoration:none; font-weight:600; font-size:.95rem; }
+  nav.links a:hover{ color:#fff; }
+  .langbtn{ background:transparent; color:#E7C97A; border:1.5px solid rgba(233,201,122,.5); border-radius:999px; padding:6px 14px; font-family:var(--body); font-weight:600; font-size:.9rem; cursor:pointer; }
+  .langbtn:hover{ border-color:var(--gold-bright); color:var(--gold-bright); }
+  .eyebrow{ font-weight:700; letter-spacing:.16em; text-transform:uppercase; font-size:.9rem; color:var(--gold-bright); margin-top:22px; display:block; }
+  header h1{ color:#fff; font-size:clamp(1.8rem,5vw,2.5rem); margin:8px 0 10px; }
+  header .lead{ color:#DCE6DE; font-size:1.08rem; max-width:640px; }
+
+  main{ padding:34px 0 10px; }
+  .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:20px; }
+  .card{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px 22px 20px; box-shadow:0 10px 26px rgba(20,48,39,.06); display:flex; flex-direction:column; }
+  .cat{ font-weight:700; letter-spacing:.12em; text-transform:uppercase; font-size:.72rem; color:var(--gold); }
+  .card h3{ color:var(--green); font-size:1.24rem; margin:8px 0 4px; }
+  .date{ color:var(--muted); font-size:.8rem; margin-bottom:10px; }
+  .card p{ margin:0 0 12px; color:#37423A; font-size:.97rem; }
+  .src{ margin-top:auto; color:var(--muted); font-size:.78rem; font-style:italic; border-top:1px solid var(--line); padding-top:10px; }
+  .disc{ background:var(--ivory2); border:1px solid var(--line); border-radius:12px; padding:14px 18px; font-size:.86rem; color:#3A463D; margin:26px 0 0; }
+  footer{ border-top:1px solid var(--line); margin-top:30px; padding:24px 0 44px; color:var(--muted); font-size:.86rem; }
+  footer b{ color:#3A463D; }
+  .tagf{ font-family:var(--display); font-style:italic; color:var(--gold); }
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap">
+    <div class="topbar">
+      <a href="/" style="text-decoration:none"><span class="mark">TalentGate<small>The gateway for Australia's workforce solutions</small></span></a>
+      <nav class="links">
+        <a href="/" data-i18n="nav_home">Home</a>
+        <a href="/jobs" data-i18n="nav_jobs">Jobs</a>
+        <a href="/insights" data-i18n="nav_insights">News &amp; Insights</a>
+        <a href="/partner-with-us" data-i18n="nav_partner">Partner with us</a>
+        <a href="/apply" data-i18n="nav_apply">Apply</a>
+        <a href="/employer-enquiry" style="background:#B98A34;color:#143027;padding:8px 15px;border-radius:99px;font-weight:700" data-i18n="nav_cta">Employer enquiry</a>
+        <button class="langbtn" id="langbtn" onclick="toggleLang()">Tiếng Việt</button>
+      </nav>
+    </div>
+    <span class="eyebrow" data-i18n="eyebrow">Industry &amp; Workforce Insights</span>
+    <h1 data-i18n="h1">Reading Australia's workforce</h1>
+    <p class="lead" data-i18n="lead">News and analysis on the labour market — the shortages, sectors and trends shaping how employers hire and how workers build careers in Australia.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="cards">
+
+      <h2 id="news" class="secHead" data-i18n="n_head" style="font-family:Fraunces,Georgia,serif;color:#143027;font-size:1.5rem;margin:6px 0 14px">News &amp; insights</h2>
+      <article class="card">
+        <span class="cat" data-i18n="c1_cat">Employment &amp; Skills</span>
+        <h3 data-i18n="c1_h">Shortages are easing — but the gaps that matter most persist</h3>
+        <div class="date" data-i18n="c1_d">June 2026</div>
+        <p data-i18n="c1_b">Jobs and Skills Australia's 2025 Occupation Shortage List found about 29% of assessed occupations in national shortage — down from 33% in 2024 and 36% in 2023. The relief is uneven: nearly half of trade roles and two in five professional roles remain short, and 139 occupations have now been in shortage for five straight years, concentrated in construction, engineering, health and early-childhood education. For employers, the hardest-to-fill roles are structural, not temporary.</p>
+        <div class="src" data-i18n="c1_s">Source: Jobs and Skills Australia, 2025 Occupation Shortage List.</div>
+      </article>
+
+      <article class="card">
+        <span class="cat" data-i18n="c2_cat">Construction</span>
+        <h3 data-i18n="c2_h">Australia's housing target meets a workforce reality</h3>
+        <div class="date" data-i18n="c2_d">May 2026</div>
+        <p data-i18n="c2_b">The national goal of 1.2 million new homes by 2029 is running into a shortage of skilled trades. Master Builders Australia reported construction apprenticeship completions fell about 15% and commencements dropped around 22% in a single year — thinning the pipeline just as demand peaks. Builders who plan their workforce early and invest in training and retention will be the ones who keep projects moving.</p>
+        <div class="src" data-i18n="c2_s">Source: Master Builders Australia; Jobs and Skills Australia; ABC News.</div>
+      </article>
+
+      <article class="card">
+        <span class="cat" data-i18n="c3_cat">Aged Care &amp; Health</span>
+        <h3 data-i18n="c3_h">The care economy's demographic wave</h3>
+        <div class="date" data-i18n="c3_d">April 2026</div>
+        <p data-i18n="c3_b">Australia will need an estimated 110,000 additional direct aged-care workers within a decade, rising toward 400,000 by 2050, as the share of people over 65 approaches one in five by 2031. Aged and disability carers are projected to be among the fastest-growing occupations in the country. Attracting — and, crucially, keeping — these workers is now one of the defining workforce challenges of the decade.</p>
+        <div class="src" data-i18n="c3_s">Source: CEDA, Duty of Care (2025); ABS population projections.</div>
+      </article>
+
+      <article class="card">
+        <span class="cat" data-i18n="c4_cat">Regional Workforce</span>
+        <h3 data-i18n="c4_h">Where shortages bite hardest: regional Australia</h3>
+        <div class="date" data-i18n="c4_d">March 2026</div>
+        <p data-i18n="c4_b">Twenty-one occupations were in shortage in regional Australia alone in 2025. Regional vacancy fill rates have improved — to about 68.6%, the strongest gain in years — yet city employers still fill roles more easily. Housing, distance and thinner local applicant pools make regional hiring uniquely hard. Long-term settlement support, not just recruitment, is what makes regional placements last.</p>
+        <div class="src" data-i18n="c4_s">Source: Jobs and Skills Australia, 2025.</div>
+      </article>
+
+      <article class="card">
+        <span class="cat" data-i18n="c5_cat">Future of Work</span>
+        <h3 data-i18n="c5_h">Diversity and technology: the quiet workforce advantage</h3>
+        <div class="date" data-i18n="c5_d">February 2026</div>
+        <p data-i18n="c5_b">Jobs and Skills Australia found that occupations with stronger participation from women, older workers, First Nations people and people with disability are far less likely to be in shortage — reframing inclusion as a workforce-resilience strategy, not only an equity goal. At the same time, AI and automation are reshaping tasks across every sector. The employers who thrive will widen their talent pools and invest in skills that complement new technology.</p>
+        <div class="src" data-i18n="c5_s">Source: Jobs and Skills Australia, 2025.</div>
+      </article>
+
+    </div>
+
+    
+      <h2 id="guides" class="secHead" data-i18n="g_head" style="font-family:Fraunces,Georgia,serif;color:#143027;font-size:1.5rem;margin:30px 0 6px">Guides &amp; resources library</h2>
+      <p data-i18n="g_lead" style="color:#53605A;margin:0 0 16px">Practical, plain-language guides for employers and workers. Open any guide below — downloadable versions and industry reports are being added to this library.</p>
+
+      <div style="background:#143027;border:1.5px solid #B98A34;border-radius:14px;padding:18px 20px;margin:4px 0 18px">
+        <b style="color:#F2DF81;font-family:Fraunces,Georgia,serif;font-size:1.12rem" data-i18n="g_dl_t">Working &amp; Settling in Australia — the TalentGate worker guide</b>
+        <p style="color:#F7F4EC;margin:8px 0 12px;line-height:1.55" data-i18n="g_dl_b">Our complete relocation &amp; settlement guide for workers and their families — documents to prepare, your first week and first month, money and banking, pay and rights, housing, health and schooling. Fully bilingual: English + Tiếng Việt in one document.</p>
+        <a href="/resources/worker-settlement-guide.pdf" target="_blank" rel="noopener" style="display:inline-block;background:#B98A34;color:#143027;font-weight:700;padding:9px 18px;border-radius:99px;text-decoration:none;margin-right:10px" data-i18n="g_view">View the guide</a>
+        <a href="/resources/worker-settlement-guide.pdf" download style="display:inline-block;background:transparent;color:#F2DF81;font-weight:700;padding:8px 16px;border-radius:99px;text-decoration:none;border:1.5px solid #B98A34" data-i18n="g_dl">Download PDF</a>
+      </div>
+
+      <h3 data-i18n="g_emp" style="color:#143027;margin:14px 0 8px">For employers</h3>
+      <details class="guide" style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px;margin:0 0 10px">
+        <summary style="font-weight:700;color:#143027;cursor:pointer" data-i18n="g_e1_t">Workforce planning for the season ahead</summary>
+        <div style="color:#2A332E;margin-top:8px;line-height:1.55" data-i18n="g_e1_b">Start with the roles, not the people: list each position you will need, how many, from when, and for how long. Check the award pay floor for each role before budgeting, decide early whether accommodation or transport support is needed for regional sites, and build a two-to-three month lead time for sourcing and onboarding. A clear plan shared with your recruitment partner is the single biggest predictor of positions filled on time.</div>
+      </details>
+      <details class="guide" style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px;margin:0 0 10px">
+        <summary style="font-weight:700;color:#143027;cursor:pointer" data-i18n="g_e2_t">Writing a role brief that attracts the right people</summary>
+        <div style="color:#2A332E;margin-top:8px;line-height:1.55" data-i18n="g_e2_b">The best briefs answer four questions in plain words: what the person will actually do each day; the pay and how it is set; the roster, including weekends and overtime expectations; and the level of English genuinely needed for the job. Be honest about the hard parts — heat, early starts, physical work. Honest briefs attract workers who stay; polished briefs that hide the reality attract workers who leave.</div>
+      </details>
+      <details class="guide" style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px;margin:0 0 10px">
+        <summary style="font-weight:700;color:#143027;cursor:pointer" data-i18n="g_e3_t">Onboarding overseas-recruited staff so they stay</summary>
+        <div style="color:#2A332E;margin-top:8px;line-height:1.55" data-i18n="g_e3_b">The first month decides the first year. Have housing, transport to site, a local phone plan and banking sorted before day one. Assign a buddy for the first fortnight, walk through payslips in the first pay cycle so nothing is a surprise, and check in at week one, week four and month three. Workers who settle well become your most loyal people — and your best recruiters.</div>
+      </details>
+
+      <h3 data-i18n="g_wkr" style="color:#143027;margin:18px 0 8px">For workers</h3>
+      <details class="guide" style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px;margin:0 0 10px">
+        <summary style="font-weight:700;color:#143027;cursor:pointer" data-i18n="g_w1_t">Getting ready to work in Australia</summary>
+        <div style="color:#2A332E;margin-top:8px;line-height:1.55" data-i18n="g_w1_b">Prepare your documents early: passport, CV, qualification certificates, written references from past employers, and any English test results. Many jobs need specific tickets — a White Card for construction sites, a forklift licence for warehouses — and getting them early makes you easier to place. Keep clear photos or scans of everything in one folder on your phone.</div>
+      </details>
+      <details class="guide" style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px;margin:0 0 10px">
+        <summary style="font-weight:700;color:#143027;cursor:pointer" data-i18n="g_w2_t">Your first month: settling in well</summary>
+        <div style="color:#2A332E;margin-top:8px;line-height:1.55" data-i18n="g_w2_b">In your first weeks, set up the essentials in this order: a local SIM and phone number, a bank account, your tax file number, and your superannuation fund details for your employer. Learn your route to work before your first shift. Find your local shops, clinic and community groups — and if anything at work is unclear, ask early; good employers would always rather answer a question than fix a problem.</div>
+      </details>
+      <details class="guide" style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px;margin:0 0 10px">
+        <summary style="font-weight:700;color:#143027;cursor:pointer" data-i18n="g_w3_t">Understanding pay basics in Australia</summary>
+        <div style="color:#2A332E;margin-top:8px;line-height:1.55" data-i18n="g_w3_b">Most jobs in Australia are covered by an award — a legal document setting minimum pay for each type of work, including higher rates for overtime, weekends and public holidays. You must receive a payslip for every pay showing your hours, rate and superannuation. If you want to check a rate, the Fair Work Ombudsman website has a free pay calculator in many languages.</div>
+      </details>
+
+      <h2 id="reports" class="secHead" data-i18n="r_head" style="font-family:Fraunces,Georgia,serif;color:#143027;font-size:1.5rem;margin:28px 0 6px">Industry snapshots &amp; reports</h2>
+      <p data-i18n="r_lead" style="color:#53605A;margin:0 0 12px">Short reads on the sectors we serve. Full downloadable reports are being added — to be notified when new resources arrive, email <a href="mailto:jobs@talentgate.com.au">jobs@talentgate.com.au</a>.</p>
+      <div class="snapgrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:0 0 8px">
+        <div style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px">
+          <b style="color:#143027" data-i18n="r_s1_t">Hospitality &amp; food services</b>
+          <p style="color:#2A332E;margin:6px 0 0;line-height:1.5" data-i18n="r_s1_b">Kitchens remain among the hardest teams to staff in regional Australia — cooks and chefs top demand lists year-round, with venues increasingly planning recruitment seasons ahead rather than reacting to vacancies.</p>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px">
+          <b style="color:#143027" data-i18n="r_s2_t">Horticulture &amp; fresh produce</b>
+          <p style="color:#2A332E;margin:6px 0 0;line-height:1.5" data-i18n="r_s2_b">Harvest and packing seasons drive predictable surges in demand for reliable workers, with growers who arrange accommodation and transport consistently filling crews faster than those who leave workers to arrange their own.</p>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px;margin:0 0 14px">
+        <b style="color:#143027" data-i18n="off_h">Official settlement resources — Government of South Australia</b>
+        <p style="color:#2A332E;margin:6px 0 8px;line-height:1.5" data-i18n="off_b">Moving to South Australia? The state government publishes excellent pre-arrival and post-arrival checklists — flights, documents, banking, MyGov, schooling and settling into your new home.</p>
+        <a href="https://migration.sa.gov.au/arrival-support/settling-in" target="_blank" rel="noopener" style="color:#B98A34;font-weight:700" data-i18n="off_a">Visit the official “Settling in” page →</a>
+      </div>
+
+      <h3 data-i18n="lib_h" style="color:#143027;margin:18px 0 8px">From the research desk — leading industry sources</h3>
+      <div class="snapgrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:0 0 10px">
+        <div style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px">
+          <b style="color:#143027" data-i18n="lib1_t">Regional Australia Institute</b>
+          <p style="color:#2A332E;margin:6px 0 8px;line-height:1.5" data-i18n="lib1_b">Australia's leading research body on regional workforce — including the Big Skills Challenge series on why regional employers struggle to fill roles, and what works.</p>
+          <a href="https://www.regionalaustralia.org.au/Web/Web/Research-Policy/Research-Library.aspx" target="_blank" rel="noopener" style="color:#B98A34;font-weight:700" data-i18n="lib_go">Visit the research library →</a>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px">
+          <b style="color:#143027" data-i18n="lib2_t">AUSVEG</b>
+          <p style="color:#2A332E;margin:6px 0 8px;line-height:1.5" data-i18n="lib2_b">The peak body for Australia's vegetable growers — industry sentiment reports and publications on the workforce realities of fresh produce.</p>
+          <a href="https://ausveg.com.au/news-publications/publications/" target="_blank" rel="noopener" style="color:#B98A34;font-weight:700" data-i18n="lib_go2">Visit the publications library →</a>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px">
+          <b style="color:#143027" data-i18n="lib3_t">National Farmers' Federation</b>
+          <p style="color:#2A332E;margin:6px 0 8px;line-height:1.5" data-i18n="lib3_b">Farm Facts — the essential numbers on Australian agriculture: output, exports, and the workforce that keeps farms running.</p>
+          <a href="https://nff.org.au/media-centre/farm-facts/" target="_blank" rel="noopener" style="color:#B98A34;font-weight:700" data-i18n="lib_go3">Visit Farm Facts →</a>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:12px;padding:14px 16px">
+          <b style="color:#143027" data-i18n="lib4_t">Jobs and Skills Australia</b>
+          <p style="color:#2A332E;margin:6px 0 8px;line-height:1.5" data-i18n="lib4_b">The Australian Government's labour-market authority — occupation shortage lists, employment projections and skills data across every sector.</p>
+          <a href="https://www.jobsandskills.gov.au/" target="_blank" rel="noopener" style="color:#B98A34;font-weight:700" data-i18n="lib_go4">Visit Jobs and Skills Australia →</a>
+        </div>
+      </div>
+      <p style="color:#53605A;font-size:.9rem;font-style:italic;margin:0 0 14px" data-i18n="lib_note">External reports belong to their publishing organisations. We review this library quarterly to keep links current.</p>
+
+      <div class="disc" data-i18n="disc">Figures are drawn from public sources — including Jobs and Skills Australia, the Australian Bureau of Statistics and industry bodies — and reflect the most recent data available at the time of writing. This page is general workforce and industry information, not advice.</div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>TalentGate</b> — Talent Gate Australia Pty Ltd. Recruitment, workforce solutions, relocation and settlement support services.</div>
+    <div style="margin-top:8px" class="tagf" data-i18n="foot_win">Win for the worker · Win for the employer · Win for Australia</div>
+  </div>
+</footer>
+
+<script>
+  var T = {
+    lib_h:{en:"From the research desk \u2014 leading industry sources",vi:"T\u1eeb b\u00e0n nghi\u00ean c\u1ee9u \u2014 ngu\u1ed3n uy t\u00edn h\u00e0ng \u0111\u1ea7u ng\u00e0nh"},
+    lib1_t:{en:"Regional Australia Institute",vi:"Regional Australia Institute"},
+    lib1_b:{en:"Australia's leading research body on regional workforce \u2014 including the Big Skills Challenge series on why regional employers struggle to fill roles, and what works.",vi:"C\u01a1 quan nghi\u00ean c\u1ee9u h\u00e0ng \u0111\u1ea7u v\u1ec1 nh\u00e2n l\u1ef1c v\u00f9ng regional c\u1ee7a \u00dac \u2014 bao g\u1ed3m lo\u1ea1t b\u00e1o c\u00e1o Big Skills Challenge v\u1ec1 l\u00fd do nh\u00e0 tuy\u1ec3n d\u1ee5ng v\u00f9ng regional kh\u00f3 tuy\u1ec3n ng\u01b0\u1eddi, v\u00e0 gi\u1ea3i ph\u00e1p hi\u1ec7u qu\u1ea3."},
+    lib2_t:{en:"AUSVEG",vi:"AUSVEG"},
+    lib2_b:{en:"The peak body for Australia's vegetable growers \u2014 industry sentiment reports and publications on the workforce realities of fresh produce.",vi:"T\u1ed5 ch\u1ee9c \u0111\u1ea1i di\u1ec7n c\u00e1c nh\u00e0 tr\u1ed3ng rau c\u1ee7a \u00dac \u2014 b\u00e1o c\u00e1o t\u00e2m l\u00fd ng\u00e0nh v\u00e0 \u1ea5n ph\u1ea9m v\u1ec1 th\u1ef1c t\u1ebf nh\u00e2n l\u1ef1c ng\u00e0nh n\u00f4ng s\u1ea3n t\u01b0\u01a1i."},
+    lib3_t:{en:"National Farmers' Federation",vi:"National Farmers' Federation"},
+    lib3_b:{en:"Farm Facts \u2014 the essential numbers on Australian agriculture: output, exports, and the workforce that keeps farms running.",vi:"Farm Facts \u2014 nh\u1eefng con s\u1ed1 c\u1ed1t l\u00f5i v\u1ec1 n\u00f4ng nghi\u1ec7p \u00dac: s\u1ea3n l\u01b0\u1ee3ng, xu\u1ea5t kh\u1ea9u, v\u00e0 l\u1ef1c l\u01b0\u1ee3ng lao \u0111\u1ed9ng gi\u1eef cho n\u00f4ng tr\u1ea1i v\u1eadn h\u00e0nh."},
+    lib4_t:{en:"Jobs and Skills Australia",vi:"Jobs and Skills Australia"},
+    lib4_b:{en:"The Australian Government's labour-market authority \u2014 occupation shortage lists, employment projections and skills data across every sector.",vi:"C\u01a1 quan v\u1ec1 th\u1ecb tr\u01b0\u1eddng lao \u0111\u1ed9ng c\u1ee7a Ch\u00ednh ph\u1ee7 \u00dac \u2014 danh s\u00e1ch ngh\u1ec1 thi\u1ebfu h\u1ee5t, d\u1ef1 b\u00e1o vi\u1ec7c l\u00e0m v\u00e0 d\u1eef li\u1ec7u k\u1ef9 n\u0103ng m\u1ecdi ng\u00e0nh."},
+    lib_go:{en:"Visit the research library \u2192",vi:"Xem th\u01b0 vi\u1ec7n nghi\u00ean c\u1ee9u \u2192"},
+    lib_go2:{en:"Visit the publications library \u2192",vi:"Xem th\u01b0 vi\u1ec7n \u1ea5n ph\u1ea9m \u2192"},
+    lib_go3:{en:"Visit Farm Facts \u2192",vi:"Xem Farm Facts \u2192"},
+    lib_go4:{en:"Visit Jobs and Skills Australia \u2192",vi:"Xem Jobs and Skills Australia \u2192"},
+    lib_note:{en:"External reports belong to their publishing organisations. We review this library quarterly to keep links current.",vi:"B\u00e1o c\u00e1o b\u00ean ngo\u00e0i thu\u1ed9c v\u1ec1 t\u1ed5 ch\u1ee9c xu\u1ea5t b\u1ea3n. Ch\u00fang t\u00f4i r\u00e0 so\u00e1t th\u01b0 vi\u1ec7n n\u00e0y h\u00e0ng qu\u00fd \u0111\u1ec3 gi\u1eef li\u00ean k\u1ebft lu\u00f4n c\u1eadp nh\u1eadt."},
+    g_dl_t:{en:"Working &amp; Settling in Australia \u2014 the TalentGate worker guide",vi:"L\u00e0m vi\u1ec7c &amp; An c\u01b0 t\u1ea1i \u00dac \u2014 c\u1ea9m nang TalentGate cho ng\u01b0\u1eddi lao \u0111\u1ed9ng"},
+    g_dl_b:{en:"Our complete relocation &amp; settlement guide for workers and their families \u2014 documents to prepare, your first week and first month, money and banking, pay and rights, housing, health and schooling. Fully bilingual: English + Ti\u1ebfng Vi\u1ec7t in one document.",vi:"C\u1ea9m nang chuy\u1ec3n n\u01a1i \u1edf &amp; an c\u01b0 \u0111\u1ea7y \u0111\u1ee7 cho ng\u01b0\u1eddi lao \u0111\u1ed9ng v\u00e0 gia \u0111\u00ecnh \u2014 gi\u1ea5y t\u1edd c\u1ea7n chu\u1ea9n b\u1ecb, tu\u1ea7n \u0111\u1ea7u v\u00e0 th\u00e1ng \u0111\u1ea7u ti\u00ean, ti\u1ec1n b\u1ea1c v\u00e0 ng\u00e2n h\u00e0ng, l\u01b0\u01a1ng v\u00e0 quy\u1ec1n l\u1ee3i, nh\u00e0 \u1edf, s\u1ee9c kho\u1ebb v\u00e0 tr\u01b0\u1eddng h\u1ecdc. Song ng\u1eef: English + Ti\u1ebfng Vi\u1ec7t trong m\u1ed9t t\u00e0i li\u1ec7u."},
+    g_view:{en:"View the guide",vi:"Xem c\u1ea9m nang"},
+    g_dl:{en:"Download PDF",vi:"T\u1ea3i PDF"},
+    off_h:{en:"Official settlement resources \u2014 Government of South Australia",vi:"T\u00e0i nguy\u00ean an c\u01b0 ch\u00ednh th\u1ee9c \u2014 Ch\u00ednh ph\u1ee7 Nam \u00dac"},
+    off_b:{en:"Moving to South Australia? The state government publishes excellent pre-arrival and post-arrival checklists \u2014 flights, documents, banking, MyGov, schooling and settling into your new home.",vi:"S\u1eafp chuy\u1ec3n \u0111\u1ebfn Nam \u00dac? Ch\u00ednh quy\u1ec1n ti\u1ec3u bang c\u00f3 danh s\u00e1ch ki\u1ec3m tra tr\u01b0\u1edbc v\u00e0 sau khi \u0111\u1ebfn r\u1ea5t h\u1eefu \u00edch \u2014 chuy\u1ebfn bay, gi\u1ea5y t\u1edd, ng\u00e2n h\u00e0ng, MyGov, tr\u01b0\u1eddng h\u1ecdc v\u00e0 \u1ed5n \u0111\u1ecbnh n\u01a1i \u1edf m\u1edbi."},
+    off_a:{en:"Visit the official \u201cSettling in\u201d page \u2192",vi:"Xem trang \u201cSettling in\u201d ch\u00ednh th\u1ee9c \u2192"},
+    n_head:{en:"News &amp; insights",vi:"Tin tức &amp; góc nhìn"},
+    g_head:{en:"Guides &amp; resources library",vi:"Thư viện cẩm nang &amp; tài nguyên"},
+    g_lead:{en:"Practical, plain-language guides for employers and workers. Open any guide below — downloadable versions and industry reports are being added to this library.",vi:"Cẩm nang thực tế, ngôn ngữ dễ hiểu cho nhà tuyển dụng và người lao động. Mở bất kỳ cẩm nang nào bên dưới — phiên bản tải về và báo cáo ngành đang được bổ sung vào thư viện."},
+    g_emp:{en:"For employers",vi:"Dành cho nhà tuyển dụng"},
+    g_wkr:{en:"For workers",vi:"Dành cho người lao động"},
+    g_e1_t:{en:"Workforce planning for the season ahead",vi:"Lập kế hoạch nhân lực cho mùa vụ sắp tới"},
+    g_e1_b:{en:"Start with the roles, not the people: list each position you will need, how many, from when, and for how long. Check the award pay floor for each role before budgeting, decide early whether accommodation or transport support is needed for regional sites, and build a two-to-three month lead time for sourcing and onboarding. A clear plan shared with your recruitment partner is the single biggest predictor of positions filled on time.",vi:"Hãy bắt đầu từ vị trí công việc, không phải từ con người: liệt kê từng vị trí cần tuyển, số lượng, từ khi nào và trong bao lâu. Kiểm tra mức lương sàn theo award cho từng vị trí trước khi lập ngân sách, quyết định sớm việc hỗ trợ chỗ ở hoặc đi lại cho các địa điểm vùng regional, và dự trù hai đến ba tháng cho việc tìm nguồn và tiếp nhận. Một kế hoạch rõ ràng chia sẻ với đối tác tuyển dụng là yếu tố dự báo lớn nhất cho việc tuyển đủ người đúng hạn."},
+    g_e2_t:{en:"Writing a role brief that attracts the right people",vi:"Viết mô tả vị trí thu hút đúng người"},
+    g_e2_b:{en:"The best briefs answer four questions in plain words: what the person will actually do each day; the pay and how it is set; the roster, including weekends and overtime expectations; and the level of English genuinely needed for the job. Be honest about the hard parts — heat, early starts, physical work. Honest briefs attract workers who stay; polished briefs that hide the reality attract workers who leave.",vi:"Mô tả tốt nhất trả lời bốn câu hỏi bằng lời lẽ đơn giản: người đó thực sự làm gì mỗi ngày; mức lương và cách tính; lịch làm việc, kể cả cuối tuần và tăng ca; và trình độ tiếng Anh thực sự cần cho công việc. Hãy trung thực về những phần vất vả — nắng nóng, đi làm sớm, việc nặng. Mô tả trung thực thu hút người ở lại; mô tả bóng bẩy che giấu thực tế thu hút người sẽ rời đi."},
+    g_e3_t:{en:"Onboarding overseas-recruited staff so they stay",vi:"Tiếp nhận nhân viên tuyển từ nước ngoài để họ gắn bó"},
+    g_e3_b:{en:"The first month decides the first year. Have housing, transport to site, a local phone plan and banking sorted before day one. Assign a buddy for the first fortnight, walk through payslips in the first pay cycle so nothing is a surprise, and check in at week one, week four and month three. Workers who settle well become your most loyal people — and your best recruiters.",vi:"Tháng đầu tiên quyết định năm đầu tiên. Hãy chuẩn bị sẵn chỗ ở, phương tiện đến nơi làm, sim điện thoại và tài khoản ngân hàng trước ngày đầu tiên. Cử một người đồng hành trong hai tuần đầu, giải thích phiếu lương ngay kỳ lương đầu để không có gì bất ngờ, và hỏi thăm ở tuần một, tuần bốn và tháng ba. Người lao động an cư tốt sẽ trở thành nhân viên trung thành nhất — và người giới thiệu tốt nhất của bạn."},
+    g_w1_t:{en:"Getting ready to work in Australia",vi:"Chuẩn bị đi làm tại Úc"},
+    g_w1_b:{en:"Prepare your documents early: passport, CV, qualification certificates, written references from past employers, and any English test results. Many jobs need specific tickets — a White Card for construction sites, a forklift licence for warehouses — and getting them early makes you easier to place. Keep clear photos or scans of everything in one folder on your phone.",vi:"Chuẩn bị giấy tờ sớm: hộ chiếu, CV, bằng cấp, thư giới thiệu từ nơi làm cũ, và kết quả thi tiếng Anh nếu có. Nhiều công việc cần chứng chỉ riêng — White Card cho công trường xây dựng, bằng lái xe nâng cho kho hàng — có sớm sẽ giúp bạn dễ được sắp xếp việc hơn. Lưu ảnh chụp hoặc bản scan rõ ràng của tất cả vào một thư mục trên điện thoại."},
+    g_w2_t:{en:"Your first month: settling in well",vi:"Tháng đầu tiên: an cư thuận lợi"},
+    g_w2_b:{en:"In your first weeks, set up the essentials in this order: a local SIM and phone number, a bank account, your tax file number, and your superannuation fund details for your employer. Learn your route to work before your first shift. Find your local shops, clinic and community groups — and if anything at work is unclear, ask early; good employers would always rather answer a question than fix a problem.",vi:"Trong những tuần đầu, hãy thiết lập những thứ thiết yếu theo thứ tự: sim điện thoại, tài khoản ngân hàng, mã số thuế (TFN), và thông tin quỹ hưu bổng (superannuation) cho nơi làm việc. Học trước đường đi làm trước ca đầu tiên. Tìm hiểu cửa hàng, phòng khám và các nhóm cộng đồng gần nơi ở — và nếu điều gì ở chỗ làm chưa rõ, hãy hỏi sớm; nhà tuyển dụng tốt luôn muốn trả lời một câu hỏi hơn là sửa một vấn đề."},
+    g_w3_t:{en:"Understanding pay basics in Australia",vi:"Hiểu cơ bản về lương tại Úc"},
+    g_w3_b:{en:"Most jobs in Australia are covered by an award — a legal document setting minimum pay for each type of work, including higher rates for overtime, weekends and public holidays. You must receive a payslip for every pay showing your hours, rate and superannuation. If you want to check a rate, the Fair Work Ombudsman website has a free pay calculator in many languages.",vi:"Hầu hết công việc tại Úc thuộc phạm vi một award — văn bản pháp lý quy định mức lương tối thiểu cho từng loại công việc, bao gồm mức cao hơn cho tăng ca, cuối tuần và ngày lễ. Bạn phải nhận phiếu lương mỗi kỳ, ghi rõ số giờ, mức lương và hưu bổng. Muốn kiểm tra mức lương, trang web Fair Work Ombudsman có công cụ tính lương miễn phí bằng nhiều ngôn ngữ."},
+    r_head:{en:"Industry snapshots &amp; reports",vi:"Toàn cảnh ngành &amp; báo cáo"},
+    r_lead:{en:"Short reads on the sectors we serve. Full downloadable reports are being added — to be notified when new resources arrive, email <a href='mailto:jobs@talentgate.com.au'>jobs@talentgate.com.au</a>.",vi:"Bài đọc ngắn về các ngành chúng tôi phục vụ. Báo cáo đầy đủ để tải về đang được bổ sung — để nhận thông báo khi có tài nguyên mới, email <a href='mailto:jobs@talentgate.com.au'>jobs@talentgate.com.au</a>."},
+    r_s1_t:{en:"Hospitality &amp; food services",vi:"Nhà hàng &amp; dịch vụ ăn uống"},
+    r_s1_b:{en:"Kitchens remain among the hardest teams to staff in regional Australia — cooks and chefs top demand lists year-round, with venues increasingly planning recruitment seasons ahead rather than reacting to vacancies.",vi:"Bếp vẫn là bộ phận khó tuyển nhất ở vùng regional nước Úc — đầu bếp nấu và bếp trưởng đứng đầu danh sách nhu cầu quanh năm, và các cơ sở ngày càng lập kế hoạch tuyển dụng trước cả mùa thay vì chờ trống chỗ mới tìm người."},
+    r_s2_t:{en:"Horticulture &amp; fresh produce",vi:"Nông nghiệp &amp; nông sản tươi"},
+    r_s2_b:{en:"Harvest and packing seasons drive predictable surges in demand for reliable workers, with growers who arrange accommodation and transport consistently filling crews faster than those who leave workers to arrange their own.",vi:"Mùa thu hoạch và đóng gói tạo ra các đợt tăng nhu cầu dự đoán được về lao động đáng tin cậy; các nhà vườn lo sẵn chỗ ở và đi lại luôn tuyển đủ đội nhanh hơn những nơi để người lao động tự xoay xở."},
+    nav_home:{en:"Home",vi:"Trang chủ"}, nav_jobs:{en:"Jobs",vi:"Việc làm"}, nav_apply:{en:"Apply",vi:"Ứng tuyển"}, nav_insights:{en:"News &amp; Insights",vi:"Tin tức &amp; Phân tích"}, nav_partner:{en:"Partner with us",vi:"Trở thành đối tác"}, nav_cta:{en:"Employer enquiry",vi:"Yêu cầu tuyển dụng"},
+    eyebrow:{en:"Industry &amp; Workforce Insights",vi:"Phân tích ngành &amp; nhân lực"},
+    h1:{en:"Reading Australia's workforce",vi:"Đọc hiểu thị trường lao động Úc"},
+    lead:{en:"News and analysis on the labour market — the shortages, sectors and trends shaping how employers hire and how workers build careers in Australia.",vi:"Tin tức và phân tích về thị trường lao động — những thiếu hụt, ngành nghề và xu hướng định hình cách nhà tuyển dụng tuyển người và cách người lao động xây dựng sự nghiệp tại Úc."},
+    c1_cat:{en:"Employment &amp; Skills",vi:"Việc làm &amp; Kỹ năng"},
+    c1_h:{en:"Shortages are easing — but the gaps that matter most persist",vi:"Thiếu hụt đang giảm — nhưng những khoảng trống quan trọng nhất vẫn còn"},
+    c1_d:{en:"June 2026",vi:"Tháng 6, 2026"},
+    c1_b:{en:"Jobs and Skills Australia's 2025 Occupation Shortage List found about 29% of assessed occupations in national shortage — down from 33% in 2024 and 36% in 2023. The relief is uneven: nearly half of trade roles and two in five professional roles remain short, and 139 occupations have now been in shortage for five straight years, concentrated in construction, engineering, health and early-childhood education. For employers, the hardest-to-fill roles are structural, not temporary.",vi:"Danh sách Nghề thiếu hụt 2025 của Jobs and Skills Australia cho thấy khoảng 29% nghề được đánh giá đang thiếu hụt trên toàn quốc — giảm từ 33% năm 2024 và 36% năm 2023. Sự cải thiện không đồng đều: gần một nửa các nghề tay nghề và hai trong năm nghề chuyên môn vẫn thiếu, và 139 nghề đã thiếu hụt suốt năm năm liền, tập trung ở xây dựng, kỹ thuật, y tế và giáo dục mầm non. Với nhà tuyển dụng, những vị trí khó tuyển nhất mang tính cơ cấu, không phải tạm thời."},
+    c1_s:{en:"Source: Jobs and Skills Australia, 2025 Occupation Shortage List.",vi:"Nguồn: Jobs and Skills Australia, Danh sách Nghề thiếu hụt 2025."},
+    c2_cat:{en:"Construction",vi:"Xây dựng"},
+    c2_h:{en:"Australia's housing target meets a workforce reality",vi:"Mục tiêu nhà ở của Úc gặp thực tế về nhân lực"},
+    c2_d:{en:"May 2026",vi:"Tháng 5, 2026"},
+    c2_b:{en:"The national goal of 1.2 million new homes by 2029 is running into a shortage of skilled trades. Master Builders Australia reported construction apprenticeship completions fell about 15% and commencements dropped around 22% in a single year — thinning the pipeline just as demand peaks. Builders who plan their workforce early and invest in training and retention will be the ones who keep projects moving.",vi:"Mục tiêu quốc gia xây 1,2 triệu ngôi nhà mới trước năm 2029 đang vấp phải tình trạng thiếu thợ lành nghề. Master Builders Australia cho biết số học viên hoàn thành nghề xây dựng giảm khoảng 15% và số người bắt đầu học giảm khoảng 22% chỉ trong một năm — làm mỏng nguồn cung đúng lúc nhu cầu lên đỉnh. Những nhà thầu hoạch định nhân lực sớm và đầu tư vào đào tạo và giữ chân người lao động sẽ là những người giữ được tiến độ dự án."},
+    c2_s:{en:"Source: Master Builders Australia; Jobs and Skills Australia; ABC News.",vi:"Nguồn: Master Builders Australia; Jobs and Skills Australia; ABC News."},
+    c3_cat:{en:"Aged Care &amp; Health",vi:"Chăm sóc người cao tuổi &amp; Y tế"},
+    c3_h:{en:"The care economy's demographic wave",vi:"Làn sóng nhân khẩu học của ngành chăm sóc"},
+    c3_d:{en:"April 2026",vi:"Tháng 4, 2026"},
+    c3_b:{en:"Australia will need an estimated 110,000 additional direct aged-care workers within a decade, rising toward 400,000 by 2050, as the share of people over 65 approaches one in five by 2031. Aged and disability carers are projected to be among the fastest-growing occupations in the country. Attracting — and, crucially, keeping — these workers is now one of the defining workforce challenges of the decade.",vi:"Úc sẽ cần thêm khoảng 110.000 nhân viên chăm sóc người cao tuổi trực tiếp trong vòng một thập kỷ, tăng lên gần 400.000 vào năm 2050, khi tỷ lệ người trên 65 tuổi tiến tới một phần năm dân số vào năm 2031. Nhân viên chăm sóc người cao tuổi và người khuyết tật được dự báo nằm trong nhóm nghề tăng trưởng nhanh nhất cả nước. Thu hút — và quan trọng hơn là giữ chân — những người lao động này là một trong những thách thức nhân lực lớn nhất của thập kỷ."},
+    c3_s:{en:"Source: CEDA, Duty of Care (2025); ABS population projections.",vi:"Nguồn: CEDA, Duty of Care (2025); dự báo dân số ABS."},
+    c4_cat:{en:"Regional Workforce",vi:"Nhân lực vùng miền"},
+    c4_h:{en:"Where shortages bite hardest: regional Australia",vi:"Nơi thiếu hụt nghiêm trọng nhất: vùng miền nước Úc"},
+    c4_d:{en:"March 2026",vi:"Tháng 3, 2026"},
+    c4_b:{en:"Twenty-one occupations were in shortage in regional Australia alone in 2025. Regional vacancy fill rates have improved — to about 68.6%, the strongest gain in years — yet city employers still fill roles more easily. Housing, distance and thinner local applicant pools make regional hiring uniquely hard. Long-term settlement support, not just recruitment, is what makes regional placements last.",vi:"Có 21 nghề chỉ thiếu hụt riêng ở vùng miền nước Úc trong năm 2025. Tỷ lệ lấp đầy vị trí ở vùng miền đã cải thiện — lên khoảng 68,6%, mức tăng mạnh nhất trong nhiều năm — nhưng nhà tuyển dụng ở thành phố vẫn tuyển dễ hơn. Nhà ở, khoảng cách và nguồn ứng viên địa phương mỏng khiến việc tuyển dụng ở vùng miền đặc biệt khó. Hỗ trợ ổn định lâu dài, chứ không chỉ tuyển dụng, mới là điều giúp các vị trí ở vùng miền bền vững."},
+    c4_s:{en:"Source: Jobs and Skills Australia, 2025.",vi:"Nguồn: Jobs and Skills Australia, 2025."},
+    c5_cat:{en:"Future of Work",vi:"Tương lai công việc"},
+    c5_h:{en:"Diversity and technology: the quiet workforce advantage",vi:"Đa dạng và công nghệ: lợi thế nhân lực thầm lặng"},
+    c5_d:{en:"February 2026",vi:"Tháng 2, 2026"},
+    c5_b:{en:"Jobs and Skills Australia found that occupations with stronger participation from women, older workers, First Nations people and people with disability are far less likely to be in shortage — reframing inclusion as a workforce-resilience strategy, not only an equity goal. At the same time, AI and automation are reshaping tasks across every sector. The employers who thrive will widen their talent pools and invest in skills that complement new technology.",vi:"Jobs and Skills Australia nhận thấy những nghề có sự tham gia mạnh hơn của phụ nữ, người lớn tuổi, người Bản địa và người khuyết tật ít có khả năng thiếu hụt hơn nhiều — đưa sự hòa nhập thành chiến lược tăng sức bền nhân lực, chứ không chỉ là mục tiêu công bằng. Đồng thời, AI và tự động hóa đang định hình lại công việc ở mọi ngành. Những nhà tuyển dụng thành công sẽ mở rộng nguồn nhân tài và đầu tư vào các kỹ năng bổ trợ cho công nghệ mới."},
+    c5_s:{en:"Source: Jobs and Skills Australia, 2025.",vi:"Nguồn: Jobs and Skills Australia, 2025."},
+    disc:{en:"Figures are drawn from public sources — including Jobs and Skills Australia, the Australian Bureau of Statistics and industry bodies — and reflect the most recent data available at the time of writing. This page is general workforce and industry information, not advice.",vi:"Các số liệu được lấy từ nguồn công khai — gồm Jobs and Skills Australia, Cục Thống kê Úc (ABS) và các tổ chức ngành — và phản ánh dữ liệu mới nhất có được tại thời điểm viết. Trang này là thông tin chung về ngành và nhân lực, không phải lời khuyên."},
+    foot_win:{en:"Win for the worker · Win for the employer · Win for Australia",vi:"Lợi cho người lao động · Lợi cho nhà tuyển dụng · Lợi cho nước Úc"}
+  };
+  var curLang = 'en';
+  function setLang(l){
+    curLang = l;
+    document.documentElement.lang = l;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var k = el.getAttribute('data-i18n');
+      if(T[k] && T[k][l]!==undefined) el.innerHTML = T[k][l];
+    });
+    var b = document.getElementById('langbtn');
+    if(b) b.textContent = (l==='en') ? 'Tiếng Việt' : 'English';
+  }
+  function toggleLang(){ setLang(curLang==='en' ? 'vi' : 'en'); }
+</script>
+</body>
+</html>

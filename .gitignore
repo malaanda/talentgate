@@ -3,3 +3,15 @@ node_modules/
 .DS_Store
 *.bak
 deno.lock
+
+# Internal — never publish (public repo; entity wall + LMT evidence)
+directives/
+img/lmt_proofs/
+data/lmt_tracker.json
+admin-lmt.html
+wix_export/
+wix_migration_package.zip
+modified/
+candidate-document-intake.md
+M365-email-setup-runbook.md
+export_wix_data.py

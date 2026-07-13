@@ -1,226 +1,652 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Board - TalentGate</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Job Modal Styles */
-        .job-modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 34, 57, 0.6); /* Navy backdrop */
-            display: flex; justify-content: center; align-items: center;
-            z-index: 2000;
-            opacity: 0; visibility: hidden;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
-        }
-        .job-modal-overlay.active {
-            opacity: 1; visibility: visible;
-        }
-        .job-modal-content {
-            background: white;
-            width: 90%; max-width: 700px;
-            max-height: 90vh;
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            overflow-y: auto;
-            position: relative;
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-            display: flex; flex-direction: column;
-        }
-        .job-modal-overlay.active .job-modal-content {
-            transform: translateY(0);
-        }
-        .job-modal-header {
-            padding: 2rem 2rem 1.5rem;
-            border-bottom: 1px solid #e2e8f0;
-            position: sticky; top: 0; background: white; z-index: 10;
-        }
-        .job-modal-close {
-            position: absolute; top: 1.5rem; right: 1.5rem;
-            background: #f1f5f9; border: none; width: 36px; height: 36px;
-            border-radius: 50%; color: #64748b; font-size: 1.2rem;
-            cursor: pointer; display: flex; justify-content: center; align-items: center;
-            transition: 0.2s;
-        }
-        .job-modal-close:hover { background: #e2e8f0; color: #0f172a; }
-        .job-modal-body {
-            padding: 2rem; flex-grow: 1;
-        }
-        .job-modal-footer {
-            padding: 1.5rem 2rem; background: #f8fafc;
-            border-top: 1px solid #e2e8f0; text-align: right;
-            position: sticky; bottom: 0;
-        }
-        .job-desc-full {
-            line-height: 1.7; color: #334155;
-        }
-        .job-desc-full ul { margin-left: 1.5rem; margin-bottom: 1rem; }
-        .job-desc-full p { margin-bottom: 1rem; }
-        
-        .truncate-text {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;  
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    </style>
-</head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<meta name="supported-color-schemes" content="light">
+<meta name="theme-color" content="#143027">
+<title>TalentGate — The gateway for Australia’s workforce solutions</title>
+<meta name="description" content="TalentGate connects Australian employers with skilled and semi-skilled workers from around the world — and supports them to relocate, settle and build a life in Australia. Recruitment, relocation and settlement across 11 industries.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TalentGate">
+<meta property="og:title" content="TalentGate — The gateway for Australia's workforce solutions">
+<meta property="og:description" content="Recruitment, workforce solutions, relocation and settlement support — connecting reliable workers with Australian employers who need them.">
+<meta property="og:url" content="https://talentgate.com.au/">
+<meta property="og:image" content="https://talentgate.com.au/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_AU">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TalentGate — The gateway for Australia's workforce solutions">
+<meta name="twitter:description" content="Recruitment, workforce solutions, relocation and settlement support — connecting reliable workers with Australian employers who need them.">
+<meta name="twitter:image" content="https://talentgate.com.au/og-image.png">
+<link rel="icon" type="image/png" href="img/asset-e5b00e0c.png">
+<link rel="apple-touch-icon" href="img/asset-e5b00e0c.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ color-scheme: only light; }
+  :root{
+    color-scheme: only light;
+    --green:#143027; --green2:#1E4636; --green3:#26543F;
+    --gold:#B98A34; --gold-bright:#F2DF81; --gold-soft:#E7C97A;
+    --ivory:#F7F4EC; --ivory2:#EFE9DC; --ink:#20261F; --muted:#6B7A6F;
+    --line:rgba(184,138,52,.28);
+    --display:'Fraunces',Georgia,serif; --body:'Inter',system-ui,sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; color-scheme:only light; background:#F7F4EC; }
+  body{ margin:0; font-family:var(--body); color:var(--ink); background:var(--ivory); line-height:1.6; font-size:17px; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:var(--display); font-weight:500; line-height:1.12; margin:0; }
+  a{ color:inherit; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 22px; }
+  .eyebrow{ font-family:var(--body); font-weight:700; letter-spacing:.16em; text-transform:uppercase; font-size:.95rem; color:var(--gold); }
 
+  header.nav{ position:sticky; top:0; z-index:40; background:rgba(20,48,39,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(233,201,122,.18); }
+  .nav .wrap{ display:flex; align-items:center; justify-content:space-between; gap:22px; height:66px; }
+  .logo{ display:flex; align-items:center; gap:11px; color:var(--ivory); text-decoration:none; }
+  .logo svg{ width:34px; height:30px; }
+  .logo .lt{ font-family:var(--display); font-size:1.06rem; font-weight:600; }
+  .logo .lt small{ display:block; font-family:var(--body); font-size:.6rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gold-soft); font-weight:600; margin-top:1px; }
+  .navlinks{ display:flex; gap:16px; align-items:center; }
+  .navlinks a:not(.btn){ color:#DCE6DE; text-decoration:none; font-size:.88rem; font-weight:500; }
+  .navlinks a:not(.btn):hover{ color:var(--gold-bright); }
+  .hamburger{ display:none; flex-direction:column; justify-content:center; gap:6px; width:42px; height:42px; padding:0; background:transparent; border:0; cursor:pointer; }
+  .hamburger span{ display:block; width:24px; height:2px; margin:0 auto; background:var(--gold-soft); border-radius:2px; transition:transform .25s ease, opacity .2s ease; }
+  .nav.open .hamburger span:nth-child(1){ transform:translateY(8px) rotate(45deg); }
+  .nav.open .hamburger span:nth-child(2){ opacity:0; }
+  .nav.open .hamburger span:nth-child(3){ transform:translateY(-8px) rotate(-45deg); }
+  .langbtn{ background:transparent; border:1.5px solid rgba(233,201,122,.5); color:var(--gold-soft); border-radius:999px; padding:7px 14px; font-family:var(--body); font-weight:600; font-size:.82rem; cursor:pointer; }
+  .langbtn:hover{ border-color:var(--gold-bright); color:var(--gold-bright); }
+  .btn{ display:inline-block; border:none; border-radius:999px; font-family:var(--body); font-weight:600; font-size:.92rem; cursor:pointer; text-decoration:none; transition:transform .15s ease, box-shadow .15s ease, background .2s ease; }
+  .btn-gold{ background:linear-gradient(135deg,var(--gold-soft),var(--gold)); color:#2a2008; padding:13px 26px; box-shadow:0 6px 18px rgba(0,0,0,.18); }
+  .btn-gold:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(0,0,0,.24); }
+  .btn-ghost{ background:transparent; color:var(--ivory); border:1.5px solid rgba(233,201,122,.5); padding:12px 24px; }
+  .btn-ghost:hover{ border-color:var(--gold-bright); color:var(--gold-bright); }
+  .navlinks .btn-gold{ padding:9px 16px; }
+  @media(max-width:820px){
+    .hamburger{ display:inline-flex; }
+    .navlinks{ position:absolute; top:66px; left:0; right:0; flex-direction:column; align-items:stretch; gap:0;
+      background:rgba(20,48,39,.985); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(233,201,122,.2); box-shadow:0 18px 34px rgba(0,0,0,.30);
+      padding:6px 0 16px; display:none; }
+    .nav.open .navlinks{ display:flex; }
+    .navlinks a:not(.btn){ display:block; padding:13px 26px; font-size:1.02rem; border-bottom:1px solid rgba(233,201,122,.08); }
+    .navlinks .langbtn{ margin:14px 26px 4px; align-self:flex-start; }
+    .navlinks .btn-gold{ margin:10px 26px 2px; text-align:center; padding:14px 26px; }
+  }
+
+  .hero{ background:radial-gradient(120% 90% at 50% -10%, #1E4636 0%, var(--green) 55%, #0F241C 100%); color:var(--ivory); text-align:center; padding:60px 0 76px; position:relative; overflow:hidden; }
+  .hero .gate{ margin:6px auto 22px; width:190px; height:150px; display:block; animation:rise 1s ease both; }
+  .hero h1{ font-size:clamp(2.3rem,6vw,4rem); letter-spacing:-.01em; }
+  .hero h1 .em{ color:var(--gold-bright); font-style:italic; }
+  .hero p.lede{ max-width:680px; margin:20px auto 0; color:#EEF2EA; font-size:1.26rem; font-weight:500; line-height:1.5; }
+  .lede-hl{ color:var(--gold-bright); font-weight:700; font-style:italic; }
+  .hero .paths{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:34px; }
+  .hero .tagline{ margin-top:40px; font-family:var(--display); font-style:italic; color:var(--gold-soft); font-size:1.05rem; }
+  @keyframes rise{ from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:none;} }
+
+  section{ padding:74px 0; }
+  .sec-head{ max-width:700px; margin-bottom:38px; }
+  .sec-head h2{ font-size:clamp(1.8rem,3.6vw,2.6rem); margin-top:10px; }
+  .sec-head p{ color:var(--muted); margin:12px 0 0; font-size:1.05rem; }
+
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .step{ position:relative; padding:26px 24px; background:#fff; border:1px solid var(--line); border-radius:16px; }
+  .step .no{ font-family:var(--display); font-size:.95rem; color:var(--gold); font-weight:600; }
+  .step h3{ font-size:1.35rem; margin:8px 0 8px; color:var(--green); }
+  .step p{ margin:0; color:var(--muted); font-size:.98rem; }
+  .step .arrow{ position:absolute; right:-16px; top:50%; transform:translateY(-50%); color:var(--gold-soft); font-size:1.4rem; z-index:2; }
+  .step:last-child .arrow{ display:none; }
+  @media(max-width:800px){ .steps{ grid-template-columns:1fr; } .step .arrow{ display:none; } }
+
+  /* sectors */
+  .sectors{ background:var(--ivory2); }
+  .sectors-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .sector{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px 20px; text-align:left; transition:transform .15s ease, box-shadow .15s ease; } .sector p{ margin:6px 0 0; color:var(--muted); font-size:.85rem; line-height:1.45; }
+  .sector:hover{ transform:translateY(-3px); box-shadow:0 12px 28px rgba(20,48,39,.1); }
+  .sector .ic{ font-size:1.7rem; display:block; margin-bottom:8px; }
+  .sector h3{ font-size:1.08rem; color:var(--green); }
+  @media(max-width:900px){ .sectors-grid{ grid-template-columns:repeat(2,1fr); } } @media(max-width:560px){ .sectors-grid{ grid-template-columns:1fr; } }
+
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+  .aud{ border-radius:18px; padding:34px 30px; }
+  .aud.emp{ background:var(--green); color:var(--ivory); }
+  .aud.cand{ background:linear-gradient(160deg,#2c5240,#1E4636); color:var(--ivory); }
+  .aud h3{ font-size:1.7rem; color:#fff; }
+  .aud .eyebrow{ color:var(--gold-bright); }
+  .aud ul{ list-style:none; padding:0; margin:18px 0 24px; }
+  .aud li{ padding-left:26px; position:relative; margin:10px 0; color:#D8E2DA; }
+  .aud li::before{ content:""; position:absolute; left:0; top:9px; width:9px; height:9px; border-radius:50%; background:var(--gold-soft); }
+  @media(max-width:800px){ .split{ grid-template-columns:1fr; } }
+
+  /* testimonials */
+  .tgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .tcard{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:26px 24px; position:relative; }
+  .tcard .mark{ font-family:var(--display); font-size:2.6rem; color:var(--gold-soft); line-height:.4; }
+  .tcard p{ font-family:var(--display); font-style:italic; font-size:1.08rem; color:var(--green2); margin:6px 0 16px; }
+  .tcard .by{ font-size:.86rem; color:var(--muted); font-weight:600; }
+  .tnote{ text-align:center; color:var(--muted); font-size:.82rem; font-style:italic; margin-top:20px; }
+  @media(max-width:800px){ .tgrid{ grid-template-columns:1fr; } }
+
+  .formcard{ background:#fff; border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:0 20px 50px rgba(20,48,39,.08); }
+  .tabs{ display:flex; }
+  .tab{ flex:1; padding:18px 16px; text-align:center; font-weight:600; font-size:1rem; background:var(--ivory2); color:var(--muted); border:none; cursor:pointer; font-family:var(--body); border-bottom:3px solid transparent; }
+  .tab[aria-selected="true"]{ background:#fff; color:var(--green); border-bottom-color:var(--gold); }
+  .tab:hover{ color:var(--green); }
+  .panel{ padding:34px 30px 38px; display:none; }
+  .panel[data-active="true"]{ display:block; animation:fade .35s ease; }
+  @keyframes fade{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:none;} }
+  .panel h3{ font-size:1.5rem; color:var(--green); }
+  .panel .intro{ color:var(--muted); margin:8px 0 22px; font-size:.98rem; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:16px 18px; }
+  @media(max-width:640px){ .grid2{ grid-template-columns:1fr; } }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field.full{ grid-column:1 / -1; }
+  label{ font-size:.86rem; font-weight:600; color:var(--green2); }
+  label .req{ color:var(--gold); }
+  input,select,textarea{ font-family:var(--body); font-size:1rem; padding:12px 13px; border:1.5px solid #D9D3C4; border-radius:10px; background:var(--ivory); color:var(--ink); width:100%; }
+  input:focus,select:focus,textarea:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(185,138,52,.16); background:#fff; }
+  textarea{ resize:vertical; min-height:84px; }
+  .consent{ grid-column:1 / -1; display:flex; gap:11px; align-items:flex-start; background:var(--ivory2); border-radius:10px; padding:13px 15px; }
+  .consent input{ width:auto; margin-top:4px; }
+  .consent label{ font-weight:400; font-size:.85rem; color:var(--green2); }
+  .promise{ grid-column:1/-1; display:flex; gap:11px; align-items:center; background:#EAF1E7; border:1px solid #CBDDC5; border-radius:10px; padding:12px 15px; color:#2c4d38; font-size:.9rem; }
+  .promise b{ color:var(--green); }
+  .submitrow{ grid-column:1/-1; margin-top:8px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .submitrow span{ color:var(--muted); font-size:.85rem; }
+  .err{ grid-column:1/-1; color:#a5342b; font-size:.9rem; display:none; }
+  .note-legal{ grid-column:1/-1; font-size:.8rem; color:var(--muted); margin-top:4px; }
+  .confirm{ display:none; background:#fff; border:1px solid var(--line); border-radius:14px; padding:24px; margin-top:22px; }
+  .confirm h4{ font-family:var(--display); color:var(--green); font-size:1.25rem; margin:0 0 6px; }
+  .confirm .sub{ margin:.2rem 0 10px; color:var(--muted); font-size:.92rem; }
+  .confirm pre{ white-space:pre-wrap; font-family:var(--body); background:var(--ivory); border-radius:10px; padding:15px; font-size:.9rem; color:var(--ink); border:1px solid var(--line); }
+  .confirm .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+  .btn-green{ background:var(--green); color:var(--ivory); padding:12px 22px; }
+  .btn-green:hover{ background:var(--green2); }
+  .btn-outline{ background:transparent; border:1.5px solid var(--gold); color:var(--green); padding:11px 20px; }
+
+  .ethics{ background:var(--green); color:var(--ivory); }
+  .ethics .wrap{ display:grid; grid-template-columns:1.1fr 1fr; gap:30px; align-items:center; }
+  .ethics h2{ color:#fff; font-size:2rem; }
+  .ethics p{ color:#CFDBD1; }
+  .ethics .pledge{ background:rgba(233,201,122,.09); border:1px solid rgba(233,201,122,.28); border-radius:16px; padding:24px 26px; }
+  .ethics .pledge div{ display:flex; gap:12px; margin:12px 0; align-items:flex-start; }
+  .ethics .pledge .tick{ color:var(--gold-bright); font-weight:700; }
+  @media(max-width:800px){ .ethics .wrap{ grid-template-columns:1fr; } }
+
+  footer{ background:#0F241C; color:#B9C7BC; padding:52px 0 30px; }
+  footer .cols{ display:flex; justify-content:space-between; gap:30px; flex-wrap:wrap; }
+  footer .lt{ font-family:var(--display); color:var(--ivory); font-size:1.2rem; }
+  footer a{ color:#B9C7BC; text-decoration:none; display:block; margin:7px 0; font-size:.92rem; }
+  footer a:hover{ color:var(--gold-bright); }
+  footer h5{ color:var(--gold-soft); font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; margin:0 0 10px; }
+  .legalstrip{ border-top:1px solid rgba(233,201,122,.15); margin-top:34px; padding-top:20px; font-size:.82rem; color:#8CA095; }
+  .legalstrip b{ color:#CFDBD1; }
+  :focus-visible{ outline:3px solid var(--gold-bright); outline-offset:2px; border-radius:4px; }
+  @media(prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } html{ scroll-behavior:auto; } }
+.logo-img{width:44px;height:44px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1.5px rgba(233,201,122,.45);}.hero .gate{width:190px;height:190px;border-radius:50%;object-fit:cover;box-shadow:0 10px 34px rgba(0,0,0,.4),0 0 0 2px rgba(233,201,122,.4);}
+.photo-slot{border:2px dashed rgba(233,201,122,.55);border-radius:14px;background:rgba(255,255,255,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--gold-soft);padding:20px;min-height:150px;margin-bottom:18px;}.photo-slot .cam{font-size:1.5rem;margin-bottom:6px;opacity:.9;}.photo-slot .lbl{font-size:.82rem;font-weight:600;line-height:1.4;}.photo-slot .hint{font-size:.72rem;opacity:.72;margin-top:3px;font-weight:400;}.photo-band{background:var(--ivory2);padding:26px 0;}.photo-band .strip{border:2px dashed rgba(184,138,52,.5);border-radius:16px;background:#fff;min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--gold);padding:30px;}.photo-band .strip .cam{font-size:2rem;margin-bottom:8px;}.photo-band .strip .lbl{font-family:var(--display);font-size:1.15rem;color:var(--green);}.photo-band .strip .hint{font-size:.8rem;color:var(--muted);margin-top:6px;max-width:520px;}
+.aud.primary{display:grid;grid-template-columns:0.85fr 1fr;gap:26px;align-items:center;margin-bottom:24px;}.aud.primary .aud-photo .photo-slot{margin:0;min-height:210px;height:100%;}.aud.partner{background:linear-gradient(160deg,#22503c,#153629);color:var(--ivory);}@media(max-width:800px){.aud.primary{grid-template-columns:1fr;}}@media(max-width:560px){.tab{font-size:.8rem;padding:14px 8px;}}
+</style>
+</head>
 <body>
 
-    <!-- Simplified Navigation -->
-    <nav id="navbar" style="position: sticky;">
-        <div class="container nav-content">
-            <div class="logo">
-                <a href="index.html"><img src="img/logo.png" alt="TalentGate"></a>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Portal Home</a></li>
-                <li><a href="application.html" class="btn-nav">General Application</a></li>
-            </ul>
-        </div>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="TalentGate Australia home">
+      <img class="logo-img" src="img/asset-45a690bc.jpg" alt="TalentGate">
+      <span class="lt">TalentGate</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    <nav class="navlinks">
+      <a href="#about" data-i18n="nav_about">About</a>
+      <a href="#how" data-i18n="nav_how">How it works</a>
+      <a href="#sectors" data-i18n="nav_sectors">Industries</a>
+      <a href="#employers" data-i18n="nav_emp">Employers</a>
+      <a href="#candidates" data-i18n="nav_work">Workers</a>
+      <a href="/jobs" data-i18n="nav_jobs">Jobs</a>
+      <a href="/insights" data-i18n="nav_insights">News &amp; Insights</a>
+      <button class="langbtn" id="langbtn" onclick="toggleLang()">Tiếng Việt</button>
+      <a href="/employer-enquiry" class="btn btn-gold" data-i18n="nav_cta">Employer enquiry</a>
     </nav>
+  </div>
+</header>
 
-    <!-- Generic Hero -->
-    <header class="page-hero bg-navy text-white section-padding">
-        <div class="container text-center">
-            <h1>Current Opportunities</h1>
-            <p class="lead-text text-white">Find your next role with Australia's most ethical recruiter.</p>
-        </div>
-    </header>
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap">
+    <img class="gate" src="img/asset-45a690bc.jpg" alt="TalentGate">
+    <h1 data-i18n="hero_h1">Australia's <span class="em">Trusted</span> Gateway to Skilled &amp; Semi-Skilled Talent</h1>
+    <p class="lede" data-i18n="hero_lede">Where employers and workers build <span class="lede-hl">Australia's future — together</span>.</p>
+    <div class="paths">
+      <a href="#employers" class="btn btn-gold" data-i18n="hero_emp">I'm an employer</a>
+      <a href="#partners" class="btn btn-ghost" data-i18n="hero_partner">I'm a referral partner</a>
+      <a href="#candidates" class="btn btn-ghost" data-i18n="hero_work">I'm a worker</a>
+      <a href="/jobs" class="btn btn-ghost" data-i18n="hero_jobs">Browse open jobs</a>
+    </div>
+    <p class="tagline" data-i18n="hero_tag">Win for the worker · Win for the employer · Win for Australia</p>
+  </div>
+</section>
 
-    <!-- Job Board Section -->
-    <section class="section-padding bg-light">
-        <div class="container">
+<section class="photo-band" aria-label="Australian workplaces">
+  <img src="img/hero.jpg" alt="Australian workplaces — construction, healthcare and professional teams" style="display:block;width:100%;height:auto" decoding="async">
+</section>
 
-            <!-- Search & Filter Bar (Indeed/Upwork style) -->
-            <div class="search-filter-panel" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); margin-top: -3rem; position: relative; z-index: 10; border: 1px solid #e2e8f0; max-width: 950px; margin-left: auto; margin-right: auto; margin-bottom: 3rem; box-sizing: border-box;">
-                <form id="jobs-search-form" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;" onsubmit="event.preventDefault();">
-                    <!-- Occupation Search -->
-                    <div style="flex: 2; min-width: 250px; position: relative; display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.8rem 1rem; box-sizing: border-box; background: white;">
-                        <i class="fas fa-search" style="color: #64748b; margin-right: 0.8rem; font-size: 1.1rem;"></i>
-                        <input type="text" id="search-occupation" placeholder="Job title, keywords, or occupation..." style="border: none; outline: none; width: 100%; font-size: 1rem; color: var(--primary);">
-                    </div>
-                    <!-- Location Select -->
-                    <div style="flex: 1.2; min-width: 180px; position: relative; display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.8rem 1rem; box-sizing: border-box; background: white;">
-                        <i class="fas fa-map-marker-alt" style="color: #64748b; margin-right: 0.8rem; font-size: 1.1rem;"></i>
-                        <select id="filter-location" style="border: none; outline: none; width: 100%; font-size: 1rem; color: var(--primary); background: transparent; cursor: pointer;">
-                            <option value="">All Locations</option>
-                            <option value="Sydney">Sydney, NSW</option>
-                            <option value="Melbourne">Melbourne, VIC</option>
-                            <option value="Brisbane">Brisbane, QLD</option>
-                            <option value="Perth">Perth, WA</option>
-                            <option value="Adelaide">Adelaide, SA</option>
-                            <option value="Hobart">Hobart, TAS</option>
-                            <option value="Canberra">Canberra, ACT</option>
-                            <option value="Darwin">Darwin, NT</option>
-                            <option value="Regional NSW">Regional NSW</option>
-                            <option value="Regional VIC">Regional VIC</option>
-                            <option value="Regional QLD">Regional QLD</option>
-                            <option value="Regional WA">Regional WA</option>
-                        </select>
-                    </div>
-                    <!-- Industry Select -->
-                    <div style="flex: 1.2; min-width: 180px; position: relative; display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.8rem 1rem; box-sizing: border-box; background: white;">
-                        <i class="fas fa-industry" style="color: #64748b; margin-right: 0.8rem; font-size: 1.1rem;"></i>
-                        <select id="filter-industry" style="border: none; outline: none; width: 100%; font-size: 1rem; color: var(--primary); background: transparent; cursor: pointer;">
-                            <option value="">All Industries</option>
-                            <option value="Agriculture">Agriculture & Processing</option>
-                            <option value="Healthcare">Healthcare & Care</option>
-                            <option value="Hospitality">Hospitality & Trades</option>
-                            <option value="Construction">Services & Support</option>
-                        </select>
-                    </div>
-                    <!-- Reset Button -->
-                    <button type="button" id="reset-filters" class="btn btn-outline" style="padding: 0 1.5rem; font-weight: 600; font-size: 0.95rem; border: 1px solid #cbd5e1; color: #64748b; display: flex; align-items: center; gap: 0.5rem; justify-content: center; height: 50px; box-sizing: border-box; border-radius: 8px; background: transparent; cursor: pointer; transition: all 0.2s;">
-                        <i class="fas fa-undo"></i> Reset
-                    </button>
-                </form>
-            </div>
+<section id="about" style="padding-top:26px;">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="about_eyebrow">About TalentGate</span>
+      <h2 data-i18n="about_h2">Building Australia's workforce — the right way</h2>
+      <p data-i18n="about_mission" style="font-size:1.15rem;font-weight:600;color:var(--green);margin:0 0 12px">Across Australia — regional Australia especially — critical industries face ongoing, chronic shortages of skilled and semi-skilled workers. TalentGate exists to close that gap.</p>
+      <p data-i18n="about_p">TalentGate connects Australian employers with skilled and semi-skilled workers from around the world — then stays alongside those workers as they relocate, settle and build a life here. With genuine roots in both Eastern and Western business cultures, we bridge global talent and the Australian employers who need them: honestly, respectfully, and for the long term. When the worker, the employer and Australia all win, that’s a workforce built the right way.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:6px"><div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 10px 26px rgba(20,48,39,.06)"><span style="font-size:2.3rem;line-height:1;display:block;margin:0 0 10px">👷‍♂️</span><h3 style="color:var(--gold);margin:0 0 8px;font-size:1.2rem" data-i18n="about_w1_h">Win for the worker</h3><p style="margin:0;color:var(--muted);font-size:1rem;line-height:1.6" data-i18n="about_w1_p">Genuine opportunities to work, live and build a future in Australia — for workers and their families.</p></div> <div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 10px 26px rgba(20,48,39,.06)"><span style="font-size:2.3rem;line-height:1;display:block;margin:0 0 10px">🏭</span><h3 style="color:var(--gold);margin:0 0 8px;font-size:1.2rem" data-i18n="about_w2_h">Win for the employer</h3><p style="margin:0;color:var(--muted);font-size:1rem;line-height:1.6" data-i18n="about_w2_p">Reliable, work-ready people matched to real shortages, and supported to stay for the long term.</p></div> <div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 10px 26px rgba(20,48,39,.06)"><span style="font-size:2.3rem;line-height:1;display:block;margin:0 0 10px">🇦🇺</span><h3 style="color:var(--gold);margin:0 0 8px;font-size:1.2rem" data-i18n="about_w3_h">Win for Australia</h3><p style="margin:0;color:var(--muted);font-size:1rem;line-height:1.6" data-i18n="about_w3_p">Skilled people who fill genuine shortages, contribute, and help build Australia’s future.</p></div>
+    </div>
+  </div>
+</section>
 
-            <!-- Job List Container -->
-            <div id="job-display" style="display: block;">
-                <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.8rem;">
-                    <h2 class="section-title" id="jobs-list-header" style="margin: 0; font-size: 1.8rem; text-align: left; color: var(--primary);">All Open Positions</h2>
-                </div>
+<div style="background:#0F241C;border-top:1px solid rgba(184,138,52,.35);border-bottom:1px solid rgba(184,138,52,.35);padding:20px 0 18px">
+  <div class="wrap" style="text-align:center">
+    <div style="color:#F2DF81;font-weight:700;font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;margin-bottom:10px" data-i18n="trust_e">Trusted by leading employers across</div>
+    <div>
+      <span style="display:inline-block;border:1px solid rgba(231,201,122,.55);color:#F7F4EC;border-radius:99px;padding:6px 14px;font-size:.88rem;margin:4px 3px;white-space:nowrap" data-i18n="ts1">Primary industries</span><span style="display:inline-block;border:1px solid rgba(231,201,122,.55);color:#F7F4EC;border-radius:99px;padding:6px 14px;font-size:.88rem;margin:4px 3px;white-space:nowrap" data-i18n="ts2">Agriculture</span><span style="display:inline-block;border:1px solid rgba(231,201,122,.55);color:#F7F4EC;border-radius:99px;padding:6px 14px;font-size:.88rem;margin:4px 3px;white-space:nowrap" data-i18n="ts3">Horticulture</span><span style="display:inline-block;border:1px solid rgba(231,201,122,.55);color:#F7F4EC;border-radius:99px;padding:6px 14px;font-size:.88rem;margin:4px 3px;white-space:nowrap" data-i18n="ts4">Construction</span><span style="display:inline-block;border:1px solid rgba(231,201,122,.55);color:#F7F4EC;border-radius:99px;padding:6px 14px;font-size:.88rem;margin:4px 3px;white-space:nowrap" data-i18n="ts5">Childcare</span><span style="display:inline-block;border:1px solid rgba(231,201,122,.55);color:#F7F4EC;border-radius:99px;padding:6px 14px;font-size:.88rem;margin:4px 3px;white-space:nowrap" data-i18n="ts6">Food &amp; supermarket</span><span style="display:inline-block;border:1px solid rgba(231,201,122,.55);color:#F7F4EC;border-radius:99px;padding:6px 14px;font-size:.88rem;margin:4px 3px;white-space:nowrap" data-i18n="ts7">Restaurant &amp; cafe</span><span style="display:inline-block;border:1px solid rgba(231,201,122,.55);color:#F7F4EC;border-radius:99px;padding:6px 14px;font-size:.88rem;margin:4px 3px;white-space:nowrap" data-i18n="ts8">Hospitality</span>
+    </div>
+    <div style="color:#E7C97A;font-weight:700;font-size:.95rem;letter-spacing:.14em;margin-top:10px">NSW &nbsp;·&nbsp; WA &nbsp;·&nbsp; SA</div>
+  </div>
+</div>
 
-                <div id="job-list" class="job-list-layout">
-                    <!-- Jobs injected dynamically here as Indeed/Upwork style rows -->
-                    <div class="loading-spinner">Loading opportunities...</div>
-                </div>
-            </div>
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="how_eyebrow">How it works</span>
+      <h2 data-i18n="how_h2">One gateway, three steps</h2>
+      <p data-i18n="how_p">We don't just find workers. We bring them here and help them stay and succeed — end to end.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="no" data-i18n="step1_no">Step 1</div><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true" style="display:block;margin:0 0 8px"><circle cx="22" cy="22" r="20.2" fill="#FBF3DC" stroke="#B98A34" stroke-width="1.5"/><circle cx="20" cy="20" r="6.6" stroke="#143027" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M25.2 25.2 L31.5 31.5" stroke="#143027" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><h3 data-i18n="step1_h">Source</h3><p data-i18n="step1_p">We find and honestly screen skilled, work-ready candidates matched to the roles you actually need.</p><span class="arrow">→</span></div>
+      <div class="step"><div class="no" data-i18n="step2_no">Step 2</div><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true" style="display:block;margin:0 0 8px"><circle cx="22" cy="22" r="20.2" fill="#FBF3DC" stroke="#B98A34" stroke-width="1.5"/><path d="M12 22.5 L32 13 L26 31.5 L21.5 24.5 Z M21.5 24.5 L32 13" stroke="#143027" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><h3 data-i18n="step2_h">Relocate</h3><p data-i18n="step2_p">We handle the logistics of getting the worker to your region, ready to start.</p><span class="arrow">→</span></div>
+      <div class="step"><div class="no" data-i18n="step3_no">Step 3</div><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true" style="display:block;margin:0 0 8px"><circle cx="22" cy="22" r="20.2" fill="#FBF3DC" stroke="#B98A34" stroke-width="1.5"/><path d="M22 32.5 V21.5 M22 24 Q13.8 24 13.2 15.8 Q21.4 15.8 22 24 M22 21.5 Q30.2 21.5 30.8 13.3 Q22.6 13.3 22 21.5" stroke="#143027" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><h3 data-i18n="step3_h">Settle</h3><p data-i18n="step3_p">We support each worker to settle in — so they stay, contribute, and build a life here.</p></div>
+    </div>
+  </div>
+</section>
 
-        </div>
-    </section>
+<section class="sectors" id="sectors">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="sectors_eyebrow">Industries we serve</span>
+      <h2 data-i18n="sectors_h2">Workforce solutions across every sector</h2>
+      <p data-i18n="sectors_p">For many years we've helped employers address critical skill shortages — across:</p>
+    </div>
+    <div class="sectors-grid">
+      <div class="sector"><span class="ic">🌾</span><h3 data-i18n="ind1_h">Horticulture, Farming &amp; Agriculture</h3><p data-i18n="ind1_r">Farm supervisors, horticulturists &amp; crop growers, livestock &amp; dairy workers, agricultural technicians</p></div>
+      <div class="sector"><span class="ic">🍽️</span><h3 data-i18n="ind2_h">Hospitality, Restaurants &amp; Cafés</h3><p data-i18n="ind2_r">Chefs &amp; cooks, café &amp; restaurant managers, baristas, food &amp; beverage staff</p></div>
+      <div class="sector"><span class="ic">🛒</span><h3 data-i18n="ind3_h">Supermarkets &amp; General Food Stores</h3><p data-i18n="ind3_r">Store managers, butchers, bakers, retail supervisors</p></div>
+      <div class="sector"><span class="ic">🏗️</span><h3 data-i18n="ind4_h">Construction &amp; Building</h3><p data-i18n="ind4_r">Carpenters &amp; joiners, bricklayers, plumbers, electricians, site supervisors</p></div>
+      <div class="sector"><span class="ic">💅</span><h3 data-i18n="ind5_h">Beauty Salons &amp; Nail Shops</h3><p data-i18n="ind5_r">Hairdressers, beauty therapists, nail technicians, salon managers</p></div>
+      <div class="sector"><span class="ic">⚙️</span><h3 data-i18n="ind6_h">Engineering &amp; Manufacturing</h3><p data-i18n="ind6_r">Mechanical &amp; electrical engineers, fitters &amp; turners, welders, production supervisors</p></div>
+      <div class="sector"><span class="ic">🩺</span><h3 data-i18n="ind7_h">Healthcare &amp; Aged Care</h3><p data-i18n="ind7_r">Registered &amp; enrolled nurses, aged &amp; disability carers, personal care assistants, allied health</p></div>
+      <div class="sector"><span class="ic">🧸</span><h3 data-i18n="ind8_h">Childcare &amp; Early Learning</h3><p data-i18n="ind8_r">Early childhood teachers, diploma educators, room leaders, centre directors &amp; managers</p></div>
+      <div class="sector"><span class="ic">🚗</span><h3 data-i18n="ind9_h">Automotive &amp; Car Services</h3><p data-i18n="ind9_r">Motor mechanics, auto electricians, panel beaters, vehicle spray painters</p></div>
+      <div class="sector"><span class="ic">⛏️</span><h3 data-i18n="ind10_h">Mining</h3><p data-i18n="ind10_r">Drillers &amp; miners, plant &amp; machine operators, mining engineers, geologists &amp; technicians</p></div>
+      <div class="sector"><span class="ic">💼</span><h3 data-i18n="ind11_h">Professional Services</h3><p data-i18n="ind11_r">IT &amp; AI specialists, sales &amp; marketing, management, accounting, customer service, finance &amp; office administration</p></div>
+    </div>
+  </div>
+</section>
 
-    <!-- Call to Action -->
-    <section class="section-padding text-center">
-        <div class="container">
-            <h2>Don't see a role for you?</h2>
-            <p class="mb-5">Register your details with us and we'll contact you when a suitable position becomes
-                available.</p>
-            <a href="application.html" class="btn btn-primary">General Application</a>
-        </div>
-    </section>
-
-    <!-- Job Details Modal -->
-    <div class="job-modal-overlay" id="jobModal" onclick="closeJobModal(event)">
-        <div class="job-modal-content" onclick="event.stopPropagation()">
-            <button class="job-modal-close" onclick="closeJobModal()"><i class="fas fa-times"></i></button>
-            <div class="job-modal-header">
-                <h2 id="modal-title" style="margin-bottom: 0.5rem; color: var(--primary); padding-right: 2rem;">Job Title</h2>
-                <div class="job-meta" id="modal-meta" style="margin: 0; font-size: 0.95rem; justify-content: flex-start; gap: 1.5rem; border: none; padding: 0;">
-                    <!-- Injected meta -->
-                </div>
-            </div>
-            <div class="job-modal-body">
-                <div id="modal-image-container" style="display: none; margin-bottom: 1.5rem;">
-                    <img id="modal-image" src="" alt="Job Image" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
-                </div>
-                <div class="job-desc-full" id="modal-desc">
-                    <!-- Injected full HTML description -->
-                </div>
-                <div id="modal-dates" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; font-size: 0.85rem; color: #64748b; display: flex; justify-content: space-between;">
-                    <!-- Injected dates -->
-                </div>
-            </div>
-            <div class="job-modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
-                <button onclick="shareJobModal()" id="modal-share-btn" class="btn btn-outline-primary" style="padding: 0.6rem 1.2rem; font-size: 0.9rem; border-radius: 6px;"><i class="fas fa-link"></i> Copy Link</button>
-                <a href="#" id="modal-apply-btn" class="btn btn-primary" style="font-weight: 600; padding: 0.8rem 2rem;">Apply Now <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i></a>
-            </div>
-        </div>
+<section id="employers" style="padding-top:20px;">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="who_eyebrow">Who we work with</span>
+      <h2 data-i18n="who_h2">Built for Australian employers, workers and referral partners</h2>
+      <p data-i18n="who_p">We solve skilled and semi-skilled shortages for employers and the partners who refer them — and we open a genuine path for individual workers too.</p>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-col">
-                <h3>TalentGate<span>.</span></h3>
-                <p>Australia’s Ethical Gateway to Skilled & Talented Workers.</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <p>&copy; 2026 TalentGate. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <div class="aud emp primary">
+      <div class="aud-photo"><img src="img/employer.jpg" alt="Regional agricultural team on site" style="display:block;width:100%;height:auto" loading="lazy" decoding="async"></div>
+      <div class="aud-body">
+        <span class="eyebrow" data-i18n="emp_eyebrow">For employers</span>
+        <h3 data-i18n="emp_h3">Solving labour shortages — loyal, hardworking, reliable, long-term</h3>
+        <ul>
+          <li data-i18n="emp_li1">End-to-end recruitment</li>
+          <li data-i18n="emp_li2">Total compliance</li>
+          <li data-i18n="emp_li3">Workforce planning</li>
+          <li data-i18n="emp_li4">Fewer headaches</li>
+        </ul>
+        <p data-i18n="emp_promise" style="font-weight:700;color:var(--gold);margin:4px 0 14px">The promise: stability, productivity and peace of mind.</p>
+        <a href="#apply" class="btn btn-gold" data-i18n="emp_cta" onclick="pick('employer')">Tell us what you need</a>
+      </div>
+    </div>
 
-    <script src="script.js"></script>
+    <div class="split">
+      <div class="aud partner" id="partners">
+        <img src="img/partner.jpg" alt="Sealing a regional workforce partnership" style="display:block;width:100%;height:auto" loading="lazy" decoding="async">
+        <span class="eyebrow" data-i18n="par_eyebrow">For referral partners</span>
+        <h3 data-i18n="par_h3">Refer roles or candidates — we deliver</h3>
+        <ul>
+          <li data-i18n="par_li1">Refer employer demand or job-ready candidates</li>
+          <li data-i18n="par_li2">A clear, written referral arrangement</li>
+          <li data-i18n="par_li3">Profiles shared anonymised first, named on your approval</li>
+          <li data-i18n="par_li4">Dependable delivery that protects your reputation</li>
+        </ul>
+        <a href="#apply" class="btn btn-gold" data-i18n="par_cta" onclick="pick('partner')">Partner with us</a>
+      </div>
+      <div class="aud cand" id="candidates">
+        <img src="img/worker.jpg" alt="A family arriving to begin their new life in Australia" style="display:block;width:100%;height:auto" loading="lazy" decoding="async">
+        <span class="eyebrow" data-i18n="cand_eyebrow">For workers</span>
+        <h3 data-i18n="cand_h3">Real jobs. Real support. Real futures.</h3>
+        <ul>
+          <li data-i18n="cand_li1">Genuine opportunities</li>
+          <li data-i18n="cand_li2">Honest pathways</li>
+          <li data-i18n="cand_li3">Settlement support</li>
+          <li data-i18n="cand_li4">Safety &amp; respect</li>
+        </ul>
+        <p data-i18n="cand_promise" style="font-weight:700;color:var(--gold);margin:4px 0 14px">The promise: a secure future for you and your family.</p>
+        <a href="/apply" target="_blank" rel="noopener" class="btn btn-gold" data-i18n="cand_cta">Register your interest</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="voices" style="padding-top:26px;">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="voices_eyebrow">Voices</span>
+      <h2 data-i18n="voices_h2">What people say</h2>
+      <p data-i18n="voices_p">The relationships behind the placements.</p>
+    </div>
+    <div class="tgrid">
+      <div class="tcard"><div class="mark">“</div><p data-i18n="quote1">They didn't just send us names — they sent people who arrived ready, worked hard and got on with it. Two seasons on, the same crew is still with us: production is up, and the revolving door of the old contractor model is gone. Fewer headaches, more stability. That's the difference.</p><div class="by" data-i18n="by1">— Operations Manager, Horticulture (WA)</div></div>
+      <div class="tcard"><div class="mark">“</div><p data-i18n="quote2">From the first call to my first six months at work in Australia, someone was always there — making sure I was okay and settling in well. Every promise was kept, and I never felt alone.</p><div class="by" data-i18n="by2">— Skilled worker, now in regional Victoria</div></div>
+      <div class="tcard"><div class="mark">“</div><p data-i18n="quote3">When we refer someone, our own reputation travels with them. TalentGate answers us within a day, tells us honestly when something won't work, and looks after every person we send. That's why they're the partner we keep choosing.</p><div class="by" data-i18n="by3">— Recruitment partner, Western Australia</div></div>
+    </div>
+    </div>
+</section>
+
+<section id="apply" style="padding-top:26px;">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="apply_eyebrow">Get started</span>
+      <h2 data-i18n="apply_h2">Tell us about you</h2>
+      <p data-i18n="apply_p">Three short forms — for employers, referral partners and workers. We'll be in touch personally.</p>
+    </div>
+
+    <div class="formcard">
+      <div class="tabs" role="tablist">
+        <button class="tab" id="tab-emp" role="tab" aria-selected="true" onclick="pick('employer')" data-i18n="tab_emp">I'm an employer</button>
+        <button class="tab" id="tab-par" role="tab" aria-selected="false" onclick="pick('partner')" data-i18n="tab_par">Referral partner</button>
+        <button class="tab" id="tab-cand" role="tab" aria-selected="false" onclick="pick('candidate')" data-i18n="tab_cand">I'm a worker</button>
+      </div>
+
+      <div class="panel" id="panel-emp" data-active="true" role="tabpanel">
+        <h3 data-i18n="empf_h">Employer enquiry</h3>
+        <p class="intro" data-i18n="empf_intro">Tell us the roles you need filled. This is a business enquiry — there's no cost to ask.</p>
+        <div class="grid2">
+          <div class="field"><label data-i18n="l_company">Business name <span class="req">*</span></label><input id="e_company" type="text"></div>
+          <div class="field"><label data-i18n="l_contact">Contact name <span class="req">*</span></label><input id="e_name" type="text"></div>
+          <div class="field"><label data-i18n="l_email">Email <span class="req">*</span></label><input id="e_email" type="email"></div>
+          <div class="field"><label data-i18n="l_phone">Phone</label><input id="e_phone" type="tel"></div>
+          <div class="field"><label data-i18n="l_sector">Industry / sector</label><input id="e_sector" type="text" data-i18n-ph="ph_sector" placeholder="e.g. Agriculture, Trades, Hospitality"></div>
+          <div class="field"><label data-i18n="l_location">Location / region <span class="req">*</span></label><input id="e_location" type="text" data-i18n-ph="ph_location" placeholder="Town / region / state"></div>
+          <div class="field"><label data-i18n="l_role">Role(s) needed <span class="req">*</span></label><input id="e_role" type="text" data-i18n-ph="ph_role" placeholder="e.g. Metal Fabricator, Cook"></div>
+          <div class="field"><label data-i18n="l_qty">Number of positions</label><input id="e_qty" type="text" placeholder="e.g. 4"></div>
+          <div class="field full"><label data-i18n="l_skills_e">Key skills / tickets / requirements</label><textarea id="e_skills" data-i18n-ph="ph_skills_e" placeholder="What the role genuinely needs"></textarea></div>
+          <div class="field full"><label data-i18n="l_time">Timeframe &amp; anything else</label><textarea id="e_notes" data-i18n-ph="ph_time" placeholder="When you need them; any details"></textarea></div>
+          <div class="consent"><input type="checkbox" id="e_consent"><label for="e_consent" data-i18n="c_emp">I agree that TalentGate may use these details to respond to my enquiry, in line with its privacy practices.</label></div>
+          <div class="err" id="e_err" data-i18n="err">Please complete the required fields marked with *.</div>
+          <div class="submitrow"><button class="btn btn-green" onclick="submitForm('employer')" data-i18n="empf_send">Send enquiry</button><span data-i18n="empf_note">We reply personally, usually within a couple of business days.</span></div>
+          <p class="note-legal" data-i18n="legal_emp">TalentGate provides recruitment, workforce solutions, relocation and settlement support services.</p>
+        </div>
+        <div class="confirm" id="e_confirm">
+          <h4 data-i18n="rev_h">Review &amp; send</h4>
+          <p class="sub" data-i18n="rev_emp">Here's your enquiry. Send it by email, or copy it.</p>
+          <pre id="e_summary"></pre>
+          <div class="cta-row"><a class="btn btn-gold" href="/employer-enquiry" data-i18n="full_enquiry_btn">Full workforce enquiry form</a><a class="btn btn-green" id="e_mail" href="#" data-i18n="send_mail">Send by email</a><button class="btn btn-outline" onclick="copySummary('e_summary',this)" data-i18n="copy_btn">Copy details</button></div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-par" role="tabpanel">
+        <h3 data-i18n="parf_h">Referral partner enquiry</h3>
+        <p class="intro" data-i18n="parf_intro">Tell us about your organisation and what you'd like to refer. This is a business enquiry — no cost to ask.</p>
+        <div class="grid2">
+          <div class="field"><label data-i18n="l_pcompany">Organisation name <span class="req">*</span></label><input id="p_company" type="text"></div>
+          <div class="field"><label data-i18n="l_contact">Contact name <span class="req">*</span></label><input id="p_name" type="text"></div>
+          <div class="field"><label data-i18n="l_email">Email <span class="req">*</span></label><input id="p_email" type="email"></div>
+          <div class="field"><label data-i18n="l_phone">Phone</label><input id="p_phone" type="tel"></div>
+          <div class="field"><label data-i18n="l_ptype">Partner type</label><select id="p_type"><option value="" data-i18n="opt_select">Select…</option><option data-i18n="opt_agency">Recruitment agency</option><option data-i18n="opt_interm">Employer intermediary</option><option data-i18n="opt_assoc">Community / association</option><option data-i18n="opt_other">Other</option></select></div>
+          <div class="field"><label data-i18n="l_refer">What are you referring?</label><select id="p_refer"><option value="" data-i18n="opt_select">Select…</option><option data-i18n="opt_demand">Employer demand / roles</option><option data-i18n="opt_cands">Job-ready candidates</option><option data-i18n="opt_both">Both</option></select></div>
+          <div class="field full"><label data-i18n="l_pregions">Regions &amp; sectors</label><input id="p_regions" type="text" data-i18n-ph="ph_pregions" placeholder="Where and what you cover"></div>
+          <div class="field full"><label data-i18n="l_pdetails">Volume &amp; anything else</label><textarea id="p_notes" data-i18n-ph="ph_pdetails" placeholder="Numbers, timing, how you'd like to work together"></textarea></div>
+          <div class="consent"><input type="checkbox" id="p_consent"><label for="p_consent" data-i18n="c_par">I agree that TalentGate may use these details to respond to my enquiry, in line with its privacy practices.</label></div>
+          <div class="err" id="p_err" data-i18n="err">Please complete the required fields marked with *.</div>
+          <div class="submitrow"><button class="btn btn-green" onclick="submitForm('partner')" data-i18n="parf_send">Send enquiry</button><span data-i18n="empf_note">We reply personally, usually within a couple of business days.</span></div>
+          <p class="note-legal" data-i18n="legal_emp">TalentGate provides recruitment, workforce solutions, relocation and settlement support services.</p>
+        </div>
+        <div class="confirm" id="p_confirm">
+          <h4 data-i18n="rev_h">Review &amp; send</h4>
+          <p class="sub" data-i18n="rev_emp">Here's your enquiry. Send it by email, or copy it.</p>
+          <pre id="p_summary"></pre>
+          <div class="cta-row"><a class="btn btn-green" id="p_mail" href="#" data-i18n="send_mail">Send by email</a><button class="btn btn-outline" onclick="copySummary('p_summary',this)" data-i18n="copy_btn">Copy details</button></div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-cand" role="tabpanel">
+        <h3 data-i18n="candf_h">Candidate application</h3>
+        <p class="intro" data-i18n="candf_intro">Tell us about your skills and experience. Registering is always free.</p>
+        <div style="background:var(--ivory2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:0 0 18px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+          <span data-i18n="cand_fullform_lead" style="font-size:.95rem;color:#3A463D">Prefer the full application, with document uploads?</span>
+          <a href="/apply" target="_blank" rel="noopener" class="btn btn-gold" data-i18n="cand_fullform_btn" style="padding:10px 18px">Open full application →</a>
+        </div>
+        <div class="grid2">
+          <div class="field"><label data-i18n="l_fullname">Full name <span class="req">*</span></label><input id="c_name" type="text"></div>
+          <div class="field"><label data-i18n="l_email">Email <span class="req">*</span></label><input id="c_email" type="email"></div>
+          <div class="field"><label data-i18n="l_phone_w">Phone / WhatsApp</label><input id="c_phone" type="tel"></div>
+          <div class="field"><label data-i18n="l_curloc">Current country / location <span class="req">*</span></label><input id="c_location" type="text"></div>
+          <div class="field"><label data-i18n="l_occ">Occupation / trade <span class="req">*</span></label><input id="c_role" type="text" data-i18n-ph="ph_occ" placeholder="e.g. Motor Mechanic"></div>
+          <div class="field"><label data-i18n="l_years">Years of experience</label><input id="c_exp" type="text" placeholder="e.g. 6"></div>
+          <div class="field full"><label data-i18n="l_skills_c">Skills, tickets &amp; licences</label><textarea id="c_skills" data-i18n-ph="ph_skills_c" placeholder="Your main skills and any tickets or licences you hold"></textarea></div>
+          <div class="field"><label data-i18n="l_quals">Qualifications</label><input id="c_quals" type="text"></div>
+          <div class="field"><label data-i18n="l_eng">English level (your estimate)</label><select id="c_english"><option value="" data-i18n="opt_select">Select…</option><option data-i18n="opt_basic">Basic</option><option data-i18n="opt_conv">Conversational</option><option data-i18n="opt_good">Good</option><option data-i18n="opt_fluent">Fluent</option></select></div>
+          <div class="field"><label data-i18n="l_availfrom">Available from</label><input id="c_avail" type="text" data-i18n-ph="ph_avail" placeholder="e.g. Immediately, or a date"></div>
+          <div class="field"><label data-i18n="l_reloc">Willing to relocate in Australia?</label><select id="c_reloc"><option value="" data-i18n="opt_select">Select…</option><option data-i18n="opt_any">Yes, anywhere</option><option data-i18n="opt_some">Yes, some regions</option><option data-i18n="opt_disc">Prefer to discuss</option></select></div>
+          <div class="field full"><label data-i18n="l_else">Anything else you'd like us to know</label><textarea id="c_notes"></textarea></div>
+          <div class="consent"><input type="checkbox" id="c_consent"><label for="c_consent" data-i18n="c_cand">I consent to TalentGate holding these details to help match me with employers. I understand my details are shared with an employer only with my agreement, and that TalentGate does not guarantee any particular outcome.</label></div>
+          <div class="err" id="c_err" data-i18n="err">Please complete the required fields marked with *.</div>
+          <div class="submitrow"><button class="btn btn-green" onclick="submitForm('candidate')" data-i18n="candf_send">Register my interest</button><span data-i18n="candf_note">Free, always. We'll be in touch.</span></div>
+          <p class="note-legal" data-i18n="legal_cand">TalentGate provides recruitment, workforce solutions, relocation and settlement support services.</p>
+        </div>
+        <div class="confirm" id="c_confirm">
+          <h4 data-i18n="rev_h">Review &amp; send</h4>
+          <p class="sub" data-i18n="rev_cand">Here are your details. Send them by email, or copy them.</p>
+          <pre id="c_summary"></pre>
+          <div class="cta-row"><a class="btn btn-green" id="c_mail" href="#" data-i18n="send_mail">Send by email</a><button class="btn btn-outline" onclick="copySummary('c_summary',this)" data-i18n="copy_btn">Copy details</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ethics">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow" style="color:var(--gold-bright)" data-i18n="eth_eyebrow">Our promise</span>
+      <h2 data-i18n="eth_h2">Recruitment done honestly</h2>
+      <p data-i18n="eth_p">We believe a job can change a family's future — for generations. That belief only holds if the work is done right. So we hold a clear line on every placement.</p>
+    </div>
+    <div class="pledge">
+      <div><span class="tick">✓</span><span data-i18n="eth2">We represent people and roles <b style="color:#fff">honestly</b> — no inflated profiles, no false promises.</span></div>
+      <div><span class="tick">✓</span><span data-i18n="eth3">Your details are shared with an employer <b style="color:#fff">only with your consent</b>.</span></div>
+      <div><span class="tick">✓</span><span data-i18n="eth4">We support you through <b style="color:#fff">relocation and settlement</b> — every step of the way.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="cols">
+      <div style="max-width:300px">
+        <div class="logo" style="margin-bottom:10px"><img class="logo-img" src="img/asset-45a690bc.jpg" alt="TalentGate"><span class="lt" style="color:var(--ivory)">TalentGate</span></div>
+        <p style="color:#8CA095;font-size:.92rem" data-i18n="foot_tag">The gateway for Australia’s workforce solutions.</p>
+      </div>
+      <div><h5 data-i18n="foot_explore">Explore</h5><a href="#how" data-i18n="nav_how">How it works</a><a href="#sectors" data-i18n="nav_sectors">Industries</a><a href="/jobs" data-i18n="nav_jobs">Jobs</a><a href="/insights" data-i18n="foot_insights">News &amp; Insights</a><a href="/partner-with-us" data-i18n="foot_partner">Partner with us</a><a href="#employers" data-i18n="nav_emp">For employers</a><a href="#candidates" data-i18n="nav_work">For workers</a></div>
+      <div><h5 data-i18n="foot_contact">Contact</h5><a href="mailto:jobs@talentgate.com.au">jobs@talentgate.com.au</a><a href="/employer-enquiry" data-i18n="foot_empenq">Employer enquiry</a><a href="/apply" target="_blank" rel="noopener" data-i18n="foot_workreg">Candidate application</a><a href="/privacy" data-i18n="foot_privacy">Privacy</a></div>
+    </div>
+    <div class="legalstrip">
+      <span data-i18n="foot_legal"><b>TalentGate</b> provides recruitment, workforce solutions, relocation and settlement support services.</span>
+      <div style="margin-top:10px">© <span id="yr"></span> Talent Gate Australia Pty Ltd.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  var T = {
+    nav_about:{en:"About",vi:"Giới thiệu"},
+    nav_jobs:{en:"Jobs",vi:"Việc làm"},
+    hero_jobs:{en:"Browse open jobs",vi:"Xem việc làm đang tuyển"},
+    foot_privacy:{en:"Privacy",vi:"Quyền riêng tư"},
+    about_eyebrow:{en:"About TalentGate",vi:"Về TalentGate"},
+    about_h2:{en:"Building Australia's workforce — the right way",vi:"Xây dựng lực lượng lao động cho nước Úc — một cách đúng đắn"},
+    about_mission:{en:"Across Australia — regional Australia especially — critical industries face ongoing, chronic shortages of skilled and semi-skilled workers. TalentGate exists to close that gap.",vi:"Trên khắp nước Úc — đặc biệt là các vùng miền — nhiều ngành trọng yếu đang đối mặt với tình trạng thiếu hụt lao động có tay nghề và bán tay nghề kéo dài và trầm trọng. TalentGate ra đời để lấp đầy khoảng trống đó."},
+    about_p:{en:"TalentGate connects Australian employers with skilled and semi-skilled workers from around the world — then stays alongside those workers as they relocate, settle and build a life here. With genuine roots in both Eastern and Western business cultures, we bridge global talent and the Australian employers who need them: honestly, respectfully, and for the long term. When the worker, the employer and Australia all win, that’s a workforce built the right way.",vi:"TalentGate kết nối các nhà tuyển dụng Úc với người lao động có tay nghề và bán tay nghề từ khắp nơi trên thế giới — rồi đồng hành cùng họ khi chuyển đến, ổn định và xây dựng cuộc sống tại đây. Với sự am hiểu sâu sắc cả văn hóa kinh doanh phương Đông và phương Tây, chúng tôi là cầu nối giữa nhân tài toàn cầu và các nhà tuyển dụng Úc đang cần họ: trung thực, tôn trọng và bền vững lâu dài. Khi người lao động, nhà tuyển dụng và nước Úc đều thắng, đó là lực lượng lao động được xây dựng một cách đúng đắn."},
+    about_w1_h:{en:"Win for the worker",vi:"Lợi cho người lao động"},
+    about_w1_p:{en:"Genuine opportunities to work, live and build a future in Australia — for workers and their families.",vi:"Cơ hội thực sự để làm việc, sinh sống và xây dựng tương lai tại Úc — cho người lao động và gia đình họ."},
+    about_w2_h:{en:"Win for the employer",vi:"Lợi cho nhà tuyển dụng"},
+    about_w2_p:{en:"Reliable, work-ready people matched to real shortages, and supported to stay for the long term.",vi:"Những con người đáng tin cậy, sẵn sàng làm việc, phù hợp với nhu cầu thực tế và được hỗ trợ gắn bó lâu dài."},
+    about_w3_h:{en:"Win for Australia",vi:"Lợi cho nước Úc"},
+    about_w3_p:{en:"Skilled people who fill genuine shortages, contribute, and help build Australia’s future.",vi:"Những người có tay nghề lấp đầy những thiếu hụt thực sự, đóng góp và góp phần xây dựng tương lai nước Úc."},
+    nav_how:{en:"How it works",vi:"Cách thức"}, nav_sectors:{en:"Industries",vi:"Ngành nghề"},
+    nav_emp:{en:"Employers",vi:"Nhà tuyển dụng"}, nav_work:{en:"Workers",vi:"Người lao động"}, nav_insights:{en:"News &amp; Insights",vi:"Tin tức &amp; Phân tích"}, nav_cta:{en:"Employer enquiry",vi:"Yêu cầu tuyển dụng"},
+    hero_h1:{en:"Australia\u2019s <span class='em'>Trusted</span> Gateway to Skilled &amp; Semi-Skilled Talent",vi:"Cánh cổng <span class='em'>đáng tin cậy</span> đến nhân lực có tay nghề &amp; bán tay nghề tại Úc"},
+    hero_lede:{en:"Where employers and workers build <span class='lede-hl'>Australia\u2019s future — together</span>.",vi:"Nơi nhà tuyển dụng và người lao động cùng xây dựng <span class='lede-hl'>tương lai nước Úc — cùng nhau</span>."},
+    hero_emp:{en:"I'm an employer",vi:"Tôi là nhà tuyển dụng"}, hero_work:{en:"I'm a worker",vi:"Tôi là người lao động"},
+    hero_tag:{en:"Win for the worker · Win for the employer · Win for Australia",vi:"Lợi cho người lao động · Lợi cho nhà tuyển dụng · Lợi cho nước Úc"},
+    how_eyebrow:{en:"How it works",vi:"Cách thức hoạt động"}, how_h2:{en:"One gateway, three steps",vi:"Một cánh cổng, ba bước"},
+    how_p:{en:"We don't just find workers. We bring them here and help them stay and succeed — end to end.",vi:"Chúng tôi không chỉ tìm người lao động. Chúng tôi đưa họ sang và giúp họ ở lại, thành công — trọn gói."},
+    step1_no:{en:"Step 1",vi:"Bước 1"}, step1_h:{en:"Source",vi:"Tìm nguồn"}, step1_p:{en:"We find and honestly screen skilled, work-ready candidates matched to the roles you actually need.",vi:"Chúng tôi tìm và sàng lọc trung thực các ứng viên có tay nghề, sẵn sàng làm việc, phù hợp với vị trí bạn thực sự cần."},
+    step2_no:{en:"Step 2",vi:"Bước 2"}, step2_h:{en:"Relocate",vi:"Đưa sang"}, step2_p:{en:"We handle the logistics of getting the worker to your region, ready to start.",vi:"Chúng tôi lo toàn bộ việc đưa người lao động đến khu vực của bạn, sẵn sàng bắt đầu."},
+    step3_no:{en:"Step 3",vi:"Bước 3"}, step3_h:{en:"Settle",vi:"Ổn định"}, step3_p:{en:"We support each worker to settle in — so they stay, contribute, and build a life here.",vi:"Chúng tôi hỗ trợ mỗi người lao động ổn định cuộc sống — để họ ở lại, đóng góp và xây dựng cuộc sống tại đây."},
+    sectors_eyebrow:{en:"Industries we serve",vi:"Ngành nghề chúng tôi phục vụ"}, sectors_h2:{en:"Workforce solutions across every sector",vi:"Giải pháp nhân lực trên mọi lĩnh vực"},
+    sectors_p:{en:"For many years we\u2019ve helped employers address critical skill shortages — across:",vi:"Nhiều năm qua, chúng tôi đã giúp các nhà tuyển dụng giải quyết tình trạng thiếu hụt lao động — trên các ngành:"},
+    ind1_h:{en:"Horticulture, Farming &amp; Agriculture",vi:"Trồng trọt, Nông trại &amp; Nông nghiệp"}, ind1_r:{en:"Farm supervisors, horticulturists &amp; crop growers, livestock &amp; dairy workers, agricultural technicians",vi:"Quản lý nông trại, chuyên viên trồng trọt &amp; người trồng cây, công nhân chăn nuôi &amp; bò sữa, kỹ thuật viên nông nghiệp"},
+    ind2_h:{en:"Hospitality, Restaurants &amp; Cafés",vi:"Nhà hàng, Khách sạn &amp; Quán cà phê"}, ind2_r:{en:"Chefs &amp; cooks, café &amp; restaurant managers, baristas, food &amp; beverage staff",vi:"Đầu bếp, quản lý quán cà phê &amp; nhà hàng, pha chế, nhân viên đồ ăn &amp; thức uống"},
+    ind3_h:{en:"Supermarkets &amp; General Food Stores",vi:"Siêu thị &amp; Cửa hàng thực phẩm"}, ind3_r:{en:"Store managers, butchers, bakers, retail supervisors",vi:"Quản lý cửa hàng, thợ lóc thịt, thợ làm bánh, giám sát bán lẻ"},
+    ind4_h:{en:"Construction &amp; Building",vi:"Xây dựng &amp; Công trình"}, ind4_r:{en:"Carpenters &amp; joiners, bricklayers, plumbers, electricians, site supervisors",vi:"Thợ mộc, thợ nề, thợ ống nước, thợ điện, giám sát công trường"},
+    ind5_h:{en:"Beauty Salons &amp; Nail Shops",vi:"Thẩm mỹ viện &amp; Tiệm nail"}, ind5_r:{en:"Hairdressers, beauty therapists, nail technicians, salon managers",vi:"Thợ làm tóc, chuyên viên thẩm mỹ, thợ nail, quản lý salon"},
+    ind6_h:{en:"Engineering &amp; Manufacturing",vi:"Kỹ thuật &amp; Sản xuất"}, ind6_r:{en:"Mechanical &amp; electrical engineers, fitters &amp; turners, welders, production supervisors",vi:"Kỹ sư cơ khí &amp; điện, thợ nguội &amp; tiện, thợ hàn, giám sát sản xuất"},
+    ind7_h:{en:"Healthcare &amp; Aged Care",vi:"Y tế &amp; Chăm sóc người cao tuổi"}, ind7_r:{en:"Registered &amp; enrolled nurses, aged &amp; disability carers, personal care assistants, allied health",vi:"Điều dưỡng đăng ký &amp; thực hành, nhân viên chăm sóc người già &amp; khuyết tật, trợ lý chăm sóc cá nhân, y tế liên quan"},
+    ind8_h:{en:"Childcare &amp; Early Learning",vi:"Chăm sóc trẻ &amp; Giáo dục mầm non"}, ind8_r:{en:"Early childhood teachers, diploma educators, room leaders, centre directors &amp; managers",vi:"Giáo viên mầm non, giáo viên có bằng, trưởng nhóm lớp, giám đốc &amp; quản lý trung tâm"},
+    ind9_h:{en:"Automotive &amp; Car Services",vi:"Ô tô &amp; Dịch vụ xe"}, ind9_r:{en:"Motor mechanics, auto electricians, panel beaters, vehicle spray painters",vi:"Thợ sửa ô tô, thợ điện ô tô, thợ gò, thợ sơn xe"},
+    ind10_h:{en:"Mining",vi:"Khai khoáng"}, ind10_r:{en:"Drillers &amp; miners, plant &amp; machine operators, mining engineers, geologists &amp; technicians",vi:"Thợ khoan &amp; thợ mỏ, vận hành máy móc, kỹ sư khai khoáng, nhà địa chất &amp; kỹ thuật viên"},
+    ind11_h:{en:"Professional Services",vi:"Dịch vụ chuyên môn"}, ind11_r:{en:"IT &amp; AI specialists, sales &amp; marketing, management, accounting, customer service, finance &amp; office administration",vi:"Chuyên gia CNTT &amp; AI, kinh doanh &amp; tiếp thị, quản lý, kế toán, chăm sóc khách hàng, tài chính &amp; hành chính văn phòng"},
+    emp_eyebrow:{en:"For employers",vi:"Dành cho nhà tuyển dụng"}, emp_h3:{en:"Solving labour shortages — loyal, hardworking, reliable, long-term",vi:"Giải quyết thiếu hụt lao động — trung thành, chăm chỉ, đáng tin cậy, lâu dài"},
+    emp_li1:{en:"End-to-end recruitment",vi:"Tuyển dụng trọn gói"}, emp_li2:{en:"Total compliance",vi:"Tuân thủ toàn diện"}, emp_li3:{en:"Workforce planning",vi:"Hoạch định nhân lực"}, emp_li4:{en:"Fewer headaches",vi:"Ít phiền toái hơn"},
+    emp_cta:{en:"Tell us what you need",vi:"Cho chúng tôi biết nhu cầu"}, full_enquiry_btn:{en:"Full workforce enquiry form",vi:"Phiếu đăng ký nhu cầu nhân lực"}, emp_promise:{en:"The promise: stability, productivity and peace of mind.",vi:"Cam kết: sự ổn định, năng suất và sự an tâm."},
+    cand_eyebrow:{en:"For workers",vi:"Dành cho người lao động"}, cand_h3:{en:"Real jobs. Real support. Real futures.",vi:"Việc làm thật. Hỗ trợ thật. Tương lai thật."},
+    cand_li1:{en:"Genuine opportunities",vi:"Cơ hội thực sự"}, cand_li2:{en:"Honest pathways",vi:"Lộ trình trung thực"}, cand_li3:{en:"Settlement support",vi:"Hỗ trợ ổn định cuộc sống"}, cand_cta:{en:"Register your interest",vi:"Đăng ký quan tâm"}, cand_li4:{en:"Safety & respect",vi:"An toàn & tôn trọng"}, cand_promise:{en:"The promise: a secure future for you and your family.",vi:"Cam kết: một tương lai vững chắc cho bạn và gia đình."},
+    voices_eyebrow:{en:"Voices",vi:"Cảm nhận"}, voices_h2:{en:"What people say",vi:"Mọi người nói gì"}, voices_p:{en:"The relationships behind the placements.",vi:"Những mối quan hệ đằng sau mỗi lần kết nối."},
+    quote1:{en:"They didn't just send us names — they sent people who arrived ready, worked hard and got on with it. Two seasons on, the same crew is still with us: production is up, and the revolving door of the old contractor model is gone. Fewer headaches, more stability. That's the difference.",vi:"Họ không chỉ gửi cho chúng tôi danh sách tên — họ gửi những con người đến nơi là sẵn sàng, làm việc chăm chỉ và chuyên tâm. Hai mùa vụ rồi, vẫn đội ngũ ấy ở lại với chúng tôi: sản lượng tăng, cảnh thay người liên tục của mô hình nhà thầu cũ không còn nữa. Ít đau đầu hơn, ổn định hơn. Đó chính là sự khác biệt."}, by1:{en:"— Operations Manager, Horticulture (WA)",vi:"— Quản lý Vận hành, Ngành trồng trọt (WA)"},
+    quote2:{en:"From the first call to my first six months at work in Australia, someone was always there — making sure I was okay and settling in well. Every promise was kept, and I never felt alone.",vi:"Từ cuộc gọi đầu tiên cho đến sáu tháng đầu làm việc tại Úc, luôn có người bên cạnh — quan tâm xem tôi có ổn không và giúp tôi an cư thuận lợi. Mọi lời hứa đều được giữ, và tôi chưa bao giờ thấy đơn độc."}, by2:{en:"— Skilled worker, now in regional Victoria",vi:"— Lao động tay nghề, hiện ở vùng Victoria"},
+    quote3:{en:"When we refer someone, our own reputation travels with them. TalentGate answers us within a day, tells us honestly when something won't work, and looks after every person we send. That's why they're the partner we keep choosing.",vi:"Khi chúng tôi giới thiệu một người, uy tín của chính chúng tôi đi cùng họ. TalentGate phản hồi trong một ngày, nói thật khi điều gì không khả thi, và chăm lo cho từng người chúng tôi gửi gắm. Vì vậy họ là đối tác chúng tôi luôn chọn."}, by3:{en:"— Recruitment partner, Western Australia",vi:"— Đối tác tuyển dụng, Tây Úc"},
+    apply_eyebrow:{en:"Get started",vi:"Bắt đầu"}, apply_h2:{en:"Tell us about you",vi:"Hãy cho chúng tôi biết về bạn"}, apply_p:{en:"Three short forms — for employers, referral partners and workers. We'll be in touch personally.",vi:"Ba mẫu đơn ngắn — cho nhà tuyển dụng, đối tác giới thiệu và người lao động. Chúng tôi sẽ liên hệ trực tiếp với bạn."},
+    tab_emp:{en:"I'm an employer",vi:"Tôi là nhà tuyển dụng"}, tab_cand:{en:"I'm a worker",vi:"Tôi là người lao động"},
+    hero_partner:{en:"I'm a referral partner",vi:"Tôi là đối tác giới thiệu"},
+    who_eyebrow:{en:"Who we work with",vi:"Chúng tôi phục vụ ai"}, who_h2:{en:"Built for Australian employers, workers and referral partners",vi:"Được xây dựng cho nhà tuyển dụng Úc, người lao động và đối tác giới thiệu"}, who_p:{en:"We solve skilled and semi-skilled shortages for employers and the partners who refer them — and we open a genuine path for individual workers too.",vi:"Chúng tôi giải quyết tình trạng thiếu hụt lao động có và bán tay nghề cho nhà tuyển dụng và các đối tác giới thiệu — và mở một con đường thực sự cho cả người lao động."},
+    par_eyebrow:{en:"For referral partners",vi:"Dành cho đối tác giới thiệu"}, par_h3:{en:"Refer roles or candidates — we deliver",vi:"Giới thiệu vị trí hoặc ứng viên — chúng tôi thực hiện"}, par_li1:{en:"Refer employer demand or job-ready candidates",vi:"Giới thiệu nhu cầu của nhà tuyển dụng hoặc ứng viên sẵn sàng làm việc"}, par_li2:{en:"A clear, written referral arrangement",vi:"Thỏa thuận giới thiệu rõ ràng bằng văn bản"}, par_li3:{en:"Profiles shared anonymised first, named on your approval",vi:"Hồ sơ chia sẻ ẩn danh trước, nêu tên khi bạn đồng ý"}, par_li4:{en:"Dependable delivery that protects your reputation",vi:"Thực hiện đáng tin cậy, bảo vệ uy tín của bạn"}, par_cta:{en:"Partner with us",vi:"Hợp tác với chúng tôi"},
+    tab_par:{en:"Referral partner",vi:"Đối tác giới thiệu"}, parf_h:{en:"Referral partner enquiry",vi:"Yêu cầu từ đối tác giới thiệu"}, parf_intro:{en:"Tell us about your organisation and what you'd like to refer. This is a business enquiry — no cost to ask.",vi:"Cho chúng tôi biết về tổ chức của bạn và điều bạn muốn giới thiệu. Đây là yêu cầu doanh nghiệp — hỏi miễn phí."}, parf_send:{en:"Send enquiry",vi:"Gửi yêu cầu"},
+    l_pcompany:{en:"Organisation name <span class='req'>*</span>",vi:"Tên tổ chức <span class='req'>*</span>"}, l_ptype:{en:"Partner type",vi:"Loại đối tác"}, l_refer:{en:"What are you referring?",vi:"Bạn giới thiệu điều gì?"}, l_pregions:{en:"Regions &amp; sectors",vi:"Khu vực &amp; ngành nghề"}, l_pdetails:{en:"Volume &amp; anything else",vi:"Số lượng &amp; thông tin thêm"},
+    ph_pregions:{en:"Where and what you cover",vi:"Khu vực và lĩnh vực bạn phụ trách"}, ph_pdetails:{en:"Numbers, timing, how you'd like to work together",vi:"Số lượng, thời gian, cách bạn muốn hợp tác"},
+    c_par:{en:"I agree that TalentGate may use these details to respond to my enquiry, in line with its privacy practices.",vi:"Tôi đồng ý để TalentGate sử dụng các thông tin này nhằm phản hồi yêu cầu của tôi, theo chính sách bảo mật."},
+    opt_agency:{en:"Recruitment agency",vi:"Công ty tuyển dụng"}, opt_interm:{en:"Employer intermediary",vi:"Bên trung gian của nhà tuyển dụng"}, opt_assoc:{en:"Community / association",vi:"Cộng đồng / hiệp hội"}, opt_other:{en:"Other",vi:"Khác"},
+    opt_demand:{en:"Employer demand / roles",vi:"Nhu cầu / vị trí của nhà tuyển dụng"}, opt_cands:{en:"Job-ready candidates",vi:"Ứng viên sẵn sàng làm việc"}, opt_both:{en:"Both",vi:"Cả hai"},
+    empf_h:{en:"Employer enquiry",vi:"Yêu cầu tuyển dụng"}, empf_intro:{en:"Tell us the roles you need filled. This is a business enquiry — there's no cost to ask.",vi:"Cho chúng tôi biết các vị trí bạn cần tuyển. Đây là yêu cầu doanh nghiệp — hỏi hoàn toàn miễn phí."},
+    l_company:{en:"Business name <span class='req'>*</span>",vi:"Tên doanh nghiệp <span class='req'>*</span>"}, l_contact:{en:"Contact name <span class='req'>*</span>",vi:"Người liên hệ <span class='req'>*</span>"}, l_email:{en:"Email <span class='req'>*</span>",vi:"Email <span class='req'>*</span>"}, l_phone:{en:"Phone",vi:"Điện thoại"},
+    l_sector:{en:"Industry / sector",vi:"Ngành nghề"}, l_location:{en:"Location / region <span class='req'>*</span>",vi:"Địa điểm / khu vực <span class='req'>*</span>"}, l_role:{en:"Role(s) needed <span class='req'>*</span>",vi:"Vị trí cần tuyển <span class='req'>*</span>"}, l_qty:{en:"Number of positions",vi:"Số lượng vị trí"},
+    l_skills_e:{en:"Key skills / tickets / requirements",vi:"Kỹ năng / chứng chỉ / yêu cầu chính"}, l_time:{en:"Timeframe &amp; anything else",vi:"Thời gian &amp; thông tin thêm"},
+    ph_sector:{en:"e.g. Agriculture, Trades, Hospitality",vi:"vd. Nông nghiệp, Kỹ thuật, Nhà hàng"}, ph_location:{en:"Town / region / state",vi:"Thị trấn / khu vực / bang"}, ph_role:{en:"e.g. Metal Fabricator, Cook",vi:"vd. Thợ gò hàn, Đầu bếp"}, ph_skills_e:{en:"What the role genuinely needs",vi:"Những gì vị trí thực sự cần"}, ph_time:{en:"When you need them; any details",vi:"Khi nào bạn cần; chi tiết khác"},
+    c_emp:{en:"I agree that TalentGate may use these details to respond to my enquiry, in line with its privacy practices.",vi:"Tôi đồng ý để TalentGate sử dụng các thông tin này nhằm phản hồi yêu cầu của tôi, theo chính sách bảo mật."},
+    err:{en:"Please complete the required fields marked with *.",vi:"Vui lòng điền các trường bắt buộc có dấu *."},
+    empf_send:{en:"Send enquiry",vi:"Gửi yêu cầu"}, empf_note:{en:"We reply personally, usually within a couple of business days.",vi:"Chúng tôi phản hồi trực tiếp, thường trong vài ngày làm việc."},
+    legal_emp:{en:"TalentGate provides recruitment, workforce solutions, relocation and settlement support services.",vi:"TalentGate cung cấp dịch vụ tuyển dụng, giải pháp nhân lực, đưa sang và hỗ trợ ổn định."},
+    rev_h:{en:"Review &amp; send",vi:"Xem lại &amp; gửi"}, rev_emp:{en:"Here's your enquiry. Send it by email, or copy it.",vi:"Đây là yêu cầu của bạn. Gửi qua email, hoặc sao chép."}, rev_cand:{en:"Here are your details. Send them by email, or copy them.",vi:"Đây là thông tin của bạn. Gửi qua email, hoặc sao chép."},
+    send_mail:{en:"Send by email",vi:"Gửi qua email"}, copy_btn:{en:"Copy details",vi:"Sao chép thông tin"},
+    candf_h:{en:"Candidate application",vi:"Đơn ứng tuyển"}, candf_intro:{en:"Tell us about your skills and experience. Registering is always free.",vi:"Hãy cho chúng tôi biết về kỹ năng và kinh nghiệm của bạn. Đăng ký luôn miễn phí."},
+    cand_fullform_lead:{en:"Prefer the full application, with document uploads?",vi:"Muốn dùng đơn đăng ký đầy đủ, kèm tải tài liệu?"}, cand_fullform_btn:{en:"Open full application →",vi:"Mở đơn đầy đủ →"},
+    l_fullname:{en:"Full name <span class='req'>*</span>",vi:"Họ và tên <span class='req'>*</span>"}, l_phone_w:{en:"Phone / WhatsApp",vi:"Điện thoại / WhatsApp"}, l_curloc:{en:"Current country / location <span class='req'>*</span>",vi:"Quốc gia / nơi ở hiện tại <span class='req'>*</span>"}, l_occ:{en:"Occupation / trade <span class='req'>*</span>",vi:"Nghề nghiệp <span class='req'>*</span>"}, l_years:{en:"Years of experience",vi:"Số năm kinh nghiệm"}, l_skills_c:{en:"Skills, tickets &amp; licences",vi:"Kỹ năng, chứng chỉ &amp; giấy phép"}, l_quals:{en:"Qualifications",vi:"Bằng cấp"}, l_eng:{en:"English level (your estimate)",vi:"Trình độ tiếng Anh (tự đánh giá)"}, l_availfrom:{en:"Available from",vi:"Có thể bắt đầu từ"}, l_reloc:{en:"Willing to relocate in Australia?",vi:"Sẵn sàng chuyển đến trong nước Úc?"}, l_else:{en:"Anything else you'd like us to know",vi:"Điều gì khác bạn muốn cho chúng tôi biết"},
+    ph_occ:{en:"e.g. Motor Mechanic",vi:"vd. Thợ sửa ô tô"}, ph_skills_c:{en:"Your main skills and any tickets or licences you hold",vi:"Kỹ năng chính và các chứng chỉ / giấy phép bạn có"}, ph_avail:{en:"e.g. Immediately, or a date",vi:"vd. Ngay lập tức, hoặc một ngày cụ thể"},
+    opt_select:{en:"Select…",vi:"Chọn…"}, opt_basic:{en:"Basic",vi:"Cơ bản"}, opt_conv:{en:"Conversational",vi:"Giao tiếp"}, opt_good:{en:"Good",vi:"Khá"}, opt_fluent:{en:"Fluent",vi:"Thành thạo"}, opt_any:{en:"Yes, anywhere",vi:"Có, bất cứ đâu"}, opt_some:{en:"Yes, some regions",vi:"Có, một số khu vực"}, opt_disc:{en:"Prefer to discuss",vi:"Muốn trao đổi thêm"},
+    c_cand:{en:"I consent to TalentGate holding these details to help match me with employers. I understand my details are shared with an employer only with my agreement, and that TalentGate does not guarantee any particular outcome.",vi:"Tôi đồng ý để TalentGate lưu giữ các thông tin này nhằm giúp kết nối tôi với nhà tuyển dụng. Tôi hiểu rằng thông tin của tôi chỉ được chia sẻ với nhà tuyển dụng khi tôi đồng ý, và TalentGate không bảo đảm bất kỳ kết quả cụ thể nào."},
+    candf_send:{en:"Register my interest",vi:"Đăng ký nguyện vọng"}, candf_note:{en:"Free, always. We'll be in touch.",vi:"Luôn miễn phí. Chúng tôi sẽ liên hệ."},
+    legal_cand:{en:"TalentGate provides recruitment, workforce solutions, relocation and settlement support services.",vi:"TalentGate cung cấp dịch vụ tuyển dụng, giải pháp nhân lực, đưa sang và hỗ trợ ổn định."},
+    eth_eyebrow:{en:"Our promise",vi:"Cam kết của chúng tôi"}, eth_h2:{en:"Recruitment done honestly",vi:"Tuyển dụng một cách trung thực"}, eth_p:{en:"We believe a job can change a family's future — for generations. That belief only holds if the work is done right. So we hold a clear line on every placement.",vi:"Chúng tôi tin rằng một công việc có thể thay đổi tương lai của cả một gia đình — qua nhiều thế hệ. Niềm tin đó chỉ vững nếu công việc được làm đúng. Vì vậy chúng tôi giữ một lằn ranh rõ ràng trong mỗi lần kết nối."},
+    eth2:{en:"We represent people and roles <b style='color:#fff'>honestly</b> — no inflated profiles, no false promises.",vi:"Chúng tôi giới thiệu con người và công việc một cách <b style='color:#fff'>trung thực</b> — không thổi phồng hồ sơ, không hứa hẹn sai."}, eth3:{en:"Your details are shared with an employer <b style='color:#fff'>only with your consent</b>.",vi:"Thông tin của bạn chỉ được chia sẻ với nhà tuyển dụng <b style='color:#fff'>khi bạn đồng ý</b>."}, eth4:{en:"We support you through <b style='color:#fff'>relocation and settlement</b> — every step of the way.",vi:"Chúng tôi đồng hành cùng bạn trong <b style='color:#fff'>việc chuyển đến và ổn định</b> — trên từng bước đường."},
+    foot_tag:{en:"The gateway for Australia’s workforce solutions.",vi:"Cánh cổng cho các giải pháp nhân lực của nước Úc."}, foot_explore:{en:"Explore",vi:"Khám phá"}, foot_insights:{en:"News &amp; Insights",vi:"Tin tức &amp; Phân tích"}, foot_partner:{en:"Partner with us",vi:"Trở thành đối tác"}, trust_e:{en:"Trusted by leading employers across",vi:"Được các nhà tuyển dụng hàng đầu tin cậy trong các ngành"}, ts1:{en:"Primary industries",vi:"Sản xuất sơ cấp"}, ts2:{en:"Agriculture",vi:"Nông nghiệp"}, ts3:{en:"Horticulture",vi:"Trồng trọt"}, ts4:{en:"Construction",vi:"Xây dựng"}, ts5:{en:"Childcare",vi:"Giữ trẻ"}, ts6:{en:"Food &amp; supermarket",vi:"Thực phẩm &amp; siêu thị"}, ts7:{en:"Restaurant &amp; cafe",vi:"Nhà hàng &amp; quán cà phê"}, ts8:{en:"Hospitality",vi:"Dịch vụ khách sạn"}, foot_contact:{en:"Contact",vi:"Liên hệ"}, foot_empenq:{en:"Employer enquiry",vi:"Yêu cầu tuyển dụng"}, foot_workreg:{en:"Candidate application",vi:"Đơn ứng tuyển"},
+    foot_legal:{en:"<b>TalentGate</b> provides recruitment, workforce solutions, relocation and settlement support services.",vi:"<b>TalentGate</b> cung cấp dịch vụ tuyển dụng, giải pháp nhân lực, đưa sang và hỗ trợ ổn định."}
+  };
+
+  var curLang='en';
+  function setLang(l){
+    curLang=l; document.documentElement.lang=l;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){ var k=el.getAttribute('data-i18n'); if(T[k]&&T[k][l]!=null){ el.innerHTML=T[k][l]; } });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el){ var k=el.getAttribute('data-i18n-ph'); if(T[k]&&T[k][l]!=null){ el.placeholder=T[k][l]; } });
+    document.getElementById('langbtn').textContent = (l==='en') ? 'Tiếng Việt' : 'English';
+  }
+  function toggleLang(){ setLang(curLang==='en'?'vi':'en'); }
+  function toggleMenu(){ var n=document.querySelector('header.nav'); if(!n) return; var o=n.classList.toggle('open'); var b=document.getElementById('hamburger'); if(b) b.setAttribute('aria-expanded', o?'true':'false'); }
+  document.addEventListener('click', function(e){
+    var n=document.querySelector('header.nav'); if(!n||!n.classList.contains('open')) return;
+    var t=e.target; if(!t.closest) return;
+    if(t.closest('.navlinks a') || !t.closest('header.nav')){ n.classList.remove('open'); var b=document.getElementById('hamburger'); if(b) b.setAttribute('aria-expanded','false'); }
+  });
+
+  function pick(which){
+    var map={employer:'emp', partner:'par', candidate:'cand'};
+    ['emp','par','cand'].forEach(function(k){
+      var on = (map[which]===k);
+      document.getElementById('tab-'+k).setAttribute('aria-selected', on);
+      document.getElementById('panel-'+k).setAttribute('data-active', on);
+    });
+  }
+  function val(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  function submitForm(kind){
+    if(kind==='employer'){
+      var req=['e_company','e_name','e_email','e_location','e_role'];
+      var missing = req.some(function(id){ return !val(id); }) || !document.getElementById('e_consent').checked;
+      document.getElementById('e_err').style.display = missing ? 'block':'none';
+      if(missing){ return; }
+      var body='TALENTGATE — EMPLOYER ENQUIRY\n\nBusiness: '+val('e_company')+'\nContact: '+val('e_name')+'\nEmail: '+val('e_email')+'\nPhone: '+val('e_phone')+'\nIndustry: '+val('e_sector')+'\nLocation: '+val('e_location')+'\nRole(s): '+val('e_role')+'\nPositions: '+val('e_qty')+'\nSkills/requirements: '+val('e_skills')+'\nTimeframe/notes: '+val('e_notes')+'\n';
+      document.getElementById('e_summary').textContent = body;
+      document.getElementById('e_mail').href = 'mailto:gm@talentgate.com.au?subject='+encodeURIComponent('Employer enquiry — '+val('e_company'))+'&body='+encodeURIComponent(body);
+      var c=document.getElementById('e_confirm'); c.style.display='block'; c.scrollIntoView({behavior:'smooth',block:'center'});
+    } else if(kind==='partner'){
+      var reqp=['p_company','p_name','p_email'];
+      var missp = reqp.some(function(id){ return !val(id); }) || !document.getElementById('p_consent').checked;
+      document.getElementById('p_err').style.display = missp ? 'block':'none';
+      if(missp){ return; }
+      var bp='TALENTGATE — REFERRAL PARTNER ENQUIRY\n\nOrganisation: '+val('p_company')+'\nContact: '+val('p_name')+'\nEmail: '+val('p_email')+'\nPhone: '+val('p_phone')+'\nPartner type: '+val('p_type')+'\nReferring: '+val('p_refer')+'\nRegions/sectors: '+val('p_regions')+'\nVolume/notes: '+val('p_notes')+'\n';
+      document.getElementById('p_summary').textContent = bp;
+      document.getElementById('p_mail').href = 'mailto:gm@talentgate.com.au?subject='+encodeURIComponent('Referral partner enquiry — '+val('p_company'))+'&body='+encodeURIComponent(bp);
+      var cp=document.getElementById('p_confirm'); cp.style.display='block'; cp.scrollIntoView({behavior:'smooth',block:'center'});
+    } else {
+      var reqc=['c_name','c_email','c_location','c_role'];
+      var miss = reqc.some(function(id){ return !val(id); }) || !document.getElementById('c_consent').checked;
+      document.getElementById('c_err').style.display = miss ? 'block':'none';
+      if(miss){ return; }
+      var b='TALENTGATE — WORKER REGISTRATION\n\nName: '+val('c_name')+'\nEmail: '+val('c_email')+'\nPhone/WhatsApp: '+val('c_phone')+'\nCurrent location: '+val('c_location')+'\nOccupation/trade: '+val('c_role')+'\nYears experience: '+val('c_exp')+'\nSkills/tickets/licences: '+val('c_skills')+'\nQualifications: '+val('c_quals')+'\nEnglish level: '+val('c_english')+'\nAvailable from: '+val('c_avail')+'\nWilling to relocate: '+val('c_reloc')+'\nNotes: '+val('c_notes')+'\n';
+      document.getElementById('c_summary').textContent = b;
+      document.getElementById('c_mail').href = 'mailto:jobs@talentgate.com.au?subject='+encodeURIComponent('Candidate interest — '+val('c_name'))+'&body='+encodeURIComponent(b);
+      var cc=document.getElementById('c_confirm'); cc.style.display='block'; cc.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+  }
+  function copySummary(id, btn){
+    var txt=document.getElementById(id).textContent;
+    navigator.clipboard.writeText(txt).then(function(){ var o=btn.textContent; btn.textContent=(curLang==='en'?'Copied ✓':'Đã sao chép ✓'); setTimeout(function(){ btn.textContent=o; },1800); });
+  }
+</script>
 </body>
-
 </html>

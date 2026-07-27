@@ -244,7 +244,7 @@
   <!-- FORM -->
   <div class="wizbar" id="wizbar" aria-hidden="true"><div class="wizsteps" id="wizsteps"></div><div class="wizprog"><i id="wizfill" style="width:0%"></i></div></div>
   <form class="card" id="enquiryForm" novalidate>
-    <input type="hidden" name="access_key" value="da1d315b-110e-4d96-a448-20e8bf1bd278">
+    <!-- access_key removed — submissions now post to the in-tenant Power Automate flow, not Web3Forms -->
     <input type="hidden" name="subject" value="Employer Workforce Enquiry — TalentGate website">
     <input type="hidden" name="from_name" value="TalentGate website">
     <input type="hidden" name="ref" id="hiddenRef">
@@ -681,17 +681,32 @@
       }
     }
 
-    // Web3Forms submit — honest result handling
+    // In-tenant submit — Power Automate flow → gm@ (email only, Phase 1). No Web3Forms, no US relay.
+    // text/plain keeps it a "simple request" (no CORS preflight); the flow parses json(triggerBody()).
     var sendBtn = form.querySelector('button[type="submit"]') || form.querySelector('.submit button') || form.querySelector('button:not(.lang)');
     if(sendBtn){ sendBtn.disabled = true; }
-    var fd = new FormData(form); fd.delete('bot-field');
-    fd.append('Marketing consent', (document.getElementById('c3')&&document.getElementById('c3').checked)?'Yes':'No');
-    fetch('https://api.web3forms.com/submit', {method:'POST', body:fd})
-      .then(function(r){ return r.json(); })
-      .then(function(j){
-        if(j && j.success){ showSuccess(); }
-        else { showSendFail(); }
-      })
+    var fd = new FormData(form);
+    var g = function(n){ return (fd.get(n)||'').toString().trim(); };
+    var cb = function(id){ var el=document.getElementById(id); return (el&&el.checked)?'Yes':'No'; };
+    var payload = {
+      business_name:g('business_name'), trading_name:g('trading_name'), abn:g('abn'),
+      staff_count:g('staff_count'), turnover:g('turnover_range'), industry:g('industry'), website:g('website'),
+      contact_name:g('contact_name'), position:g('contact_role'), email:g('email'), phone:g('phone'),
+      preferred_contact:g('contact_pref'),
+      head_office:g('head_office'), worksites:g('worksites'), location_type:g('location_type'), num_sites:g('num_sites'),
+      role:g('role'), positions:g('positions'), trade:g('trade'), employment_type:g('employment_type'),
+      ft_pt:g('ft_pt'), when_needed:g('when_needed'), duties:g('duties'), award:g('award'),
+      pay_range:g('pay_range'), hours:g('hours'), overtime:g('overtime'),
+      need_driver:g('drivers'), overseas_open:g('overseas_open'), overseas_before:g('overseas_before'),
+      accommodation:g('accommodation'), volume_type:g('volume_type'), projected:g('projected'), start_date:g('start_date'),
+      hear_about:g('hear_about'), referral_partner:g('hear_about_partner'),
+      authorised:cb('c1'), consent:cb('c2'), marketing_optin:cb('c3'),
+      ref:g('ref'), src:g('src'),
+      botcheck:g('bot-field'), hcaptcha:g('h-captcha-response')
+    };
+    fetch('https://default09989e18fbad4f58bb10a8a5093164.b1.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/17/workflows/8dbca0a914de44bcadf016cdea287085/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OohvFPeT2cW4RHE_liHrqWgKMG1cFcKoWGcfjr-Qp9Q',
+      {method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body:JSON.stringify(payload)})
+      .then(function(r){ if(r.ok){ showSuccess(); } else { showSendFail(); } })
       .catch(showSendFail)
       .finally(function(){ if(sendBtn){ sendBtn.disabled = false; } });
 
@@ -930,6 +945,6 @@ window.__TG_LOADED = Date.now();
   }
 })();
 </script>
-<script src="https://web3forms.com/client/script.js" async defer></script>
+<!-- Web3Forms client script removed — form posts to the in-tenant Power Automate flow (email → gm@). hCaptcha to be re-added with our own site key before public launch. -->
 </body>
 </html>

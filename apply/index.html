@@ -286,7 +286,8 @@
 
       <div class="submitrow">
         <div class="err" id="err" data-i18n="err">Please complete the required fields and both declarations.</div>
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAAD_FnDhHjie2O5fW" style="margin:0 0 14px"></div>
+        <div id="tsbox" style="margin:0 0 10px"></div>
+        <p class="hint" style="margin:0 0 14px" data-i18n="verify_note">A quick human-verification check runs when you press submit — it may take a moment.</p>
       <button type="submit" class="btn" data-i18n="submit">Submit application</button>
         <span class="hint" data-i18n="free">Free, always. We’ll be in touch.</span>
       </div>
@@ -307,6 +308,34 @@
   // own branded layout. Body is sent as text/plain (a CORS "simple request") so the PA HTTP trigger
   // accepts it without a preflight OPTIONS. Migrated off Web3Forms 27.07.2026.
   var FLOW_URL = "https://default09989e18fbad4f58bb10a8a5093164.b1.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/22/workflows/9257985c01734d0eb3e7a4b6b788c9e5/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Tbx1O2sirKOpdV2RmqyZWnl4Gbo3ZvUSrvXYSPL4Cns";
+
+  // ---- Cloudflare Turnstile: explicit render, execute ON SUBMIT ----
+  // The challenge runs when the applicant presses submit, so the token is always seconds old.
+  // This is the correct pattern for a long form — the token can never expire mid-fill.
+  var SITE_KEY = "0x4AAAAAAD_FnDhHjie2O5fW";
+  var tsWidgetId = null, tsResolve = null;
+  window.onTurnstileLoad = function(){
+    try{
+      tsWidgetId = window.turnstile.render('#tsbox', {
+        sitekey: SITE_KEY,
+        execution: 'execute',
+        'refresh-expired': 'manual',
+        callback: function(token){ var r=tsResolve; tsResolve=null; if(r){ r(token); } },
+        'error-callback': function(){ var r=tsResolve; tsResolve=null; if(r){ r(''); } return true; },
+        'timeout-callback': function(){ var r=tsResolve; tsResolve=null; if(r){ r(''); } }
+      });
+    }catch(e){}
+  };
+  // Returns a Promise that resolves with a fresh token (or '' if verification fails/times out).
+  function getFreshToken(){
+    return new Promise(function(resolve){
+      if(!window.turnstile || tsWidgetId===null){ resolve(''); return; }
+      tsResolve = resolve;
+      try{ window.turnstile.reset(tsWidgetId); }catch(e){}
+      try{ window.turnstile.execute(tsWidgetId); }catch(e){ tsResolve=null; resolve(''); return; }
+      setTimeout(function(){ if(tsResolve===resolve){ tsResolve=null; resolve(''); } }, 30000);
+    });
+  }
 
   document.getElementById('yr').textContent = new Date().getFullYear();
 
@@ -409,13 +438,6 @@
     if(hp&&hp.value){
       document.getElementById('done').style.display='block'; form.style.display='none'; return;
     }
-    // human verification gate: a Cloudflare Turnstile token is required before sending
-    var tok=(document.querySelector('[name="cf-turnstile-response"]')||{}).value||'';
-    if(!tok){
-      alert(document.documentElement.lang==='vi' ? 'Vui lòng xác nhận bạn là người thật bằng cách hoàn thành ô xác minh phía trên nút gửi.' : 'Please confirm you are human by completing the verification box above the submit button.');
-      var capW=document.querySelector('.cf-turnstile'); if(capW){ capW.scrollIntoView({behavior:'smooth',block:'center'}); } return;
-    }
-
     // children ages required when children > 0
     var kidsN=parseInt((new FormData(form)).get('Number of children')||'0',10);
     var kEl=form.querySelector('[name="Children ages"]');
@@ -472,16 +494,25 @@
       '</div>'+
      '</div>';
 
-    var P={ formType:'Candidate Application', headline:headline, message:html, turnstile:tok, botcheck:'' };
-
+    // mint a FRESH Turnstile token right now (immune to long fill times — always < 5 min old), then send
     var SUBMIT=document.querySelector('button[type="submit"]'); if(SUBMIT){ SUBMIT.disabled=true; }
-    fetch(FLOW_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body: JSON.stringify(P) })
-      .then(function(r){ if(!r.ok){ throw new Error('bad status'); }
-        document.getElementById('done').style.display='block';
-        form.style.display='none';
+    getFreshToken().then(function(tok){
+      if(!tok){
+        if(SUBMIT){ SUBMIT.disabled=false; }
+        document.getElementById('err').textContent = (curLang==='en'?'Human verification did not complete — please press Submit again.':'Xác minh chưa hoàn tất — vui lòng nhấn Gửi lại.');
+        document.getElementById('err').style.display='block';
         window.scrollTo({top:0,behavior:'smooth'});
-      })
-      .catch(function(){ if(SUBMIT){ SUBMIT.disabled=false; } document.getElementById('err').textContent = (curLang==='en'?'Something went wrong — please email your application to jobs@talentgate.com.au':'Đã xảy ra lỗi — vui lòng gửi đơn qua email jobs@talentgate.com.au'); document.getElementById('err').style.display='block'; });
+        return;
+      }
+      var P={ formType:'Candidate Application', headline:headline, message:html, turnstile:tok, botcheck:'' };
+      fetch(FLOW_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body: JSON.stringify(P) })
+        .then(function(r){ if(!r.ok){ throw new Error('bad status'); }
+          document.getElementById('done').style.display='block';
+          form.style.display='none';
+          window.scrollTo({top:0,behavior:'smooth'});
+        })
+        .catch(function(){ if(SUBMIT){ SUBMIT.disabled=false; } document.getElementById('err').textContent = (curLang==='en'?'Something went wrong — please email your application to jobs@talentgate.com.au':'Đã xảy ra lỗi — vui lòng gửi đơn qua email jobs@talentgate.com.au'); document.getElementById('err').style.display='block'; });
+    });
   });
 
   // ==== BILINGUAL ====
@@ -541,7 +572,7 @@
     l_train:{en:"Open to further training or upskilling?",vi:"Sẵn sàng học thêm / nâng cao tay nghề?"}, l_adjust:{en:"Any support or workplace adjustments you’d like us to be aware of? (optional)",vi:"Có hỗ trợ hay điều chỉnh nơi làm việc nào bạn muốn chúng tôi biết? (không bắt buộc)"}, hint_adjust:{en:"Optional — only so we can arrange reasonable adjustments if needed.",vi:"Không bắt buộc — chỉ để chúng tôi sắp xếp điều chỉnh hợp lý nếu cần."}, l_why:{en:"Why are you interested in this opportunity?",vi:"Vì sao bạn quan tâm đến cơ hội này?"}, l_more:{en:"Additional comments",vi:"Ý kiến thêm"},
     l_id:{en:"Passport or national ID",vi:"Hộ chiếu hoặc CMND/CCCD"}, hint_files:{en:"PDF, JPG or PNG. Max 5MB.",vi:"PDF, JPG hoặc PNG. Tối đa 5MB."}, l_cv:{en:"Resume / CV",vi:"Hồ sơ / CV"}, hint_cv:{en:"PDF, DOC or DOCX. Max 5MB.",vi:"PDF, DOC hoặc DOCX. Tối đa 5MB."}, l_certs:{en:"Qualification certificates / licences (optional)",vi:"Bằng cấp / chứng chỉ (không bắt buộc)"},
     dec1:{en:"I declare the information provided is true and correct.",vi:"Tôi cam kết thông tin cung cấp là đúng sự thật."}, dec3:{en:"Yes — please send me job opportunities, news and industry insights from TalentGate. I can unsubscribe at any time. <span style='color:#8a927f'>(optional)</span>",vi:"Có — vui lòng gửi cho tôi các cơ hội việc làm, tin tức và thông tin ngành từ TalentGate. Tôi có thể huỷ đăng ký bất cứ lúc nào. <span style='color:#8a927f'>(không bắt buộc)</span>"}, dec2:{en:"I consent to TalentGate collecting, holding and using my details for recruitment and placement purposes, as set out in the <a href='/privacy' target='_blank'>Privacy & Collection Notice</a> — including sharing my details with prospective employers and relevant service partners as part of the recruitment and placement process. I understand TalentGate does not guarantee any particular outcome.",vi:"Tôi đồng ý để TalentGate thu thập, lưu giữ và sử dụng thông tin của tôi cho mục đích tuyển dụng và bố trí việc làm, theo <a href='/privacy' target='_blank'>Thông báo Quyền riêng tư & Thu thập</a> — bao gồm việc chia sẻ thông tin của tôi với các nhà tuyển dụng tiềm năng và đối tác dịch vụ liên quan trong quá trình tuyển dụng và bố trí việc làm. Tôi hiểu TalentGate không bảo đảm bất kỳ kết quả cụ thể nào."},
-    err:{en:"Please complete the required fields and both declarations.",vi:"Vui lòng điền các trường bắt buộc và cả hai cam kết."}, submit:{en:"Submit application",vi:"Gửi đơn đăng ký"}, free:{en:"Free, always. We’ll be in touch.",vi:"Luôn miễn phí. Chúng tôi sẽ liên hệ."}, home:{en:"Back to home",vi:"Về trang chủ"},
+    err:{en:"Please complete the required fields and both declarations.",vi:"Vui lòng điền các trường bắt buộc và cả hai cam kết."}, submit:{en:"Submit application",vi:"Gửi đơn đăng ký"}, verify_note:{en:"A quick human-verification check runs when you press submit — it may take a moment.",vi:"Một bước xác minh nhanh sẽ chạy khi bạn nhấn gửi — có thể mất một chút thời gian."}, free:{en:"Free, always. We’ll be in touch.",vi:"Luôn miễn phí. Chúng tôi sẽ liên hệ."}, home:{en:"Back to home",vi:"Về trang chủ"},
     o_sel:{en:"Select…",vi:"Chọn…"}, o_yes:{en:"Yes",vi:"Có"}, o_no:{en:"No",vi:"Không"}, o_unsure:{en:"Unsure",vi:"Chưa chắc"},
     o_cit:{en:"Citizen",vi:"Công dân"}, o_pr:{en:"Permanent Resident",vi:"Thường trú nhân"}, o_stu:{en:"Student",vi:"Du học sinh"}, o_whv:{en:"Working Holiday",vi:"Working Holiday"}, o_sid:{en:"Skills in Demand / 482",vi:"Skills in Demand / 482"}, o_oth:{en:"Other",vi:"Khác"},
     o_hs:{en:"High School",vi:"Trung học"}, o_cert:{en:"Certificate",vi:"Chứng chỉ"}, o_dip:{en:"Diploma",vi:"Cao đẳng"}, o_deg:{en:"Degree",vi:"Đại học"},
@@ -558,6 +589,6 @@
   }
   function toggleLang(){ setLang(curLang==='en'?'vi':'en'); }
 </script>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit" async defer></script>
 </body>
 </html>

@@ -588,7 +588,8 @@
         <button type="button" class="back" id="wizBack" data-en="← Back" data-vi="← Quay lại">← Back</button>
         <button type="button" class="next" id="wizNext" data-en="Continue →" data-vi="Tiếp tục →">Continue →</button>
       </div>
-      <div class="h-captcha" data-captcha="true" style="margin:0 0 14px"></div>
+      <div id="tsbox" style="margin:0 0 10px"></div>
+      <p class="microcopy" style="margin:0 0 14px" data-en="A quick human-verification check runs when you press submit — it may take a moment." data-vi="Một bước xác minh nhanh sẽ chạy khi bạn nhấn gửi — có thể mất một chút thời gian.">A quick human-verification check runs when you press submit — it may take a moment.</p>
       <button class="btn" type="submit" id="wizSubmit" data-en="Submit enquiry" data-vi="Gửi yêu cầu">Submit enquiry</button>
       <p class="microcopy" data-en="No cost to enquire. We’ll be in touch." data-vi="Gửi yêu cầu hoàn toàn miễn phí. Chúng tôi sẽ liên hệ với quý vị.">No cost to enquire. We’ll be in touch.</p>
       <p class="formerr" id="formErr" data-en="Please complete the required fields and both declarations." data-vi="Vui lòng điền các mục bắt buộc và xác nhận cả hai cam kết.">Please complete the required fields and both declarations.</p>
@@ -668,18 +669,7 @@
 
     // Honeypot: silently succeed without sending
     if(form.querySelector('[name="bot-field"]') && form.querySelector('[name="bot-field"]').value){ showSuccess(); return; }
-    // time-trap: machine-speed submissions silently discarded
-    if(window.__TG_LOADED && (Date.now()-window.__TG_LOADED<8000)){ showSuccess(); return; }
-    // human verification gate: if the captcha has rendered, a token is required
-    var capW=document.querySelector('.h-captcha');
-    if(capW && capW.querySelector('iframe')){
-      var tok=form.querySelector('[name="h-captcha-response"]');
-      if(!tok || !tok.value){
-        errBox.classList.add('show');
-        errBox.innerHTML=(lang==='vi') ? 'Vui lòng xác nhận bạn là người thật bằng cách hoàn thành ô xác minh phía trên nút gửi.' : 'Please confirm you are human by completing the verification box above the submit button.';
-        capW.scrollIntoView({behavior:'smooth',block:'center'}); return;
-      }
-    }
+    // (8-second time-trap removed — execute-on-submit Turnstile below is the real bot gate)
 
     // In-tenant submit — Power Automate flow → gm@ (email only, Phase 1). No Web3Forms, no US relay.
     // text/plain keeps it a "simple request" (no CORS preflight); the flow parses json(triggerBody()).
@@ -702,13 +692,23 @@
       hear_about:g('hear_about'), referral_partner:g('hear_about_partner'),
       authorised:cb('c1'), consent:cb('c2'), marketing_optin:cb('c3'),
       ref:g('ref'), src:g('src'),
-      botcheck:g('bot-field'), hcaptcha:g('h-captcha-response')
+      botcheck:g('bot-field'), turnstile:''
     };
-    fetch('https://default09989e18fbad4f58bb10a8a5093164.b1.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/17/workflows/8dbca0a914de44bcadf016cdea287085/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OohvFPeT2cW4RHE_liHrqWgKMG1cFcKoWGcfjr-Qp9Q',
-      {method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body:JSON.stringify(payload)})
-      .then(function(r){ if(r.ok){ showSuccess(); } else { showSendFail(); } })
-      .catch(showSendFail)
-      .finally(function(){ if(sendBtn){ sendBtn.disabled = false; } });
+    // mint a FRESH Turnstile token at submit (never stale, even on a long fill), then send
+    (window.tgFreshToken ? window.tgFreshToken() : Promise.resolve('')).then(function(tok){
+      if(!tok){
+        if(sendBtn){ sendBtn.disabled = false; }
+        errBox.classList.add('show');
+        errBox.innerHTML=(lang==='vi') ? 'Xác minh chưa hoàn tất — vui lòng nhấn Gửi lại.' : 'Human verification did not complete — please press Submit again.';
+        errBox.scrollIntoView({behavior:'smooth', block:'center'}); return;
+      }
+      payload.turnstile = tok;
+      fetch('https://default09989e18fbad4f58bb10a8a5093164.b1.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/17/workflows/8dbca0a914de44bcadf016cdea287085/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OohvFPeT2cW4RHE_liHrqWgKMG1cFcKoWGcfjr-Qp9Q',
+        {method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body:JSON.stringify(payload)})
+        .then(function(r){ if(r.ok){ showSuccess(); } else { showSendFail(); } })
+        .catch(showSendFail)
+        .finally(function(){ if(sendBtn){ sendBtn.disabled = false; } });
+    });
 
     function showSendFail(){
       errBox.classList.add('show');
@@ -945,6 +945,28 @@ window.__TG_LOADED = Date.now();
   }
 })();
 </script>
-<!-- Web3Forms client script removed — form posts to the in-tenant Power Automate flow (email → gm@). hCaptcha to be re-added with our own site key before public launch. -->
+<!-- Web3Forms removed — form posts to the in-tenant Power Automate flow (email → gm@). -->
+<script>
+(function(){
+  // Cloudflare Turnstile: explicit render, execute ON SUBMIT (token always seconds old)
+  var SITE_KEY="0x4AAAAAAD_FnDhHjie2O5fW";
+  var tsWidgetId=null, tsResolve=null;
+  window.onTurnstileLoad=function(){
+    try{ tsWidgetId=window.turnstile.render('#tsbox',{ sitekey:SITE_KEY, execution:'execute', 'refresh-expired':'manual',
+      callback:function(t){ var r=tsResolve; tsResolve=null; if(r){ r(t); } },
+      'error-callback':function(){ var r=tsResolve; tsResolve=null; if(r){ r(''); } return true; },
+      'timeout-callback':function(){ var r=tsResolve; tsResolve=null; if(r){ r(''); } } });
+    }catch(e){}
+  };
+  window.tgFreshToken=function(){ return new Promise(function(resolve){
+    if(!window.turnstile || tsWidgetId===null){ resolve(''); return; }
+    tsResolve=resolve;
+    try{ window.turnstile.reset(tsWidgetId); }catch(e){}
+    try{ window.turnstile.execute(tsWidgetId); }catch(e){ tsResolve=null; resolve(''); return; }
+    setTimeout(function(){ if(tsResolve===resolve){ tsResolve=null; resolve(''); } },30000);
+  }); };
+})();
+</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit" async defer></script>
 </body>
 </html>

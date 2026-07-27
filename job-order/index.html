@@ -366,7 +366,8 @@
       </section>
 
       <div class="submit-wrap">
-        <div class="h-captcha" data-captcha="true" style="margin:0 0 14px"></div>
+        <div id="tsbox" style="margin:0 0 10px"></div>
+        <p class="hint" style="margin:0 0 14px" data-i18n="verify_note">A quick human-verification check runs when you press submit — it may take a moment.</p>
         <button type="submit" class="btn" data-i18n="submit">Submit job order</button>
         <p class="hint" id="formErrJ" style="display:none;color:#a33;margin-top:10px"></p>
       </div>
@@ -454,6 +455,7 @@
     dec2:{en:"I consent to TalentGate collecting, holding and using these details for workforce sourcing and placement purposes, as set out in the <a href='/privacy' target='_blank'>Privacy & Collection Notice</a> — including sharing role details with prospective candidates and relevant service partners as part of the recruitment and placement process. I understand TalentGate does not guarantee any particular outcome.",vi:"Tôi đồng ý để TalentGate thu thập, lưu giữ và sử dụng các thông tin này cho mục đích tìm nguồn và bố trí nhân lực, theo <a href='/privacy' target='_blank'>Thông báo Quyền riêng tư & Thu thập</a> — bao gồm chia sẻ chi tiết vị trí với các ứng viên tiềm năng và đối tác dịch vụ liên quan trong quá trình tuyển dụng và bố trí. Tôi hiểu TalentGate không bảo đảm bất kỳ kết quả cụ thể nào."},
     dec3:{en:"Yes — send our organisation workforce news, hiring insights and updates from TalentGate. Unsubscribe anytime. <span style='color:#8a927f'>(optional)</span>",vi:"Có — gửi cho tổ chức chúng tôi tin tức nhân lực, thông tin tuyển dụng và cập nhật từ TalentGate. Có thể huỷ đăng ký bất cứ lúc nào. <span style='color:#8a927f'>(không bắt buộc)</span>"},
     submit:{en:"Submit job order",vi:"Gửi đơn hàng nhân lực"},
+    verify_note:{en:"A quick human-verification check runs when you press submit — it may take a moment.",vi:"Một bước xác minh nhanh sẽ chạy khi bạn nhấn gửi — có thể mất một chút thời gian."},
     done_h:{en:"Job order received",vi:"Đã nhận đơn hàng nhân lực"},
     done_p:{en:"Thank you — your job order has reached our team. We&rsquo;ll respond within one business day to confirm next steps and timelines. If it&rsquo;s urgent, email gm@talentgate.com.au.",vi:"Cảm ơn — đơn hàng nhân lực của bạn đã đến đội ngũ chúng tôi. Chúng tôi sẽ phản hồi trong vòng một ngày làm việc để xác nhận các bước tiếp theo và thời gian. Nếu gấp, vui lòng email gm@talentgate.com.au."}
   };
@@ -468,7 +470,26 @@
   window.toggleLang=function(){ lang=(lang==='en')?'vi':'en'; applyLang(); };
   applyLang();
 
-  var ACCESS_KEY='da1d315b-110e-4d96-a448-20e8bf1bd278';
+  // ==== FORM DELIVERY — in-tenant Power Automate (M365), no US relay ====
+  var FLOW_URL="https://default09989e18fbad4f58bb10a8a5093164.b1.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/1f59e86dae164adfbeffaaab28737d18/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TN4pmtT4a5zF353PoOkvge7kTAVbZrSxB6kXP2RaubQ";
+  // Cloudflare Turnstile: explicit render, execute ON SUBMIT (token always seconds old)
+  var SITE_KEY="0x4AAAAAAD_FnDhHjie2O5fW";
+  var tsWidgetId=null, tsResolve=null;
+  window.onTurnstileLoad=function(){
+    try{ tsWidgetId=window.turnstile.render('#tsbox',{ sitekey:SITE_KEY, execution:'execute', 'refresh-expired':'manual',
+      callback:function(t){ var r=tsResolve; tsResolve=null; if(r){ r(t); } },
+      'error-callback':function(){ var r=tsResolve; tsResolve=null; if(r){ r(''); } return true; },
+      'timeout-callback':function(){ var r=tsResolve; tsResolve=null; if(r){ r(''); } } });
+    }catch(e){}
+  };
+  function getFreshToken(){ return new Promise(function(resolve){
+    if(!window.turnstile || tsWidgetId===null){ resolve(''); return; }
+    tsResolve=resolve;
+    try{ window.turnstile.reset(tsWidgetId); }catch(e){}
+    try{ window.turnstile.execute(tsWidgetId); }catch(e){ tsResolve=null; resolve(''); return; }
+    setTimeout(function(){ if(tsResolve===resolve){ tsResolve=null; resolve(''); } },30000);
+  }); }
+
   var form=document.getElementById('appform');
   var PAGE_LOADED_AT=Date.now();
 
@@ -530,47 +551,75 @@
     var ok=form.checkValidity() && document.getElementById('d1').checked && document.getElementById('d2').checked && document.getElementById('d0').checked;
     if(!ok){ form.reportValidity(); return; }
 
+    // anti-bot: honeypot filled -> silent fake success (Turnstile below is the real gate)
     var hp=form.querySelector('[name="company_website_url"]');
-    if((hp&&hp.value) || (Date.now()-PAGE_LOADED_AT<8000)){ showDone(); return; }
+    if(hp&&hp.value){ showDone(); return; }
 
-    var capW=document.querySelector('.h-captcha');
-    if(capW && capW.querySelector('iframe')){
-      var tok=form.querySelector('[name="h-captcha-response"]');
-      if(!tok || !tok.value){
-        alert(lang==='vi' ? 'Vui lòng xác nhận bạn là người thật bằng cách hoàn thành ô xác minh phía trên nút gửi.' : 'Please confirm you are human by completing the verification box above the submit button.');
-        capW.scrollIntoView({behavior:'smooth',block:'center'}); return; }
-    }
+    // ---- build the branded in-tenant email by walking the form's own sections ----
+    function esc(s){ return String(s).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';}); }
+    function trow(k,v){ return '<tr><td style="color:#53605A;width:42%;padding:3px 0;vertical-align:top">'+esc(k)+'</td><td style="padding:3px 0">'+esc(v).replace(/\n/g,'<br>')+'</td></tr>'; }
+    function labelText(lab){ return lab ? lab.textContent.replace(/\*/g,'').replace(/\s+/g,' ').trim() : ''; }
+    var gv=function(n){ return ((form.querySelector('[name="'+n+'"]')||{}).value||'').trim(); };
+    var partnerCode=gv('Partner code')||SRC||'';
+    var parts=[]; var r1=gv('Role'), n1=gv('Number of positions'); if(r1){ parts.push(r1+(n1?' ×'+n1:'')); }
+    [2,3,4,5].forEach(function(i){ var r=gv('Role '+i), n=gv('Number of positions '+i); if(r){ parts.push(r+(n?' ×'+n:'')); } });
+    var roleSummary=parts.join('; ');
+    var sectionsHtml='';
+    form.querySelectorAll('section.blk').forEach(function(sec){
+      var h2=sec.querySelector('h2');
+      var title=h2 ? h2.textContent.replace(/^\s*\d+\s*/,'').replace(/\s+/g,' ').trim() : '';
+      if(/Declaration/i.test(title)){ return; }
+      var r='';
+      sec.querySelectorAll('.field').forEach(function(f){
+        var ctl=f.querySelector('input,select,textarea'); var lab=f.querySelector('label');
+        if(!ctl || ctl.type==='checkbox' || ctl.type==='hidden' || ctl.name==='company_website_url'){ return; }
+        var v=(ctl.value||'').trim(); if(!v){ return; }
+        r+=trow(labelText(lab), v);
+      });
+      var ticked=[];
+      sec.querySelectorAll('.chk input[type="checkbox"]').forEach(function(cb){ if(cb.checked){ var sp=cb.parentNode.querySelector('span'); ticked.push(sp?sp.textContent.trim():cb.name); } });
+      if(ticked.length){ r+=trow('Ticked', ticked.join(', ')); }
+      if(r){ sectionsHtml+='<p style="margin:14px 0 4px;color:#B98A34;font-size:12px;font-weight:700;text-transform:uppercase">'+esc(title)+'</p><table style="width:100%;font-size:14px;border-collapse:collapse">'+r+'</table>'; }
+    });
+    var submittedAt=new Date().toLocaleString('en-AU',{timeZone:'Australia/Sydney',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})+' AEST/AEDT';
+    var marketing=(document.getElementById('d3')&&document.getElementById('d3').checked)?'Yes':'No';
+    var metaRows=trow('Roles',roleSummary||'—')+(partnerCode?trow('Partner / source',partnerCode):'')+(REF?trow('Reference',REF):'')+trow('Language',lang==='vi'?'Vietnamese':'English')+trow('Submitted',submittedAt);
+    var headline=(roleSummary||'Job order')+(partnerCode?' — via '+partnerCode:'');
+    var html=''+
+     '<div style="font-family:Segoe UI,Arial,sans-serif;color:#20261F;max-width:660px">'+
+      '<div style="background:#143027;color:#F7F4EC;padding:16px 20px;border-radius:10px 10px 0 0">'+
+        '<div style="color:#E7C97A;font-weight:700;font-size:13px;letter-spacing:.04em">TalentGate · New Job Order</div>'+
+        '<div style="font-size:17px;font-weight:700;margin-top:6px">'+esc(roleSummary||'Job order')+'</div>'+
+      '</div>'+
+      '<div style="border:1px solid #DDE3DD;border-top:0;padding:8px 20px 16px;border-radius:0 0 10px 10px">'+
+        '<p style="margin:14px 0 4px;color:#B98A34;font-size:12px;font-weight:700;text-transform:uppercase">Order</p>'+
+        '<table style="width:100%;font-size:14px;border-collapse:collapse">'+metaRows+'</table>'+
+        sectionsHtml+
+        '<p style="margin:16px 0 0;font-size:12px;color:#53605A;border-top:1px solid #DDE3DD;padding-top:8px">'+
+          'Declarations: partner authorisation confirmed · accuracy confirmed · consent to collection/sharing confirmed · marketing opt-in: '+esc(marketing)+'.<br>'+
+          'Delivered <b>in-tenant</b> to gm@ · Source: '+esc(partnerCode||'Partner')+' · Status = New order.</p>'+
+      '</div>'+
+     '</div>';
 
-    var fd=new FormData(form);
-    fd.delete('company_website_url');
-    var ORG=fd.get('Partner code')||SRC||'';
-    var parts=[]; var r1=fd.get('Role')||'', n1=fd.get('Number of positions')||'';
-    if(r1){ parts.push(r1+(n1?' ×'+n1:'')); }
-    [2,3,4,5].forEach(function(i){ var r=fd.get('Role '+i)||'', n=fd.get('Number of positions '+i)||'';
-      if(r){ parts.push(r+(n?' ×'+n:'')); } });
-    var ROLE=parts.join('; '); var N='';
-    fd.append('access_key', ACCESS_KEY);
-    if(REF){ fd.append('ref', REF); }
-    if(SRC){ fd.append('src', SRC); }
-    fd.append('subject','TalentGate — Job Order'+(ORG?' ['+ORG+']':'')+(REF?' ['+REF+']':'')+': '+ROLE+' (by '+(fd.get('Partner contact')||'')+')');
-    fd.append('Marketing consent', document.getElementById('d3')&&document.getElementById('d3').checked?'Yes':'No');
-    fd.append('Submitted at', new Date().toLocaleString('en-AU',{timeZone:'Australia/Sydney',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})+' AEST/AEDT');
+    var P={ formType:'Job Order', headline:headline, message:html, turnstile:'', botcheck:'' };
 
-    if(ACCESS_KEY.indexOf('REPLACE_WITH_')===0){ showDone(); return; } // preview mode
-
+    var SUBMIT=document.querySelector('button[type="submit"]'); if(SUBMIT){ SUBMIT.disabled=true; }
     var err=document.getElementById('formErrJ');
-    fetch('https://api.web3forms.com/submit',{method:'POST',body:fd})
-      .then(function(r){ return r.json(); })
-      .then(function(j){ if(j&&j.success){ showDone(); } else { showFail(); } })
-      .catch(showFail);
-    function showFail(){ err.style.display='block';
-      err.innerHTML=(lang==='vi')?'Không gửi được lúc này. Vui lòng thử lại, hoặc email trực tiếp <a href="mailto:gm@talentgate.com.au">gm@talentgate.com.au</a>.':'We could not send just now. Please try again, or email <a href="mailto:gm@talentgate.com.au">gm@talentgate.com.au</a> directly.'; }
+    getFreshToken().then(function(tok){
+      if(!tok){ showFail(lang==='vi'?'Xác minh chưa hoàn tất — vui lòng nhấn Gửi lại.':'Human verification did not complete — please press Submit again.'); window.scrollTo({top:0,behavior:'smooth'}); return; }
+      P.turnstile=tok;
+      fetch(FLOW_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(P)})
+        .then(function(r){ if(!r.ok){ throw new Error('bad status'); } showDone(); })
+        .catch(function(){ showFail(); });
+    });
+    function showFail(msg){ if(SUBMIT){ SUBMIT.disabled=false; } if(err){ err.style.display='block';
+      err.innerHTML=msg || ((lang==='vi')?'Không gửi được lúc này. Vui lòng thử lại, hoặc email trực tiếp <a href="mailto:gm@talentgate.com.au">gm@talentgate.com.au</a>.':'We could not send just now. Please try again, or email <a href="mailto:gm@talentgate.com.au">gm@talentgate.com.au</a> directly.'); } }
   });
   function showDone(){ document.getElementById('done').style.display='block'; form.style.display='none';
     window.scrollTo({top:0,behavior:'smooth'}); }
 })();
 </script>
-<script src="https://web3forms.com/client/script.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit" async defer></script>
 
 </body>
 </html>

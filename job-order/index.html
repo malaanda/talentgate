@@ -551,9 +551,9 @@
     var ok=form.checkValidity() && document.getElementById('d1').checked && document.getElementById('d2').checked && document.getElementById('d0').checked;
     if(!ok){ form.reportValidity(); return; }
 
-    // anti-bot: honeypot filled -> silent fake success (Turnstile below is the real gate)
-    var hp=form.querySelector('[name="company_website_url"]');
-    if(hp&&hp.value){ showDone(); return; }
+    // Turnstile (execute-on-submit, below) is the bot gate. No honeypot silent-drop:
+    // browser autofill was populating the hidden honeypot on this form (it has a real
+    // Website field), which silently fake-succeeded real human submissions.
 
     // ---- build the branded in-tenant email by walking the form's own sections ----
     function esc(s){ return String(s).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';}); }

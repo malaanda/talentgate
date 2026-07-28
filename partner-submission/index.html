@@ -452,9 +452,8 @@
   var form = document.getElementById('appform');
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    // anti-bot: honeypot filled -> silent fake success (Turnstile below is the real gate)
-    var hp=form.querySelector('[name="company_website_url"]');
-    if(hp&&hp.value){ document.getElementById('done').style.display='block'; form.style.display='none'; return; }
+    // Turnstile (execute-on-submit, below) is the bot gate. No honeypot silent-drop:
+    // browser autofill can populate the hidden honeypot and silently drop real submissions.
 
     // minimum documents: passport bio page + CV must be included
     var fdChk=new FormData(form);

@@ -517,7 +517,26 @@
       '</div>'+
      '</div>';
 
-    var P={ formType:'Partner Submission', headline:headline, message:html, turnstile:'', botcheck:'' };
+    // Discrete fields for the Candidates register — the flow's "Create item" maps these 1:1 to
+    // columns (same key names as the partner portal). `message` still carries the branded jobs@
+    // email; `notes` is IMPORTANT INFO ONLY (screening flags), never the whole submission.
+    var flags=[];
+    var pref=gv('Partner file reference'); if(pref&&!/^n\/?a$/i.test(pref)){ flags.push('Partner file ref: '+pref); }
+    if(/^yes$/i.test(gv('Visa refusal or cancellation'))){ flags.push('Visa refusal/cancellation: Yes — '+(gv('Refusal details')||'details not given')); }
+    if(/^yes$/i.test(gv('Visa overstay'))){ flags.push('Visa overstay: Yes — '+(gv('Overstay details')||'details not given')); }
+    var extra=gv('Additional comments'); if(extra&&!/^no?$/i.test(extra)){ flags.push(extra); }
+    var missingDocs=[];
+    [['Doc — Passport bio page','Passport (photo/bio page)'],['Doc — CV / Resume','CV / Resume'],['Doc — Qualifications','Qualifications & transcripts'],['Doc — English test','English test result']]
+      .forEach(function(d){ var cb=form.querySelector('[name="'+d[0]+'"]'); if(cb&&!cb.checked){ missingDocs.push(d[1]); } });
+    var P={ formType:'Partner Submission', headline:headline,
+      fullName:fullName, partner:partnerCode,
+      email:gv('Email'), phone:gv('Phone'),
+      nationality:gv('Nationality'), occupation:gv('Occupation'),
+      jobRef:REF||'', language:(curLang==='vi'?'Vietnamese':'English'),
+      caseManager:gv('Case manager'), caseManagerEmail:gv('Case manager email'),
+      notes:flags.join('\n'), docsOutstanding:missingDocs.join(', '),
+      submittedAt:new Date().toISOString(), docsUploaded:'Pending',
+      message:html, turnstile:'', botcheck:'' };
 
     // mint a FRESH Turnstile token right now (immune to long fill times), then send
     var SUBMIT=document.querySelector('button[type="submit"]'); if(SUBMIT){ SUBMIT.disabled=true; }

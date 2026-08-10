@@ -454,6 +454,8 @@
     function row(k,v){ return '<tr><td style="color:#53605A;width:42%;padding:3px 0;vertical-align:top">'+esc(k)+'</td><td style="padding:3px 0">'+esc(v).replace(/\n/g,'<br>')+'</td></tr>'; }
     function labelText(lab){ return lab ? lab.textContent.replace(/\*/g,'').replace(/\s+/g,' ').trim() : ''; }
     var fullName=((form.querySelector('[name="Full name"]')||{}).value||'').trim();
+    var email=((form.querySelector('[name="Email"]')||{}).value||'').trim();
+    var phone=((form.querySelector('[name="Phone"]')||{}).value||'').trim();
     var sectionsHtml='';
     form.querySelectorAll('section.blk').forEach(function(sec){
       var h2=sec.querySelector('h2');
@@ -501,7 +503,7 @@
         window.scrollTo({top:0,behavior:'smooth'});
         return;
       }
-      var P={ formType:'Candidate Application', headline:headline, message:html, turnstile:tok, botcheck:'' };
+      var P={ formType:'Candidate Application', headline:headline, name:fullName, email:email, phone:phone, message:html, turnstile:tok, botcheck:'' };
       fetch(FLOW_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body: JSON.stringify(P) })
         .then(function(r){ if(!r.ok){ throw new Error('bad status'); }
           document.getElementById('done').style.display='block';

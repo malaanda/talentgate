@@ -170,7 +170,7 @@
       <h3 data-i18n="reg_h">Don&rsquo;t see a role for you?</h3>
       <p data-i18n="reg_p">Register your details and we&rsquo;ll contact you when a suitable position opens.</p>
       <a href="/apply" class="btn btn-gold" data-i18n="reg_cta">Register &mdash; general application</a>
-      <p style="color:#9FB0A4;font-size:.8rem;margin:16px 0 0" data-i18n="reg_notice">Roles are advertised on the official TalentGate website. Applications are accepted here only, and only while a role is open — not by email or through third-party sites.</p>
+      <p style="color:#9FB0A4;font-size:.8rem;margin:16px 0 0" data-i18n="reg_notice">Roles listed on this site are applied for here, and only while the role is open. Roles advertised elsewhere carry their own application instructions. We do not accept applications through third-party job sites.</p>
     </div>
 
   </div>
@@ -209,6 +209,9 @@
   function closeDate(iso){ var d=new Date(iso+'T00:00:00'); d.setDate(d.getDate()+29); return d; }
   function auDate(d){ return d.getDate()+' '+AU_MONTHS[d.getMonth()]+' '+d.getFullYear(); }
   function daysLeft(cD){ var t=new Date(); t.setHours(0,0,0,0); return Math.ceil((cD-t)/86400000); }
+  // ONE source of truth for open/closed. Dated ads: open until posted+29d.
+  // Open-ended ads: open until someone sets status:"Closed" by hand.
+  function adOpen(j){ return j.openEnded ? String(j.status||'').toLowerCase()!=='closed' : daysLeft(closeDate(j.posted||todayISO()))>0; }
 
   // ==== LISTINGS (seed) — PUBLIC data only. No employer names here; the Employer Reference / employer mapping lives in the internal Evidence Register. ====
   // Note: where two different employers in the same town advertise the same role, they are distinguished publicly ONLY by their unique Job Reference. The employer mapping is held in the internal Evidence Register.
@@ -220,9 +223,24 @@
      • Then re-upload this file to the host. That's it.
 
      FIELD NOTES
-     • posted:"YYYY-MM-DD"  the board groups by month AND auto-closes the ad
-                            29 days after this date (guarantees the 28-day window).
-                            You never set a closing date — it is calculated. Don't back-date.
+     • posted:"YYYY-MM-DD"  the board groups by month. On a DATED ad (no openEnded flag)
+                            it also auto-closes the ad 29 days after this date. Don't back-date.
+     • openEnded:true       NO closing date — "Applications close when the position is
+                            filled." Ad stays OPEN until you manually set status:"Closed".
+                            Renders the four-week non-shortlisted line (required — it is
+                            what permits running without a closing date).
+                            NOTE: Since 17.08.2026 (Alan's instruction) EVERY ad on this board
+                            runs open-ended — all 69 were reactivated with no closing date.
+                            The original 28-day LMT windows remain evidenced by each ad's
+                            posted date, the filed Day-1/Day-30 screenshots, and the
+                            pre-change ad-record snapshot in LMT-evidence/
+                            board-closed-view-snapshot-2026-08-17/. To close any ad now:
+                            set status:"Closed" by hand.
+     • sections:[...]       optional VERBATIM ad body: [{h:"Heading", ps:["para",...],
+                            ul:["bullet",...]}, ...] rendered in order, replacing the
+                            templated about/resp/you/pay blocks. Use when the ad copy is
+                            approved word-for-word (do not rewrite into template fields).
+     • howLead:"..."        optional lead sentence rendered under "How to apply".
      • ref:   must be UNIQUE — next TGA-JO.26.#### from the internal Evidence Register.
      • desc:  employer DESCRIPTION only — NEVER the employer's name.
      • ind:   must be EXACTLY one of the 11 industry names (copy from a block below).
@@ -238,49 +256,49 @@
      ═══════════════════════════════════════════════════════════════════ */
   var JOBS = [
     { ref:"TGA-JO.26.0041", posted:"2026-06-12", title:"Cold Storage Operator", desc:"an established horticultural production business",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"run day-to-day cold-storage operations for a leafy-vegetable operation",
       resp:["Receive, store, rotate and dispatch produce in cold storage","Monitor and record storage temperatures and conditions","Operate forklifts and materials-handling equipment (as licensed)","Pack, palletise and label produce","Maintain cold-store hygiene, biosecurity and stock records"],
       you:["Relevant cold-storage / warehouse / produce-handling experience","Forklift licence desirable","Able to work in chilled environments","Reliable, safety-focused and a team player"] },
 
     { ref:"TGA-JO.26.0042", posted:"2026-06-18", title:"Cold Storage Operator", desc:"an established hydroponic produce grower",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"manage cold-store operations and post-harvest produce handling for a hydroponic farm",
       resp:["Manage coolroom intake, storage rotation and dispatch","Record and monitor temperature and humidity logs","Operate forklift and pallet equipment (as licensed)","Grade, pack and label produce for cold storage","Maintain hygiene, traceability and stock records"],
       you:["Experience in cold storage, coolroom or produce handling","Forklift licence desirable","Comfortable working in chilled conditions","Reliable, safety-focused and a team player"] },
 
     { ref:"TGA-JO.26.0043", posted:"2026-06-12", title:"Skilled Horticultural Worker", desc:"an established horticultural production business",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"carry out skilled production and crop-care work in open-field vegetable growing",
       resp:["Skilled planting, cultivation, pruning and crop maintenance","Monitor plant health; assist with pest and nutrient management","Harvest, grade, sort and pack produce to quality standards","Apply irrigation and crop-treatment programs under direction","Maintain hygiene, biosecurity and quality records"],
       you:["Relevant hands-on horticultural experience (or a relevant certificate)","Sound plant-handling and crop-care skills","Able to work outdoors across a range of conditions","Reliable, safety-focused and a team player"] },
 
     { ref:"TGA-JO.26.0044", posted:"2026-06-18", title:"Skilled Horticultural Worker", desc:"an established hydroponic produce grower",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"carry out skilled crop-care work in a hydroponic growing system",
       resp:["Manage planting, training and crop maintenance in hydroponic systems","Monitor plant health, nutrient dosing and growing conditions","Harvest, grade and pack produce to quality standards","Assist with system checks and crop-treatment programs","Maintain hygiene, biosecurity and quality records"],
       you:["Hands-on horticultural or protected-cropping experience (or a relevant certificate)","Sound crop-care and plant-handling skills","Able to work across a range of glasshouse / field conditions","Reliable, safety-focused and a team player"] },
 
     { ref:"TGA-JO.26.0031", posted:"2026-06-10", title:"Production Horticulturist", desc:"an established horticultural production business",
-      loc:"Carabooda, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Carabooda, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"grow, maintain and harvest horticultural crops to quality standards",
       resp:["Plant, cultivate, prune and maintain crops","Monitor plant health; assist with pest, disease and nutrient management","Harvest, grade, sort and pack produce","Apply irrigation and crop-treatment programs under direction","Maintain hygiene, biosecurity and quality records"],
       you:["Relevant hands-on horticultural experience (or a relevant certificate)","Sound plant-handling and crop-care skills","Able to work outdoors across a range of conditions","Reliable, safety-focused and a team player"] },
 
-    { ref:"TGA-JO.26.0033", posted:"2026-07-01", title:"Cook", desc:"an established hospitality business",
-      loc:"Broome, WA", state:"WA", ind:"Hospitality, Restaurants & Cafés", type:"Full-time, ongoing", status:"Advertising",
+    { ref:"TGA-JO.26.0033", posted:"2026-04-21", title:"Cook", desc:"an established hospitality business",
+      loc:"Broome, WA", state:"WA", ind:"Hospitality, Restaurants & Cafés", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"38 ordinary hours/week on a rotating roster (includes weekends).",
       purpose:"prepare and cook menu items to a consistent standard",
       resp:["Prepare, cook and present menu items consistently","Manage food preparation, portioning and presentation","Monitor stock and assist with ordering","Maintain kitchen hygiene and food-safety standards","Follow WHS requirements"],
       you:["Relevant commercial cookery experience (or a relevant qualification)","Able to work a rotating roster including weekends","Sound food-safety knowledge","Reliable, organised and a team player"] },
 
     { ref:"TGA-JO.26.0034", posted:"2026-07-01", title:"Motor Mechanic", desc:"an established automotive service business",
-      loc:"Dubbo, NSW (Regional)", state:"NSW", ind:"Automotive & Car Services", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Dubbo, NSW (Regional)", state:"NSW", ind:"Automotive & Car Services", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"$74,000 – $82,000 p.a. + super", hours:"38 ordinary hours/week.",
       purpose:"service, diagnose and repair light vehicles",
       resp:["Service, diagnose and repair light vehicles","Carry out scheduled maintenance and safety inspections","Use diagnostic equipment to identify faults","Complete accurate job and parts records","Follow WHS requirements"],
@@ -288,398 +306,398 @@
 ,
 
     { ref:"TGA-JO.26.0045", posted:"2026-07-01", title:"Cold Storage Manager", desc:"an established hydroponic horticultural production business, growing and supplying hydroponic vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"manage our cold storage operations and maintain cold-chain integrity for our produce",
       resp:["Manage day-to-day cold storage and coolroom operations and maintain cold-chain integrity", "Monitor and record storage temperatures and act on any deviations", "Coordinate intake, storage, stock rotation (FIFO) and dispatch of produce", "Ensure food safety and biosecurity compliance and maintain records", "Supervise and coordinate cold storage staff", "Maintain equipment and report faults"],
       you:["A relevant AQF Diploma (or equivalent); or 3 years’ experience as a Cold Storage Manager", "Knowledge of cold-chain management and food-safety requirements", "Ability to supervise and coordinate a team", "Forklift licence and sound record-keeping (desirable)", "Reliable, safety-focused and organised"] },
     { ref:"TGA-JO.26.0046", posted:"2026-07-02", title:"Cold Storage Operator", desc:"an established hydroponic horticultural production business, growing and supplying hydroponic vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"run day-to-day cold-storage operations",
       resp:["Receive, store, rotate and dispatch produce in cold storage and coolrooms", "Monitor and record storage temperatures and conditions", "Operate forklifts and materials-handling equipment (as licensed)", "Pack, palletise and label produce for storage and dispatch", "Maintain cold-store hygiene, biosecurity and stock records", "Report faults in refrigeration or handling equipment"],
       you:["Relevant experience in cold storage, warehouse or produce handling (or a relevant certificate)", "Forklift licence desirable", "Able to work in cold / chilled environments", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0047", posted:"2026-07-01", title:"Facility Supervisor", desc:"an established hydroponic horticultural production business, growing and supplying hydroponic vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the day-to-day running of our farm facility and packing operations",
       resp:["Supervise day-to-day operations of the farm facility and packing shed", "Coordinate and roster staff and oversee workflow and productivity", "Guide and direct staff to meet quality, productivity and safety standards", "Ensure work health and safety, food safety and biosecurity compliance", "Coordinate maintenance and report faults", "Maintain operational records"],
       you:["A relevant AQF Certificate III or Certificate IV (or equivalent); or 3 years’ experience as a Facility Supervisor with relevant formal training; or 5 years’ experience with no formal training", "Knowledge of WHS and food-safety requirements", "Ability to coordinate and direct a team", "Sound record-keeping", "Reliable, safety-focused and organised"] },
     { ref:"TGA-JO.26.0048", posted:"2026-07-01", title:"Irrigation Assistant", desc:"an established hydroponic horticultural production business, growing and supplying hydroponic vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"help operate and maintain our irrigation systems and support day-to-day production",
       resp:["Operate and monitor irrigation and fertigation systems", "Assist with installation, repair and maintenance of irrigation infrastructure", "Monitor soil moisture and water application and report faults", "Assist with general production tasks as required", "Follow WHS requirements and use personal protective equipment"],
       you:["A relevant AQF Certificate II (or equivalent) and at least 1 year’s relevant experience; or at least 2 years’ relevant experience", "Practical mechanical aptitude", "Able to work outdoors across a range of conditions", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0049", posted:"2026-07-02", title:"Irrigation Technician", desc:"an established hydroponic horticultural production business, growing and supplying hydroponic vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"install, maintain and optimise irrigation and fertigation systems",
       resp:["Install, operate, maintain and repair irrigation and fertigation systems", "Monitor water application, pressure and soil moisture; adjust systems for optimal use", "Diagnose and repair faults in pumps, lines, valves and controllers", "Program and manage automated irrigation controllers", "Maintain irrigation records and water-use compliance", "Support water-efficiency and system-improvement initiatives"],
       you:["Relevant experience installing / maintaining irrigation systems (or a relevant certificate)", "Practical mechanical and problem-solving skills", "Able to work outdoors across a range of conditions", "Able to work independently and in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0050", posted:"2026-07-01", title:"Machinery Supervisor", desc:"an established hydroponic horticultural production business, growing and supplying hydroponic vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the operation and maintenance of our farm machinery",
       resp:["Supervise and coordinate machinery operations across the operation", "Operate, calibrate and maintain tractors, implements and equipment", "Schedule maintenance and repairs and keep machinery records", "Train and direct machinery operators", "Ensure safe operation and work health and safety compliance"],
       you:["A relevant AQF Diploma (or equivalent); or 3 years’ experience as a Machinery Supervisor", "Ability to supervise and direct operators", "Mechanical aptitude and relevant licences", "Sound understanding of WHS", "Reliable, safety-focused and organised"] },
     { ref:"TGA-JO.26.0051", posted:"2026-07-01", title:"Production Horticulturist", desc:"an established hydroponic horticultural production business, growing and supplying hydroponic vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"take day-to-day responsibility for growing healthy, high-quality crops",
       resp:["Plan, coordinate and monitor planting, growing and harvesting schedules to meet production targets", "Monitor crop health, soil condition, irrigation and nutrition, and adjust growing programs as required", "Implement pest, disease and weed management programs in accordance with regulations", "Operate, calibrate and maintain horticultural machinery and irrigation systems", "Apply fertilisers and agricultural chemicals safely and in accordance with label and WHS requirements", "Maintain accurate production, spray and harvest records"],
       you:["A relevant AQF Certificate III or Certificate IV in Horticulture (or equivalent); or 3 years’ experience as a Production Horticulturalist with relevant formal training; or 5 years’ experience with no formal training", "Sound knowledge of crop agronomy, irrigation, and pest and disease management", "Ability to operate and maintain farm machinery and irrigation systems", "Ability to work under limited supervision and to coordinate a small team", "Chemical-handling accreditation (e.g. ChemCert / AQF chemical units) desirable", "Physically fit and able to work outdoors across a range of conditions"] },
     { ref:"TGA-JO.26.0052", posted:"2026-07-02", title:"Production Operator", desc:"an established hydroponic horticultural production business, growing and supplying hydroponic vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"run grading, packing and processing line equipment",
       resp:["Operate produce grading, washing, packing and processing line equipment", "Set up, monitor and adjust line machinery for efficient production", "Sort, grade and pack produce to quality and customer specifications", "Carry out basic cleaning, changeovers and minor line adjustments", "Record production, quality and traceability data", "Report equipment faults and maintain line hygiene"],
       you:["Relevant experience operating production or packing-line equipment (or a relevant certificate)", "Attention to quality and detail", "Able to work in a fast-paced production environment", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0053", posted:"2026-06-30", title:"Cold Storage Manager", desc:"an established fresh-produce and horticultural production business, growing and supplying vegetables",
-      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"manage our cold storage operations and maintain cold-chain integrity for our produce",
       resp:["Manage day-to-day cold storage and coolroom operations and maintain cold-chain integrity", "Monitor and record storage temperatures and act on any deviations", "Coordinate intake, storage, stock rotation (FIFO) and dispatch of produce", "Ensure food safety and biosecurity compliance and maintain records", "Supervise and coordinate cold storage staff", "Maintain equipment and report faults"],
       you:["A relevant AQF Diploma (or equivalent); or 3 years’ experience as a Cold Storage Manager", "Knowledge of cold-chain management and food-safety requirements", "Ability to supervise and coordinate a team", "Forklift licence and sound record-keeping (desirable)", "Reliable, safety-focused and organised"] },
     { ref:"TGA-JO.26.0054", posted:"2026-07-02", title:"Cold Storage Operator", desc:"an established fresh-produce and horticultural production business, growing and supplying vegetables",
-      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"run day-to-day cold-storage operations",
       resp:["Receive, store, rotate and dispatch produce in cold storage and coolrooms", "Monitor and record storage temperatures and conditions", "Operate forklifts and materials-handling equipment (as licensed)", "Pack, palletise and label produce for storage and dispatch", "Maintain cold-store hygiene, biosecurity and stock records", "Report faults in refrigeration or handling equipment"],
       you:["Relevant experience in cold storage, warehouse or produce handling (or a relevant certificate)", "Forklift licence desirable", "Able to work in cold / chilled environments", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0055", posted:"2026-06-30", title:"Facility Supervisor", desc:"an established fresh-produce and horticultural production business, growing and supplying vegetables",
-      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the day-to-day running of our farm facility and packing operations",
       resp:["Supervise day-to-day operations of the farm facility and packing shed", "Coordinate and roster staff and oversee workflow and productivity", "Guide and direct staff to meet quality, productivity and safety standards", "Ensure work health and safety, food safety and biosecurity compliance", "Coordinate maintenance and report faults", "Maintain operational records"],
       you:["A relevant AQF Certificate III or Certificate IV (or equivalent); or 3 years’ experience as a Facility Supervisor with relevant formal training; or 5 years’ experience with no formal training", "Knowledge of WHS and food-safety requirements", "Ability to coordinate and direct a team", "Sound record-keeping", "Reliable, safety-focused and organised"] },
     { ref:"TGA-JO.26.0056", posted:"2026-06-30", title:"Irrigation Assistant", desc:"an established fresh-produce and horticultural production business, growing and supplying vegetables",
-      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"help operate and maintain our irrigation systems and support day-to-day production",
       resp:["Operate and monitor irrigation and fertigation systems", "Assist with installation, repair and maintenance of irrigation infrastructure", "Monitor soil moisture and water application and report faults", "Assist with general production tasks as required", "Follow WHS requirements and use personal protective equipment"],
       you:["A relevant AQF Certificate II (or equivalent) and at least 1 year’s relevant experience; or at least 2 years’ relevant experience", "Practical mechanical aptitude", "Able to work outdoors across a range of conditions", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0057", posted:"2026-07-02", title:"Irrigation Technician", desc:"an established fresh-produce and horticultural production business, growing and supplying vegetables",
-      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"install, maintain and optimise irrigation and fertigation systems",
       resp:["Install, operate, maintain and repair irrigation and fertigation systems", "Monitor water application, pressure and soil moisture; adjust systems for optimal use", "Diagnose and repair faults in pumps, lines, valves and controllers", "Program and manage automated irrigation controllers", "Maintain irrigation records and water-use compliance", "Support water-efficiency and system-improvement initiatives"],
       you:["Relevant experience installing / maintaining irrigation systems (or a relevant certificate)", "Practical mechanical and problem-solving skills", "Able to work outdoors across a range of conditions", "Able to work independently and in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0058", posted:"2026-06-30", title:"Machinery Supervisor", desc:"an established fresh-produce and horticultural production business, growing and supplying vegetables",
-      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the operation and maintenance of our farm machinery",
       resp:["Supervise and coordinate machinery operations across the operation", "Operate, calibrate and maintain tractors, implements and equipment", "Schedule maintenance and repairs and keep machinery records", "Train and direct machinery operators", "Ensure safe operation and work health and safety compliance"],
       you:["A relevant AQF Diploma (or equivalent); or 3 years’ experience as a Machinery Supervisor", "Ability to supervise and direct operators", "Mechanical aptitude and relevant licences", "Sound understanding of WHS", "Reliable, safety-focused and organised"] },
     { ref:"TGA-JO.26.0059", posted:"2026-06-30", title:"Production Horticulturist", desc:"an established fresh-produce and horticultural production business, growing and supplying vegetables",
-      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"take day-to-day responsibility for growing healthy, high-quality crops",
       resp:["Plan, coordinate and monitor planting, growing and harvesting schedules to meet production targets", "Monitor crop health, soil condition, irrigation and nutrition, and adjust growing programs as required", "Implement pest, disease and weed management programs in accordance with regulations", "Operate, calibrate and maintain horticultural machinery and irrigation systems", "Apply fertilisers and agricultural chemicals safely and in accordance with label and WHS requirements", "Maintain accurate production, spray and harvest records"],
       you:["A relevant AQF Certificate III or Certificate IV in Horticulture (or equivalent); or 3 years’ experience as a Production Horticulturalist with relevant formal training; or 5 years’ experience with no formal training", "Sound knowledge of crop agronomy, irrigation, and pest and disease management", "Ability to operate and maintain farm machinery and irrigation systems", "Ability to work under limited supervision and to coordinate a small team", "Chemical-handling accreditation (e.g. ChemCert / AQF chemical units) desirable", "Physically fit and able to work outdoors across a range of conditions"] },
     { ref:"TGA-JO.26.0060", posted:"2026-07-02", title:"Production Operator", desc:"an established fresh-produce and horticultural production business, growing and supplying vegetables",
-      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"run grading, packing and processing line equipment",
       resp:["Operate produce grading, washing, packing and processing line equipment", "Set up, monitor and adjust line machinery for efficient production", "Sort, grade and pack produce to quality and customer specifications", "Carry out basic cleaning, changeovers and minor line adjustments", "Record production, quality and traceability data", "Report equipment faults and maintain line hygiene"],
       you:["Relevant experience operating production or packing-line equipment (or a relevant certificate)", "Attention to quality and detail", "Able to work in a fast-paced production environment", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0061", posted:"2026-07-02", title:"Skilled Horticultural Worker", desc:"an established fresh-produce and horticultural production business, growing and supplying vegetables",
-      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Hillier, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"carry out hands-on production and crop-care work",
       resp:["Carry out skilled planting, cultivation, pruning and crop-maintenance tasks", "Monitor plant health and assist with pest, disease and nutrient management", "Harvest, grade, sort and pack produce to quality standards", "Operate horticultural tools and equipment", "Apply irrigation, fertilising and crop-treatment programs under direction", "Maintain hygiene, biosecurity and quality records"],
       you:["", "", "", "", "", ""] },
     { ref:"TGA-JO.26.0062", posted:"2026-07-02", title:"Cold Storage Operator", desc:"an established nursery-farm and horticultural production business, growing and supplying nursery plants",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"run day-to-day cold-storage operations",
       resp:["Receive, store, rotate and dispatch produce in cold storage and coolrooms", "Monitor and record storage temperatures and conditions", "Operate forklifts and materials-handling equipment (as licensed)", "Pack, palletise and label produce for storage and dispatch", "Maintain cold-store hygiene, biosecurity and stock records", "Report faults in refrigeration or handling equipment"],
       you:["Relevant experience in cold storage, warehouse or produce handling (or a relevant certificate)", "Forklift licence desirable", "Able to work in cold / chilled environments", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0063", posted:"2026-07-02", title:"Irrigation Technician", desc:"an established nursery-farm and horticultural production business, growing and supplying nursery plants",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"install, maintain and optimise irrigation and fertigation systems",
       resp:["Install, operate, maintain and repair irrigation and fertigation systems", "Monitor water application, pressure and soil moisture; adjust systems for optimal use", "Diagnose and repair faults in pumps, lines, valves and controllers", "Program and manage automated irrigation controllers", "Maintain irrigation records and water-use compliance", "Support water-efficiency and system-improvement initiatives"],
       you:["Relevant experience installing / maintaining irrigation systems (or a relevant certificate)", "Practical mechanical and problem-solving skills", "Able to work outdoors across a range of conditions", "Able to work independently and in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0064", posted:"2026-07-02", title:"Production Operator", desc:"an established nursery-farm and horticultural production business, growing and supplying nursery plants",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"run grading, packing and processing line equipment",
       resp:["Operate produce grading, washing, packing and processing line equipment", "Set up, monitor and adjust line machinery for efficient production", "Sort, grade and pack produce to quality and customer specifications", "Carry out basic cleaning, changeovers and minor line adjustments", "Record production, quality and traceability data", "Report equipment faults and maintain line hygiene"],
       you:["Relevant experience operating production or packing-line equipment (or a relevant certificate)", "Attention to quality and detail", "Able to work in a fast-paced production environment", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0065", posted:"2026-07-01", title:"Cold Storage Manager", desc:"a fresh-produce business specialising in the handling, storage and distribution of horticultural produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"manage our cold storage operations and maintain cold-chain integrity for our produce",
       resp:["Managing daily cold storage operations to ensure efficient handling and preservation ofhorticultural produce", "Supervising product picking activities within chiller and freezer environments", "Coordinating the receiving, storage, packing, and dispatch of fresh produce", "Monitoring cold room temperatures and storage conditions to ensure product quality andcompliance requirements are maintained", "Managing stock rotation and inventory control processes to minimise waste and maximiseproduct freshness", "Supervising and supporting cold storage staff to ensure operational targets are achieved"],
       you:["Relevant AQF Diploma qualification (or equivalent); or", "Three (3) years of employment experience as a Cold Storage Manager", "Minimum two (2) years of relevant work experience", "Experience managing cold storage, warehousing, or food handling operations", "Strong knowledge of inventory management and stock control procedures", "Experience working within food manufacturing, fresh produce, or agricultural environments"] },
     { ref:"TGA-JO.26.0066", posted:"2026-07-01", title:"Facility Supervisor", desc:"a fresh-produce business specialising in the handling, storage and distribution of horticultural produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the day-to-day running of our farm facility and packing operations",
       resp:["Ensuring correct handling of products to meet customer requirements, including grading, packing, cool chain management, hygiene, and dispatch", "Assessing incoming products for quality and determining appropriate grading resources and requirements", "Monitoring product quality throughout all stages of production, including washing, first grading, second grading, and final grading processes", "Liaising with the Harvest Supervisor, Maintenance Manager, and Dispatch Manager to coordinate operational activities and resolve production issues", "Ensuring all Quality Assurance (QA) records are accurately maintained to provide complete product traceability", "Monitoring and managing cool chain requirements during product handling, storage, and dispatch operations"],
       you:["Relevant AQF Certificate III or Certificate IV qualification (or equivalent); or", "Three (3) years of employment experience as a Facility Supervisor with relevant formaltraining; or", "Five (5) years of employment experience as a Facility Supervisor with no formal training", "Minimum two (2) years of relevant work experience", "Strong knowledge of product grading, packing, quality control, and dispatch operations", "Experience supervising facility, warehouse, production, or packing shed operations"] },
     { ref:"TGA-JO.26.0067", posted:"2026-07-01", title:"Irrigation Assistant", desc:"a fresh-produce business specialising in the handling, storage and distribution of horticultural produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"help operate and maintain our irrigation systems and support day-to-day production",
       resp:["Assisting the Irrigationist in determining hydraulic parameters for irrigation systems", "Supporting the implementation of irrigation-related programs and water management strategies", "Assisting with the scheduling and monitoring of irrigation activities to ensure optimal crop performance", "Supporting the selection, operation, and management of pumping systems for irrigation", "Interpreting and applying irrigation designs and plans under supervision", "Assisting with the supervision of irrigation system installations and upgrades"],
       you:["Minimum two (2) years of relevant work experience", "Knowledge of irrigation systems, water management principles, and horticulturalproduction practices", "Experience assisting with irrigation installation, operation, and maintenance activities", "Ability to monitor irrigation performance and identify operational issues", "Knowledge of pumps, filtration systems, valves, and irrigation infrastructure", "Strong attention to detail and ability to maintain accurate records"] },
     { ref:"TGA-JO.26.0068", posted:"2026-07-01", title:"Machinery Supervisor", desc:"a fresh-produce business specialising in the handling, storage and distribution of horticultural produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the operation and maintenance of our farm machinery",
       resp:["Supervising the operation of machinery and equipment to support production activities", "Coordinating and overseeing employees who operate machinery and equipment", "Preparing work schedules, assigning tasks, and monitoring the completion of operational activities", "Ensuring machinery is operated safely, efficiently, and in accordance with company procedures", "Performing and supervising routine machinery maintenance and servicing activities", "Monitoring machinery performance and identifying maintenance or repair requirements"],
       you:["Relevant AQF Diploma qualification (or equivalent); or", "Three (3) years of employment experience as a Machinery Supervisor", "Minimum two (2) years of relevant work experience", "Strong knowledge of machinery operation, maintenance, and equipment management", "Experience supervising machinery operators and coordinating operational activities", "Ability to identify equipment issues and coordinate maintenance solutions"] },
     { ref:"TGA-JO.26.0069", posted:"2026-07-01", title:"Production Horticulture Supervisor", desc:"a fresh-produce business specialising in the handling, storage and distribution of horticultural produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time; may require weekend and public holiday work, as well as additional hours when operational requirements arise (paid accordingly)",
       purpose:"join ourteam in Geraldton, Western Australia",
       resp:["Coordinating and supervising daily crop cultivation, maintenance, irrigation, andharvesting activities", "Implementing and overseeing crop management programs, including planting,fertilisation, pest control, and harvesting schedules", "Training, monitoring, and guiding farm operators and field workers to ensure compliancewith standard operating procedures", "Inspecting crop health and identifying, reporting, and responding to plant pests, weeds,diseases, and other crop-related issues", "Supervising soil preparation, fumigation, fertilisation, and crop protection chemicalapplications", "Overseeing the operation, adjustment, and basic maintenance of specialised farmmachinery, tractors, and spreading/seeding equipment"],
       you:["Strong knowledge of horticultural crop production, cultivation, irrigation, and harvesting practices", "Experience supervising field teams and coordinating daily production activities", "Knowledge of soil management, fertilisation, pest and disease control, and cropprotection programs", "Experience operating and overseeing agricultural machinery, tractors, and associatedequipment", "Ability to identify crop health issues and implement corrective actions", "Strong planning, organisational, and problem-solving skills"] },
     { ref:"TGA-JO.26.0070", posted:"2026-07-01", title:"Production Horticulturist", desc:"a fresh-produce business specialising in the handling, storage and distribution of horticultural produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"take day-to-day responsibility for growing healthy, high-quality crops",
       resp:["Ensuring all land preparation activities are completed in accordance with established procedures", "Training and monitoring operators to ensure tasks are performed in accordance with standard operating procedures", "Preparing daily, weekly, and monthly work programs to facilitate production activities", "Assessing the quality of work performed and implementing corrective actions where required", "Ensuring adequate materials, equipment, and operational resources are available forproduction activities", "Overseeing the upkeep and maintenance of tractors, implements, and associatedequipment"],
       you:["Relevant AQF Certificate III or Certificate IV qualification (or equivalent); or", "Three (3) years of employment experience as a Production Horticulturist with relevant formal training; or", "Five (5) years of employment experience as a Production Horticulturist with no formal training", "Minimum two (2) years of relevant work experience", "Strong knowledge of horticultural crop production, cultivation, irrigation, and harvestingpractices", "Experience operating agricultural machinery, tractors, and associated equipment"] },
     { ref:"TGA-JO.26.0071", posted:"2026-07-01", title:"Section Supervisor", desc:"a fresh-produce business specialising in the handling, storage and distribution of horticultural produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time; may require weekend and public holiday work, as well as additional hours when operational requirements arise (paid accordingly)",
       purpose:"overseeing a designated horticulturalproduction area and ensuring all crop treatment, planting, irrigation, and maint…",
       resp:["Ensuring crop treatments are carried out in accordance with established procedures and operational requirements", "Training, supervising, and monitoring operators to ensure tasks are performed safely and effectively", "Liaising with the Agronomist, Agricultural Technician, and Farm", "Operations Manager regarding crop treatment programs and production activities", "Supervising pre-plant activities, fertiliser applications, fertiliser broadcasting, and chemical spraying operations in accordance with standard operating", "Monitoring weather conditions and determining suitability for crop treatment activities to maximise effectiveness and minimise risk"],
       you:["Relevant AQF Certificate IV qualification (or equivalent) and at least one (1) year of relevant post-qualification employment experience; or", "Equivalent combination of qualifications and relevant industry experience", "Minimum two (2) years of relevant work experience", "Experience supervising staff and coordinating horticultural field operations", "Knowledge of fertiliser application, chemical handling, pest and disease management,and crop protection programs", "Ability to monitor crop performance and identify production issues requiring correctiveaction"] },
     { ref:"TGA-JO.26.0072", posted:"2026-07-01", title:"Cold Storage Manager", desc:"a horticultural business focused on high-quality fresh produce through efficient cold-storage and distribution operations",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"manage our cold storage operations and maintain cold-chain integrity for our produce",
       resp:["Managing daily cold storage operations and staff", "Supervising product picking in chiller and freezer environments", "Monitoring temperature control systems to ensure product quality and safety", "Coordinating the stacking, storage, and movement of products within cold stores", "Overseeing accurate packing and dispatch of stock", "Picking fresh food stock from production lines as required"],
       you:["AQF Diploma or equivalent qualification; or", "At least three (3) years of experience as a Cold Storage Manager", "Minimum two (2) years of relevant work experience", "Previous experience within the food manufacturing or horticultural industry preferred", "Sound knowledge of WHS and GMP requirements", "Ability to work effectively in cold room environments ranging from 3°C and below"] },
     { ref:"TGA-JO.26.0073", posted:"2026-07-01", title:"Facility Supervisor", desc:"a horticultural business focused on high-quality fresh produce through efficient cold-storage and distribution operations",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the day-to-day running of our farm facility and packing operations",
       resp:["Ensuring correct handling of products to meet customer requirements, including grading, packing, cool chain management, hygiene, and dispatch", "Assessing incoming products for quality and determining grading requirements and resources", "Monitoring product quality throughout all production stages, including washing, first grading, second grading, and final grading", "Identifying and rectifying issues relating to mechanical damage and grading quality", "Liaising with Harvest Supervisors, Maintenance Managers, and", "Dispatch Managers to ensure efficient operations"],
       you:["Relevant AQF Certificate III or Certificate IV qualification (or equivalent); or", "Three (3) years of employment experience as a Facility Supervisor with relevant formal training; or", "Five (5) years of employment experience as a Facility Supervisor with no formal training", "Minimum two (2) years of relevant work experience", "Experience supervising facility, production, warehouse, or horticultural operations", "Strong understanding of quality assurance procedures and product traceability requirements"] },
     { ref:"TGA-JO.26.0074", posted:"2026-07-01", title:"Irrigation Assistant", desc:"a horticultural business focused on high-quality fresh produce through efficient cold-storage and distribution operations",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"help operate and maintain our irrigation systems and support day-to-day production",
       resp:["Assisting the Irrigationist in determining hydraulic parameters for irrigation systems", "Supporting the implementation of irrigation-related programs and schedules", "Assisting with the scheduling and monitoring of irrigation activities", "Supporting the selection, operation, and management of irrigation pumping systems", "Interpreting and applying irrigation system designs under supervision", "Assisting with the installation and commissioning of irrigation systems"],
       you:["Relevant AQF Certificate II qualification (or equivalent) and at least one (1) year of relevantpost-qualification experience (20+ hours per week); or", "At least two (2) years of relevant full-time experience (38+ hours per week)", "Minimum two (2) years of relevant work experience", "Experience working with irrigation systems in horticultural, agricultural, or relatedenvironments", "Basic understanding of irrigation scheduling, system maintenance, and water managementpractices", "Ability to identify and report irrigation system faults and operational issues"] },
     { ref:"TGA-JO.26.0075", posted:"2026-07-01", title:"Machinery Supervisor", desc:"a horticultural business focused on high-quality fresh produce through efficient cold-storage and distribution operations",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the operation and maintenance of our farm machinery",
       resp:["Supervising the operation of machinery and equipment used in production activities", "Performing and coordinating machinery maintenance to ensure equipment reliability andperformance", "Supervising and coordinating employees who operate machinery and equipment", "Preparing work schedules, assigning tasks, and overseeing daily operational activities", "Ensuring machinery is operated safely, efficiently, and in accordance with companyprocedures", "Monitoring machinery performance and identifying operational issues"],
       you:["Relevant AQF Diploma qualification (or equivalent); or", "At least three (3) years of employment experience as a Machinery Supervisor", "Minimum two (2) years of relevant work experience", "Experience supervising machinery operations in horticultural, agricultural, manufacturing,", "Strong knowledge of machinery operation, maintenance, and safety requirements", "Ability to coordinate staff, schedules, and operational activities effectively"] },
     { ref:"TGA-JO.26.0076", posted:"2026-07-01", title:"Production Horticulture Supervisor", desc:"a horticultural business focused on high-quality fresh produce through efficient cold-storage and distribution operations",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time; may require weekend and public holiday work, as well as additional hours when operational requirements arise (paid accordingly)",
       purpose:"join ourteam in Geraldton, Western Australia",
       resp:["Coordinating and supervising daily crop cultivation, maintenance, irrigation, and harvesting activities", "Implementing and overseeing crop management programs, including planting, fertilisation, pest control, and harvesting schedules", "Training, monitoring, and guiding farm operators and field workers to ensure compliance with standard operating procedures", "Inspecting crop health and identifying, reporting, and responding to plant pests, weeds, diseases, and other crop-related issues", "Supervising soil preparation, fumigation, fertilisation, and crop protection chemical applications", "Monitoring irrigation systems to ensure optimal crop growth and efficient water use"],
       you:["Relevant AQF Certificate III or Certificate IV qualification (or equivalent); or", "Three (3) years of employment experience in horticultural production or supervision with", "Five (5) years of employment experience in horticultural production or supervision with no", "Minimum two (2) years of relevant work experience", "Strong knowledge of horticultural crop production, cultivation, irrigation, and harvesting practices", "Experience supervising field teams and coordinating daily production activities"] },
     { ref:"TGA-JO.26.0077", posted:"2026-07-01", title:"Section Supervisor", desc:"a horticultural business focused on high-quality fresh produce through efficient cold-storage and distribution operations",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time; may require weekend and public holiday work, as well as additional hours when operational requirements arise (paid accordingly)",
       purpose:"overseeing a designated horticulturalproduction area and ensuring all crop treatment, planting, irrigation, and maint…",
       resp:["Ensuring crop treatments are carried out in accordance with established procedures and operational requirements", "Training, supervising, and monitoring operators to ensure duties are performed safely and effectively", "Liaising with the Agronomist, Agricultural Technician, and Farm Operations Manager regarding crop treatment programs and production activities", "Coordinating with the maintenance division to ensure the ongoing maintenance and availability of plant and equipment", "Supervising pre-plant activities, fertiliser applications, fertiliser broadcasting, and chemical spraying operations in accordance with standard operating procedures", "Monitoring crop growth, field operations, and work quality to ensure production targets and quality standards are achieved"],
       you:["At least relevant AQF Cert IV or equivalent; AND", "One (1) year (20+hpw) relevant post qualifications experience", "Hard working ethics and good attitudes", "Demonstrate strong genuine and long-term employment commitment", "Prepare to relocate, live and work in regional area and regional adjustment", "At least two (2) years of relevant work experience"] },
     { ref:"TGA-JO.26.0078", posted:"2026-06-30", title:"Cold Storage Manager", desc:"an established horticultural production enterprise, growing vegetables",
-      loc:"Carabooda, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Carabooda, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"manage our cold storage operations and maintain cold-chain integrity for our produce",
       resp:["Manage day-to-day cold storage and coolroom operations and maintain cold-chain integrity", "Monitor and record storage temperatures and act on any deviations", "Coordinate intake, storage, stock rotation (FIFO) and dispatch of produce", "Ensure food safety and biosecurity compliance and maintain records", "Supervise and coordinate cold storage staff", "Maintain equipment and report faults"],
       you:["A relevant AQF Diploma (or equivalent); or 3 years’ experience as a Cold Storage Manager", "Knowledge of cold-chain management and food-safety requirements", "Ability to supervise and coordinate a team", "Forklift licence and sound record-keeping (desirable)", "Reliable, safety-focused and organised"] },
     { ref:"TGA-JO.26.0079", posted:"2026-06-30", title:"Facility Supervisor", desc:"an established horticultural production enterprise, growing vegetables",
-      loc:"Carabooda, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Carabooda, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the day-to-day running of our farm facility and packing operations",
       resp:["Supervise day-to-day operations of the farm facility and packing shed", "Coordinate and roster staff and oversee workflow and productivity", "Guide and direct staff to meet quality, productivity and safety standards", "Ensure work health and safety, food safety and biosecurity compliance", "Coordinate maintenance and report faults", "Maintain operational records"],
       you:["A relevant AQF Certificate III or Certificate IV (or equivalent); or 3 years’ experience as a Facility Supervisor with relevant formal training; or 5 years’ experience with no formal training", "Knowledge of WHS and food-safety requirements", "Ability to coordinate and direct a team", "Sound record-keeping", "Reliable, safety-focused and organised"] },
     { ref:"TGA-JO.26.0080", posted:"2026-06-30", title:"Irrigation Assistant", desc:"an established horticultural production enterprise, growing vegetables",
-      loc:"Carabooda, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Carabooda, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"help operate and maintain our irrigation systems and support day-to-day production",
       resp:["Operate and monitor irrigation and fertigation systems", "Assist with installation, repair and maintenance of irrigation infrastructure", "Monitor soil moisture and water application and report faults", "Assist with general production tasks as required", "Follow WHS requirements and use personal protective equipment"],
       you:["A relevant AQF Certificate II (or equivalent) and at least 1 year’s relevant experience; or at least 2 years’ relevant experience", "Practical mechanical aptitude", "Able to work outdoors across a range of conditions", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
     { ref:"TGA-JO.26.0081", posted:"2026-06-30", title:"Machinery Supervisor", desc:"an established horticultural production enterprise, growing vegetables",
-      loc:"Carabooda, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Carabooda, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the operation and maintenance of our farm machinery",
       resp:["Supervise and coordinate machinery operations across the operation", "Operate, calibrate and maintain tractors, implements and equipment", "Schedule maintenance and repairs and keep machinery records", "Train and direct machinery operators", "Ensure safe operation and work health and safety compliance"],
       you:["A relevant AQF Diploma (or equivalent); or 3 years’ experience as a Machinery Supervisor", "Ability to supervise and direct operators", "Mechanical aptitude and relevant licences", "Sound understanding of WHS", "Reliable, safety-focused and organised"] },
 
     { ref:"TGA-JO.26.0082", posted:"2026-07-06", title:"Nurseryperson", desc:"an established nursery-farm and horticultural production business growing and supplying nursery plants",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"support day-to-day plant propagation and nursery production",
       resp:["Propagate plants from seed, cuttings and division; pot up and transplant seedlings and stock", "Prepare growing media, fill trays and pots, and sow or plant out", "Water, fertilise and monitor plant health; apply pest and disease controls under direction", "Prune, trim, stake and maintain nursery stock", "Monitor growing conditions (temperature, humidity, irrigation) in greenhouses and shade houses", "Grade, select and prepare stock for dispatch or sale", "Maintain nursery hygiene and biosecurity, and follow WHS requirements and use PPE"],
       you:["A relevant AQF Certificate III (or equivalent), or equivalent hands-on experience in plant propagation and nursery production", "Practical plant-handling and horticultural skills", "Able to work outdoors across a range of conditions", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0083", posted:"2026-07-06", title:"Cold Storage Operator", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"run day-to-day cold storage operations and maintain cold-chain integrity for the produce enterprise",
       resp:["Operate cold storage and coolroom facilities and monitor temperatures", "Move, store and rotate produce (FIFO) and assist with dispatch", "Operate forklifts and material-handling equipment", "Record temperatures, stock movements and storage data", "Maintain hygiene, food safety and biosecurity standards", "Follow WHS requirements and report faults"],
       you:["A relevant AQF Certificate II qualification or equivalent; or 1 year of relevant work experience", "Knowledge of cold-chain and food-safety requirements", "Forklift licence (desirable)", "Able to work in cold-store conditions", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0084", posted:"2026-07-06", title:"Irrigation Technician", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"install, operate and maintain irrigation and fertigation systems for horticultural production",
       resp:["Install, operate and maintain irrigation and fertigation systems", "Diagnose and repair pumps, valves, filters and control systems", "Monitor soil moisture, water application and system performance", "Program and adjust irrigation schedules", "Maintain records of water use and maintenance", "Follow WHS requirements and report faults"],
       you:["A relevant AQF Certificate III qualification or equivalent; or 3 years of relevant work experience", "Practical skills in pumps, hydraulics and control systems", "Problem-solving and fault-finding ability", "Able to work outdoors across a range of conditions", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0085", posted:"2026-07-06", title:"Production Horticultural Supervisor", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"supervise horticultural production and harvest operations",
       resp:["Supervise horticultural production, growing and harvest operations", "Coordinate growing programs and production schedules", "Direct and train field workers to meet quality and food-safety standards", "Monitor crop health, quality and yield", "Ensure work health and safety, food safety and biosecurity compliance", "Maintain production and harvest records"],
       you:["A relevant AQF Diploma or higher qualification or equivalent; or 3 years of relevant work experience", "Knowledge of crop agronomy and horticultural production", "Ability to supervise and coordinate a team", "Knowledge of WHS, food safety and biosecurity", "Reliable, safety-focused and organised"] },
 
     { ref:"TGA-JO.26.0086", posted:"2026-07-06", title:"Production Operator", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"operate production and packing equipment while monitoring product quality",
       resp:["Operate production, grading and packing equipment", "Monitor product quality and remove non-conforming produce", "Set up, adjust and clean machinery between runs", "Record production data and complete quality checks", "Maintain hygiene, food safety and biosecurity standards", "Follow WHS requirements and report faults"],
       you:["A relevant AQF Certificate II qualification or equivalent; or 1 year of relevant work experience", "Attention to detail and quality focus", "Able to work in a fast-paced production environment", "Able to follow procedures and keep records", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0087", posted:"2026-07-06", title:"Production Supervisor", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"lead day-to-day production and packing operations",
       resp:["Supervise day-to-day production and packing operations", "Coordinate and roster staff and oversee workflow and output targets", "Direct and train staff to meet quality, productivity and safety standards", "Ensure work health and safety, food safety and biosecurity compliance", "Coordinate maintenance and report faults", "Maintain production and quality records"],
       you:["A relevant AQF Certificate III qualification or equivalent; or 3 years of relevant work experience", "Supervisory experience in a production or packing environment", "Knowledge of WHS and food-safety requirements", "Ability to coordinate and direct a team", "Reliable, safety-focused and organised"] },
 
     { ref:"TGA-JO.26.0088", posted:"2026-07-06", title:"Skilled Horticultural Worker", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Virginia, SA", state:"SA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"carry out skilled crop production tasks including planting, training, pruning and harvesting",
       resp:["Carry out skilled planting, crop training, pruning and harvesting", "Monitor crop health and assist with pest, disease and nutrition programs", "Operate horticultural equipment and irrigation systems", "Grade and prepare produce to quality standards", "Maintain food safety, hygiene and biosecurity standards", "Follow WHS requirements and use personal protective equipment"],
       you:["A relevant AQF Certificate II qualification or equivalent; or 1 year of relevant work experience", "Knowledge of crop production and plant care", "Able to operate horticultural equipment", "Able to work outdoors across a range of conditions", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0089", posted:"2026-07-06", title:"Facility Supervisor", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee day-to-day facility and packing-shed operations",
       resp:["Supervise day-to-day operations of the facility and packing shed", "Coordinate and roster staff and oversee workflow and productivity", "Guide and direct staff to meet quality, productivity and safety standards", "Ensure work health and safety, food safety and biosecurity compliance", "Coordinate maintenance and report faults", "Maintain operational records"],
       you:["A relevant AQF Certificate III or IV (or equivalent); or 3 years' experience as a Facility Supervisor with relevant formal training; or 5 years' experience with no formal training", "Knowledge of WHS and food-safety requirements", "Ability to coordinate and direct a team", "Sound record-keeping", "Reliable, safety-focused and organised"] },
 
     { ref:"TGA-JO.26.0090", posted:"2026-07-06", title:"Forklift Driver", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"move and handle produce and materials safely across operations using forklift equipment",
       resp:["Operate a forklift to move produce, pallets and materials safely", "Load and unload deliveries and assist with dispatch", "Assist with stock movement, storage and rotation", "Conduct pre-operation checks and report faults", "Follow WHS requirements and use personal protective equipment", "Maintain basic operational records"],
       you:["A current forklift High Risk Work Licence (LF)", "A relevant AQF Certificate II (or equivalent) plus 1.5 years' relevant experience; or Certificate III plus 1 year's experience; or 2 years' full-time relevant experience", "Experience operating forklifts in a production, warehouse or cold-store environment", "Able to work outdoors and in a cold-store environment", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0091", posted:"2026-07-06", title:"Horticulture Farm Manager", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the overall horticultural operation, production planning and staff",
       resp:["Manage overall farm operations and production planning", "Set and monitor production targets and quality standards", "Manage staff, rosters, training and performance", "Oversee budgets, inputs, resources and suppliers", "Ensure compliance with WHS, food safety, biosecurity and chemical requirements", "Maintain records and report on production and operations"],
       you:["A relevant AQF Certificate III or IV (or equivalent); or 3 years' experience as a Horticulture Farm Manager with relevant formal training; or 5 years' experience with no formal training", "Farm or production management experience", "Planning, budgeting and leadership skills", "Sound knowledge of horticulture and compliance", "Reliable, organised and results-focused"] },
 
     { ref:"TGA-JO.26.0092", posted:"2026-07-06", title:"Machinery Supervisor", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"oversee the operation and maintenance of farm machinery across horticultural operations",
       resp:["Supervise and coordinate machinery operations across the operation", "Operate, calibrate and maintain tractors, implements and equipment", "Schedule maintenance and repairs and keep machinery records", "Train and direct machinery operators", "Order parts and manage equipment availability", "Ensure safe operation and work health and safety compliance"],
       you:["A relevant AQF Diploma (or equivalent); or 3 years' experience as a Machinery Supervisor", "Ability to supervise and direct operators", "Mechanical aptitude and relevant licences", "Sound understanding of WHS", "Reliable, safety-focused and organised"] },
 
     { ref:"TGA-JO.26.0093", posted:"2026-07-06", title:"Mobile Plant Operator", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"operate mobile plant and move produce and materials safely across the operation",
       resp:["Operate mobile plant (loaders, telehandlers and similar) safely", "Move produce, materials and equipment across the site", "Conduct pre-start checks and basic maintenance", "Assist with loading, unloading and stock movement", "Follow WHS requirements and use personal protective equipment", "Report faults and arrange repairs"],
       you:["Relevant plant-operation licences and tickets", "A relevant AQF Certificate II (or equivalent) plus at least 1 year's relevant experience; or at least 2 years' relevant experience plus 2 years' post-qualification experience", "Experience operating mobile plant in an agricultural or production environment", "Able to work outdoors across a range of conditions", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0094", posted:"2026-07-06", title:"Motor Mechanic", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Geraldton, WA", state:"WA", ind:"Automotive & Car Services", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Automotive & Car Services", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $79,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"service and maintain the fleet of farm vehicles, tractors and machinery",
       resp:["Service, maintain and repair farm vehicles, tractors and machinery", "Diagnose mechanical and electrical faults and carry out repairs", "Carry out scheduled servicing and preventative maintenance", "Order parts and manage the servicing schedule", "Maintain accurate service and maintenance records", "Ensure safe operation and work health and safety compliance"],
       you:["A relevant AQF Certificate III in Automotive / Motor Mechanics (or equivalent trade recognition); or a relevant trade skills assessment", "Experience servicing and repairing vehicles and machinery", "Sound diagnostic skills", "Relevant licences", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0095", posted:"2026-07-06", title:"Nurseryperson", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"propagate and care for plants while supporting nursery production operations",
       resp:["Propagate plants from seed, cuttings and tissue culture", "Pot, transplant, prune and train plants", "Monitor plant health and apply pest, disease and nutrition programs", "Maintain greenhouse growing conditions (watering, ventilation, temperature)", "Grade, prepare and dispatch plants and produce", "Maintain nursery hygiene and biosecurity standards"],
       you:["A relevant AQF Certificate III including at least two years of on-the-job training; or AQF Certificate IV; or at least three years of relevant experience", "Attention to detail and quality", "Able to work outdoors and in greenhouse conditions", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0096", posted:"2026-07-06", title:"Production Horticulturalist", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"take day-to-day responsibility for growing healthy, high-quality crops",
       resp:["Plan, coordinate and monitor planting, growing and harvesting schedules", "Monitor crop health, soil condition, irrigation and nutrition", "Implement pest, disease and weed management programs", "Operate, calibrate and maintain horticultural machinery and irrigation systems", "Apply fertilisers and agricultural chemicals safely", "Maintain accurate production, spray and harvest records", "Guide and direct field workers to meet quality and food-safety standards"],
       you:["A relevant AQF Certificate III or IV in Horticulture or equivalent experience", "Sound knowledge of crop agronomy, irrigation, and pest/disease management", "Ability to operate and maintain farm machinery and irrigation systems", "Ability to work under limited supervision and coordinate small teams", "Chemical-handling accreditation desirable"] },
 
     { ref:"TGA-JO.26.0097", posted:"2026-07-06", title:"Production Horticulture Supervisor", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"supervise horticultural production and harvest operations",
       resp:["Supervise horticultural production, growing and harvest operations", "Coordinate growing programs and production schedules", "Direct and train field workers to meet quality and food-safety standards", "Monitor crop health, quality and yield", "Ensure work health and safety, food safety and biosecurity compliance", "Maintain production, spray and harvest records"],
       you:["A relevant AQF Certificate III or IV or equivalent; or 3 years' supervisor experience with formal training; or 5 years' experience without formal training", "Sound knowledge of crop agronomy and horticultural production", "Ability to supervise and coordinate a team", "Knowledge of WHS, food safety and biosecurity", "Reliable, safety-focused and organised"] },
 
     { ref:"TGA-JO.26.0098", posted:"2026-07-06", title:"Section Supervisor", desc:"an established horticultural production and fresh-produce enterprise growing cucumbers, capsicums and other vegetables",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"supervise a production section and lead its team within the horticultural operation",
       resp:["Supervise the day-to-day running of a production section", "Coordinate, roster and direct section staff to meet targets", "Monitor quality, productivity and crop/produce handling standards", "Train staff and induct new workers in section procedures", "Ensure work health and safety, food safety and biosecurity compliance", "Maintain section production and quality records"],
       you:["At least a relevant AQF Certificate IV (or equivalent) and at least 1 year's relevant post-qualification experience", "Supervisory experience in a horticultural or production environment", "Ability to coordinate and direct a team", "Knowledge of WHS and food-safety requirements", "Reliable, safety-focused and organised"] },
 
     { ref:"TGA-JO.26.0099", posted:"2026-07-08", title:"Cold Storage Manager", desc:"an established horticultural production business growing Continental cucumbers, capsicum and other fresh produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"manage cold-storage operations for produce preservation and dispatch",
       resp:["Manage day-to-day cold storage and coolroom operations", "Monitor and control temperature, humidity and storage conditions to preserve produce", "Oversee intake, stock rotation, storage and dispatch of produce", "Maintain cold-chain, storage and food-safety records and compliance", "Coordinate and supervise cold-store staff and workflow", "Arrange maintenance and calibration of refrigeration and handling equipment", "Ensure WHS, hygiene and biosecurity standards are met"],
       you:["A relevant AQF Diploma (or equivalent); or at least 3 years' experience as a Cold Storage Manager", "Knowledge of cold-chain, storage and food-safety practices", "Organisational and team-supervision skills", "Able to work across a range of conditions", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0100", posted:"2026-07-08", title:"Facility Supervisor", desc:"an established horticultural production business growing Continental cucumbers, capsicum and other fresh produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"supervise facility upkeep and maintenance of buildings, infrastructure and equipment",
       resp:["Supervise upkeep, repair and maintenance of buildings, sheds, packing/processing areas and infrastructure", "Plan and coordinate maintenance schedules, servicing and external contractors", "Supervise and direct maintenance and facility staff", "Monitor facility, equipment and service conditions and arrange timely repairs", "Manage maintenance supplies, tools and consumables", "Ensure facilities meet WHS, hygiene and biosecurity standards", "Maintain maintenance and compliance records"],
       you:["A relevant AQF Certificate III or IV (or equivalent), or equivalent relevant experience", "Practical maintenance knowledge across buildings, services and equipment", "Supervisory and team-coordination experience", "Able to work outdoors across varied conditions", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0101", posted:"2026-07-08", title:"Irrigation Assistant", desc:"an established horticultural production business growing Continental cucumbers, capsicum and other fresh produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"operate and maintain irrigation systems while supporting production operations",
       resp:["Operate and monitor irrigation and fertigation systems", "Assist with installation, repair and maintenance of irrigation infrastructure", "Monitor soil moisture and water application and report faults", "Assist with general production tasks as required", "Follow WHS requirements and use personal protective equipment"],
       you:["A relevant AQF Certificate II (or equivalent) and at least 1 year's relevant experience; or at least 2 years' relevant experience", "Practical mechanical aptitude", "Able to work outdoors across a range of conditions", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0102", posted:"2026-07-08", title:"Machinery Supervisor", desc:"an established horticultural production business growing Continental cucumbers, capsicum and other fresh produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"supervise farm machinery operations and maintenance to support horticultural production",
       resp:["Supervise the operation, servicing and repair of farm machinery, vehicles and equipment", "Plan and coordinate machinery use, servicing schedules and preventive maintenance", "Supervise and direct machinery operators and maintenance staff", "Order and manage spare parts, consumables and equipment", "Diagnose faults and coordinate response to breakdowns to minimise downtime", "Maintain machinery, servicing and compliance records", "Ensure machinery safety, WHS and operator compliance"],
       you:["A relevant AQF Diploma (or equivalent), or at least 3 years' experience as a Machinery Supervisor", "Strong mechanical knowledge of agricultural and horticultural machinery", "Supervisory and team-coordination experience", "Able to work outdoors across a range of conditions", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0103", posted:"2026-07-08", title:"Production Horticulturist", desc:"an established horticultural production business growing Continental cucumbers, capsicum and other fresh produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"plan and carry out cultivation programs, monitor crop health and manage pests and diseases",
       resp:["Plan and carry out planting, cultivation, irrigation and fertilising programs", "Monitor crop and plant health; identify and manage pests, diseases and nutrient needs", "Carry out propagation, potting, transplanting and crop maintenance", "Monitor growing conditions and adjust practices to optimise yield and quality", "Harvest, grade and prepare produce to quality standards", "Operate and maintain horticultural equipment", "Follow WHS and biosecurity requirements and use personal protective equipment"],
       you:["A relevant AQF Certificate III or IV (or equivalent), or equivalent relevant experience as a Production Horticulturist", "Sound practical horticultural knowledge and plant-handling skills", "Able to work outdoors across a range of conditions", "Able to follow directions and work in a team", "Reliable and safety-focused"] },
 
     { ref:"TGA-JO.26.0104", posted:"2026-07-08", title:"Production Horticulturist Supervisor", desc:"an established horticultural production business growing Continental cucumbers, capsicum and other fresh produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"supervise horticultural production, growing and harvest operations",
       resp:["Supervise horticultural production, growing and harvest operations", "Coordinate growing programs and production schedules", "Direct and train field workers to meet quality and food-safety standards", "Monitor crop health, quality and yield", "Ensure work health and safety, food safety and biosecurity compliance", "Maintain production, spray and harvest records"],
       you:["A relevant AQF Certificate III or IV (or equivalent); or 3 years' experience as a Production Horticulture Supervisor with relevant formal training; or 5 years' experience with no formal training", "Sound knowledge of crop agronomy and horticultural production", "Ability to supervise and coordinate a team", "Knowledge of WHS, food safety and biosecurity", "Reliable, safety-focused and organised"] },
 
     { ref:"TGA-JO.26.0105", posted:"2026-07-08", title:"Section Supervisor", desc:"an established horticultural production business growing Continental cucumbers, capsicum and other fresh produce",
-      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Geraldton, WA", state:"WA", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"supervise a production section and lead its team in the horticultural operation",
       resp:["Supervise the day-to-day running of a production section", "Coordinate, roster and direct section staff to meet targets", "Monitor quality, productivity and crop/produce handling standards", "Train staff and induct new workers in section procedures", "Ensure work health and safety, food safety and biosecurity compliance", "Maintain section production and quality records"],
       you:["At least a relevant AQF Certificate IV (or equivalent) and at least 1 year's post-qualification experience", "Supervisory experience in a horticultural or production environment", "Ability to coordinate and direct a team", "Knowledge of WHS and food-safety requirements", "Reliable, safety-focused and organised"] },
 
     { ref:"TGA-JO.26.0106", posted:"2026-07-09", title:"Forklift Driver", desc:"an established family-owned horticulture business in Victoria's Swan Hill growing region",
-      loc:"Woorinen, VIC", state:"VIC", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising",
+      loc:"Woorinen, VIC", state:"VIC", ind:"Horticulture, Farming & Agriculture", type:"Full-time, ongoing", status:"Advertising", openEnded:true,
       sal:"From $71,550 p.a. + super", hours:"Full-time, based on a 46-hour week — 38 ordinary hours plus approximately 8 hours overtime per week — with the guaranteed annual salary inclusive of overtime.",
       purpose:"safely operate forklifts moving produce through the operation from field to dispatch",
       resp:["Safely operate a forklift to load, unload and move produce, bins and pallets", "Stack, store and rotate stock", "Load and unload trucks and assist with dispatch during harvest", "Conduct routine pre-start checks and report faults", "Follow all workplace health and safety procedures", "Keep work and yard areas clean and hazard-free", "Assist the team with general operational tasks seasonally"],
@@ -703,10 +721,17 @@
     var stLbl = curLang==='en'?j.status:(j.status==='Advertising'?'Đang tuyển':'Đang xét');
     var apply = curLang==='en'?'Apply':'Ứng tuyển';
     var view = curLang==='en'?'View details':'Xem chi tiết';
-    var pIso=j.posted||todayISO(); var pD=postedDate(pIso); var cD=closeDate(pIso); var dl=daysLeft(cD); var open=dl>0;
-    var dateLine = (curLang==='en')
-      ? 'Posted '+auDate(pD)+' · '+(open ? ('Closes '+auDate(cD)+' · '+dl+' day'+(dl===1?'':'s')+' left') : ('Ad window complete — closed '+auDate(cD)+'. Current roles: talentgate.com.au'))
-      : 'Đăng '+auDate(pD)+' · '+(open ? ('Đóng '+auDate(cD)+' · còn '+dl+' ngày') : ('Đã đóng '+auDate(cD)+'. Vị trí hiện tại: talentgate.com.au'));
+    var pIso=j.posted||todayISO(); var pD=postedDate(pIso); var cD=closeDate(pIso); var dl=daysLeft(cD); var open=adOpen(j);
+    var dateLine;
+    if(j.openEnded){
+      dateLine = (curLang==='en')
+        ? 'Posted '+auDate(pD)+' · '+(open ? 'Applications close when the position is filled' : 'Position filled — applications closed')
+        : 'Đăng '+auDate(pD)+' · '+(open ? 'Đơn đóng khi vị trí đã tuyển được người' : 'Đã tuyển được người — đóng đơn');
+    } else {
+      dateLine = (curLang==='en')
+        ? 'Posted '+auDate(pD)+' · '+(open ? ('Closes '+auDate(cD)+' · '+dl+' day'+(dl===1?'':'s')+' left') : ('Ad window complete — closed '+auDate(cD)+'. Current roles: talentgate.com.au'))
+        : 'Đăng '+auDate(pD)+' · '+(open ? ('Đóng '+auDate(cD)+' · còn '+dl+' ngày') : ('Đã đóng '+auDate(cD)+'. Vị trí hiện tại: talentgate.com.au'));
+    }
     return '<div class="card">'+
       '<span class="jobref">'+j.ref+'</span>'+
       '<div class="tags"><span class="tag ind">'+esc(j.ind)+'</span><span class="tag st">'+j.state+'</span><span class="tag status">'+stLbl+'</span></div>'+
@@ -730,7 +755,7 @@
     var key=document.getElementById('fKey').value.trim().toLowerCase();
     var st=document.getElementById('fStatus').value;
     var list=JOBS.filter(function(j){
-      var isOpen = daysLeft(closeDate(j.posted||todayISO()))>0;
+      var isOpen = adOpen(j);
       if(st==='open' && !isOpen) return false;
       if(st==='closed' && isOpen) return false;
       if(loc && j.state!==loc) return false;
@@ -805,23 +830,46 @@
     var lead = (L==='en'
       ? 'TalentGate (Talent Gate Australia Pty Ltd) is recruiting on behalf of our client, '+j.desc+' based in '+j.loc+'. We are seeking a '+j.title+' to '+j.purpose+'.'
       : 'TalentGate (Talent Gate Australia Pty Ltd) đang tuyển dụng thay mặt cho khách hàng của chúng tôi, '+j.desc+' tại '+j.loc+'.');
-    var isOpen = daysLeft(cD) > 0;
+    var isOpen = adOpen(j);
+    var closesTxt = j.openEnded
+      ? (L==='en' ? 'Applications close when the position is filled.' : 'Đơn đóng khi vị trí đã tuyển được người.')
+      : (L==='en' ? 'Applications close '+auDate(cD)+'.' : 'Đơn đóng ngày '+auDate(cD)+'.');
     var how = isOpen
       ? (L==='en'
-        ? 'Apply through TalentGate using the button below. Applications are accepted only on the official TalentGate website — you’ll complete a short registration first. We don’t accept applications by email or through third-party sites. Applications close '+auDate(cD)+'.'
-        : 'Ứng tuyển qua TalentGate bằng nút bên dưới. Đơn chỉ được tiếp nhận trên website chính thức của TalentGate — bạn cần đăng ký trước. Chúng tôi không nhận đơn qua email hay qua các trang bên thứ ba. Đơn đóng ngày '+auDate(cD)+'.')
+        ? 'Apply through TalentGate using the button below — you’ll complete a short registration first. '+closesTxt
+        : 'Ứng tuyển qua TalentGate bằng nút bên dưới — bạn cần hoàn tất đăng ký ngắn trước. '+closesTxt)
       : (L==='en'
         ? 'Applications for this role have closed. You’re welcome to register your interest and we’ll contact you when a suitable role opens.'
         : 'Vị trí này đã đóng đơn. Bạn có thể đăng ký quan tâm và chúng tôi sẽ liên hệ khi có vị trí phù hợp.');
-    var html='<h4>'+t.about+'</h4><p>'+esc(lead)+'</p>'+
-      '<h4>'+t.resp+'</h4><ul>'+j.resp.map(function(r){return '<li>'+esc(r)+'</li>';}).join('')+'<li>Follow WHS requirements and use personal protective equipment</li></ul>'+
-      '<h4>'+t.you+'</h4><ul>'+j.you.map(function(r){return '<li>'+esc(r)+'</li>';}).join('')+'</ul>'+
-      '<h4>'+t.rem+'</h4><p><b>'+esc(j.sal)+'</b> — '+esc(j.hours)+' '+(L==='en'?'Paid per the applicable Award; commensurate with skills and experience.':'Trả theo Award áp dụng; tương xứng với kỹ năng và kinh nghiệm.')+'</p>'+
-      '<h4>'+t.how+'</h4><p>'+how+'</p>'+
+    // Apply block REMOVED 17.08.2026 (Alan): apply-link/email/comments-PM lines are for
+    // FACEBOOK ads only (Alan posts those himself) — not applicable on the website.
+    // Verbatim-sections path (approved word-for-word ad copy) vs the standard template.
+    var bodyCore;
+    if(j.sections && j.sections.length){
+      bodyCore=j.sections.map(function(s){
+        return (s.h?'<h4>'+esc(s.h)+'</h4>':'')+
+          (s.ps||[]).map(function(p){return '<p>'+esc(p)+'</p>';}).join('')+
+          (s.ul&&s.ul.length?'<ul>'+s.ul.map(function(li){return '<li>'+esc(li)+'</li>';}).join('')+'</ul>':'');
+      }).join('');
+    } else {
+      bodyCore='<h4>'+t.about+'</h4><p>'+esc(lead)+'</p>'+
+        '<h4>'+t.resp+'</h4><ul>'+j.resp.map(function(r){return '<li>'+esc(r)+'</li>';}).join('')+'<li>Follow WHS requirements and use personal protective equipment</li></ul>'+
+        '<h4>'+t.you+'</h4><ul>'+j.you.map(function(r){return '<li>'+esc(r)+'</li>';}).join('')+'</ul>'+
+        '<h4>'+t.rem+'</h4><p><b>'+esc(j.sal)+'</b> — '+esc(j.hours)+' '+(L==='en'?'Paid per the applicable Award; commensurate with skills and experience.':'Trả theo Award áp dụng; tương xứng với kỹ năng và kinh nghiệm.')+'</p>';
+    }
+    // Four-week line: REQUIRED on open-ended ads (it is what permits no closing date).
+    var fourWeek = (j.openEnded && isOpen)
+      ? '<p style="margin-top:10px;font-size:.85rem;line-height:1.55">Only shortlisted applicants will be contacted. <b>If you have not heard from us within four weeks of applying, your application has not been shortlisted for this role</b> — you will not be left waiting without an answer.</p>'
+      : '';
+    var html=bodyCore+
+      '<h4>'+t.how+'</h4>'+(j.howLead&&isOpen?'<p>'+esc(j.howLead)+'</p>':'')+'<p>'+how+'</p>'+fourWeek+
       '<div style="margin-top:16px">'+(isOpen
         ? ('<a class="btn btn-gold" href="/apply?ref='+j.ref+'&role='+encodeURIComponent(j.title)+'">'+(L==='en'?'Apply for this role':'Ứng tuyển vị trí này')+'</a>')
         : ('<a class="btn btn-gold" href="/apply">'+(L==='en'?'Register your interest':'Đăng ký quan tâm')+'</a>'))+'</div>'+
-      '<p class="adv">Ref '+j.ref+' · '+(L==='en'?'Advertised by TalentGate, a recruitment agency.':'Đăng bởi TalentGate, công ty tuyển dụng.')+'<br>'+(L==='en'?'Advertised ':'Đăng ngày ')+auDate(pD)+'. '+(L==='en'?'Job closing date: ':'Ngày đóng đơn: ')+auDate(cD)+'.</p>';
+      '<p class="adv">Ref '+j.ref+' · '+(L==='en'?'Advertised by TalentGate, a recruitment agency.':'Đăng bởi TalentGate, công ty tuyển dụng.')+'<br>'+(L==='en'?'Advertised ':'Đăng ngày ')+auDate(pD)+'. '+
+      (j.openEnded
+        ? (L==='en'?'Applications close when the position is filled.':'Đơn đóng khi vị trí đã tuyển được người.')
+        : ((L==='en'?'Job closing date: ':'Ngày đóng đơn: ')+auDate(cD)+'.'))+'</p>';
     document.getElementById('mBody').innerHTML=html;
     document.getElementById('overlay').style.display='block';
     document.body.style.overflow='hidden';
@@ -837,7 +885,7 @@
     f_per:{en:"Posted month",vi:"Tháng đăng"}, all_per:{en:"All periods",vi:"Tất cả các kỳ"}, freshline:{en:"New opportunities are added every month.",vi:"Cơ hội mới được cập nhật mỗi tháng."},
     all_loc:{en:"All locations",vi:"Tất cả địa điểm"}, all_ind:{en:"All industries",vi:"Tất cả ngành nghề"}, ph_search:{en:"e.g. cold storage, Virginia",vi:"vd. cold storage, Virginia"}, reset:{en:"Reset",vi:"Đặt lại"},
     reg_h:{en:"Don’t see a role for you?",vi:"Chưa thấy vị trí phù hợp?"}, reg_p:{en:"Register your details and we’ll contact you when a suitable position opens.",vi:"Đăng ký thông tin của bạn và chúng tôi sẽ liên hệ khi có vị trí phù hợp."}, reg_cta:{en:"Register — general application",vi:"Đăng ký — đơn chung"},
-    reg_notice:{en:"Roles are advertised on the official TalentGate website. Applications are accepted here only, and only while a role is open — not by email or through third-party sites.",vi:"Các vị trí được đăng trên website chính thức của TalentGate. Đơn chỉ được tiếp nhận tại đây và chỉ khi vị trí còn mở — không qua email hay các trang bên thứ ba."},
+    reg_notice:{en:"Roles listed on this site are applied for here, and only while the role is open. Roles advertised elsewhere carry their own application instructions. We do not accept applications through third-party job sites.",vi:"Các vị trí đăng trên trang này được ứng tuyển ngay tại đây, và chỉ khi vị trí còn mở. Các vị trí đăng ở nơi khác có hướng dẫn ứng tuyển riêng. Chúng tôi không nhận đơn qua các trang tuyển dụng bên thứ ba."},
     home:{en:"Back to home",vi:"Về trang chủ"}
   };
   function setLang(l){

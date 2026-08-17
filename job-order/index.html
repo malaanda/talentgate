@@ -466,6 +466,7 @@
       var k=el.getAttribute('data-i18n'); if(T[k]){ el.innerHTML=T[k][lang]; }
     });
     var b=document.getElementById('langbtn'); if(b){ b.textContent=(lang==='en')?'Tiếng Việt':'English'; }
+    document.querySelectorAll('.field').forEach(function(fw){var ctl=fw.querySelector('input,select,textarea');var lab=fw.querySelector('label');if(ctl&&lab&&ctl.required&&!lab.querySelector('.req')&&ctl.type!=='hidden'){var sp=document.createElement('span');sp.className='req';sp.textContent=' *';lab.appendChild(sp);}});
   }
   window.toggleLang=function(){ lang=(lang==='en')?'vi':'en'; applyLang(); };
   applyLang();

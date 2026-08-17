@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="Current roles across regional and metropolitan Australia. Genuine jobs, honest terms, long-term support.">
 <meta name="twitter:image" content="https://talentgate.com.au/og-image.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23143027'/%3E%3Cg stroke='%23E7C97A' stroke-width='4' stroke-linecap='round'%3E%3Cline x1='12' y1='19' x2='52' y2='19'/%3E%3Cline x1='15' y1='27' x2='49' y2='27'/%3E%3Cline x1='21' y1='21' x2='21' y2='48'/%3E%3Cline x1='43' y1='21' x2='43' y2='48'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="canonical" href="/">
+<link rel="canonical" href="https://talentgate.com.au/jobs">
 <meta name="robots" content="index,follow,noarchive">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -960,12 +960,12 @@
       bodyCore=j.sections.map(function(s){
         return (s.h?'<h4>'+esc(s.h)+'</h4>':'')+
           (s.ps||[]).map(function(p){return '<p>'+esc(p)+'</p>';}).join('')+
-          (s.ul&&s.ul.length?'<ul>'+s.ul.map(function(li){return '<li>'+esc(li)+'</li>';}).join('')+'</ul>':'');
+          (s.ul&&s.ul.length?'<ul>'+s.ul.filter(function(li){return (li||'').trim();}).map(function(li){return '<li>'+esc(li)+'</li>';}).join('')+'</ul>':'');
       }).join('');
     } else {
       bodyCore='<h4>'+t.about+'</h4><p>'+esc(lead)+'</p>'+
-        '<h4>'+t.resp+'</h4><ul>'+j.resp.map(function(r){return '<li>'+esc(r)+'</li>';}).join('')+'<li>Follow WHS requirements and use personal protective equipment</li></ul>'+
-        '<h4>'+t.you+'</h4><ul>'+j.you.map(function(r){return '<li>'+esc(r)+'</li>';}).join('')+'</ul>'+
+        '<h4>'+t.resp+'</h4><ul>'+j.resp.filter(function(r){return (r||'').trim();}).map(function(r){return '<li>'+esc(r)+'</li>';}).join('')+'<li>Follow WHS requirements and use personal protective equipment</li></ul>'+
+        (function(){var yb=j.you.filter(function(r){return (r||'').trim();});return yb.length?'<h4>'+t.you+'</h4><ul>'+yb.map(function(r){return '<li>'+esc(r)+'</li>';}).join('')+'</ul>':'';})()+
         '<h4>'+t.rem+'</h4><p><b>'+esc(j.sal)+'</b> — '+esc(j.hours)+' '+(L==='en'?'Paid per the applicable Award; commensurate with skills and experience.':'Trả theo Award áp dụng; tương xứng với kỹ năng và kinh nghiệm.')+'</p>';
     }
     // Four-week line: REQUIRED on open-ended ads (it is what permits no closing date).

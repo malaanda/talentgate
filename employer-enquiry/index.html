@@ -641,6 +641,7 @@
     });
     document.documentElement.lang = lang;
     btn.textContent = (lang === 'en') ? 'Tiếng Việt' : 'English';
+    document.querySelectorAll('.field').forEach(function(fw){var ctl=fw.querySelector('input,select,textarea');var lab=fw.querySelector('label');if(ctl&&lab&&ctl.required&&!lab.querySelector('.req')&&ctl.type!=='hidden'){var sp=document.createElement('span');sp.className='req';sp.textContent=' *';lab.appendChild(sp);}});
   }
   btn.addEventListener('click', function(){ lang = (lang === 'en') ? 'vi' : 'en'; applyLang(); });
 
@@ -667,8 +668,7 @@
     }
     errBox.classList.remove('show');
 
-    // Honeypot: silently succeed without sending
-    if(form.querySelector('[name="bot-field"]') && form.querySelector('[name="bot-field"]').value){ showSuccess(); return; }
+    // Honeypot handled server-side (botcheck in payload) + Turnstile — never silently drop client-side (a real user with autofill would lose their enquiry).
     // (8-second time-trap removed — execute-on-submit Turnstile below is the real bot gate)
 
     // In-tenant submit — Power Automate flow → gm@ (email only, Phase 1). No Web3Forms, no US relay.

@@ -645,7 +645,7 @@
   }
   function copySummary(id, btn){
     var txt=document.getElementById(id).textContent;
-    navigator.clipboard.writeText(txt).then(function(){ var o=btn.textContent; btn.textContent=(curLang==='en'?'Copied ✓':'Đã sao chép ✓'); setTimeout(function(){ btn.textContent=o; },1800); });
+    navigator.clipboard.writeText(txt).then(function(){ var o=btn.textContent; btn.textContent=(curLang==='en'?'Copied ✓':'Đã sao chép ✓'); setTimeout(function(){ btn.textContent=o; },1800); }).catch(function(){ var o=btn.textContent; btn.textContent=(curLang==='en'?'Press Ctrl+C to copy':'Nhấn Ctrl+C để sao chép'); setTimeout(function(){ btn.textContent=o; },2500); });
   }
 </script>
 </body>

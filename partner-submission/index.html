@@ -122,7 +122,7 @@
           <div class="field"><label data-i18n="cm_name">Case manager name <span class="req">*</span></label><input name="Case manager" required placeholder="e.g. Vicky"></div>
           <div class="field"><label data-i18n="cm_email">Case manager email <span class="req">*</span></label><input type="email" name="Case manager email" required placeholder="e.g. name@yourcompany.com"></div>
           <div class="field"><label data-i18n="cm_phone">Case manager mobile / WhatsApp <span class="req">*</span></label><input type="tel" name="Case manager phone" autocomplete="tel" inputmode="tel" required placeholder="+84 …"></div>
-          <div class="field"><label data-i18n="cm_ref">Your internal file reference (optional)</label><input name="Partner file reference" required></div>
+          <div class="field"><label data-i18n="cm_ref">Your internal file reference (optional)</label><input name="Partner file reference"></div>
         </div>
         <label class="chk" style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;font-size:.95rem">
           <input type="checkbox" id="d0" required style="margin-top:4px">
@@ -239,7 +239,7 @@
         <div class="grid2">
           <div class="field"><label data-i18n="w_fit">Fit to perform the physical requirements of the role? <span class="req">*</span></label><select name="Fit for work" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="With adjustments" data-i18n="o_adj">With adjustments</option><option value="Unsure" data-i18n="o_unsure">Unsure</option></select></div>
           <div class="field"><label data-i18n="w_police">Police clearance available on request? <span class="req">*</span></label><select name="Police clearance" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="Can obtain" data-i18n="o_can">Can obtain</option><option value="No" data-i18n="o_no">No</option></select></div>
-          <div class="field full"><label data-i18n="w_note">Anything relevant to safe work or reasonable adjustments (optional)</label><input name="Work screening notes" placeholder="N/A if not applicable" required></div>
+          <div class="field full"><label data-i18n="w_note">Anything relevant to safe work or reasonable adjustments (optional)</label><input name="Work screening notes" placeholder="N/A if not applicable"></div>
         </div>
       </section>
 
@@ -271,7 +271,7 @@
       <section class="blk">
         <h2><span class="n">7</span><span data-i18n="s7">Additional information</span></h2>
         <div class="field"><label data-i18n="l_train">Open to further training or upskilling?</label><select name="Open to training" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="No" data-i18n="o_no">No</option></select></div>
-        <div class="field"><label data-i18n="l_adjust">Any support or workplace adjustments you’d like us to be aware of? (optional)</label><input name="Adjustments" placeholder="N/A if not applicable" required><div class="hint" data-i18n="hint_adjust">Optional — only so we can arrange reasonable adjustments if needed.</div></div>
+        <div class="field"><label data-i18n="l_adjust">Any support or workplace adjustments you’d like us to be aware of? (optional)</label><input name="Adjustments" placeholder="N/A if not applicable"><div class="hint" data-i18n="hint_adjust">Optional — only so we can arrange reasonable adjustments if needed.</div></div>
         <div class="field"><label data-i18n="l_why">Why are you interested in this opportunity?</label><textarea name="Why interested" required></textarea></div>
         <div class="field"><label data-i18n="l_more">Additional comments</label><textarea name="Additional comments" placeholder="N/A if not applicable" required></textarea></div>
       </section>
@@ -292,7 +292,7 @@
         <div style="margin-top:12px">
           <a id="uploadBtn" href="#" target="_blank" rel="noopener" style="display:none;background:#143027;color:#F2DF81;text-decoration:none;font-weight:700;border-radius:10px;padding:12px 20px" data-i18n="dc_btn">Open secure document upload</a>
           <div id="uploadPending" style="display:none;background:#FBF6E8;border:1px solid #E7D9A8;border-radius:10px;padding:11px 13px;font-size:.92rem" data-i18n="dc_pending">Your organisation&rsquo;s secure upload link is being activated. In the meantime, send the documents from your registered case-manager email to <b>jobs@talentgate.com.au</b>, using the file naming below.</div>
-          <div style="background:#EFE9DC;border:1px solid rgba(184,138,52,.3);border-radius:10px;padding:11px 13px;font-size:.88rem;margin-top:8px" data-i18n="dc_naming">Name each file with the candidate\u2019s full name and the document type — for example: <b>Nguyen Van A - Passport.pdf</b>. This lets us match documents to the right dossier quickly.</div>
+          <div style="background:#EFE9DC;border:1px solid rgba(184,138,52,.3);border-radius:10px;padding:11px 13px;font-size:.88rem;margin-top:8px" data-i18n="dc_naming">Name each file with the candidate’s full name and the document type — for example: <b>Nguyen Van A - Passport.pdf</b>. This lets us match documents to the right dossier quickly.</div>
           <p id="uploadNote" class="hint" style="margin-top:8px" data-i18n="dc_note2">Name each file: YourCode_CandidateSurname_DocType (e.g. ABC_TRAN_Passport.pdf).</p>
         </div>
       </section>
@@ -626,6 +626,7 @@
     document.querySelectorAll('[data-i18n]').forEach(function(el){ var k=el.getAttribute('data-i18n'); if(T[k]&&T[k][l]!=null){ el.innerHTML=T[k][l]; } });
     document.querySelectorAll('[data-ph]').forEach(function(el){ var k=el.getAttribute('data-ph'); if(T[k]&&T[k][l]!=null){ el.placeholder=T[k][l]; } });
     document.getElementById('langbtn').textContent = (l==='en') ? 'Tiếng Việt' : 'English';
+    document.querySelectorAll('.field').forEach(function(fw){var ctl=fw.querySelector('input,select,textarea');var lab=fw.querySelector('label');if(ctl&&lab&&ctl.required&&!lab.querySelector('.req')&&ctl.type!=='hidden'){var sp=document.createElement('span');sp.className='req';sp.textContent=' *';lab.appendChild(sp);}});
   }
   function toggleLang(){ setLang(curLang==='en'?'vi':'en'); }
 </script>

@@ -250,7 +250,7 @@
       <section class="blk">
         <h2><span class="n">7</span><span data-i18n="s7">Additional information</span></h2>
         <div class="field"><label data-i18n="l_train">Open to further training or upskilling?</label><select name="Open to training" required><option value="" data-i18n="o_sel">Select…</option><option value="Yes" data-i18n="o_yes">Yes</option><option value="No" data-i18n="o_no">No</option></select></div>
-        <div class="field"><label data-i18n="l_adjust">Any support or workplace adjustments you’d like us to be aware of? (optional)</label><input name="Adjustments" required><div class="hint" data-i18n="hint_adjust">Optional — only so we can arrange reasonable adjustments if needed.</div></div>
+        <div class="field"><label data-i18n="l_adjust">Any support or workplace adjustments you’d like us to be aware of? (optional)</label><input name="Adjustments"><div class="hint" data-i18n="hint_adjust">Optional — only so we can arrange reasonable adjustments if needed.</div></div>
         <div class="field"><label data-i18n="l_why">Why are you interested in this opportunity?</label><textarea name="Why interested" required></textarea></div>
         <div class="field"><label data-i18n="l_more">Additional comments</label><textarea name="Additional comments" required></textarea></div>
       </section>
@@ -584,6 +584,7 @@
     document.querySelectorAll('[data-i18n]').forEach(function(el){ var k=el.getAttribute('data-i18n'); if(T[k]&&T[k][l]!=null){ el.innerHTML=T[k][l]; } });
     document.querySelectorAll('[data-ph]').forEach(function(el){ var k=el.getAttribute('data-ph'); if(T[k]&&T[k][l]!=null){ el.placeholder=T[k][l]; } });
     document.getElementById('langbtn').textContent = (l==='en') ? 'Tiếng Việt' : 'English';
+    document.querySelectorAll('.field').forEach(function(fw){var ctl=fw.querySelector('input,select,textarea');var lab=fw.querySelector('label');if(ctl&&lab&&ctl.required&&!lab.querySelector('.req')&&ctl.type!=='hidden'){var sp=document.createElement('span');sp.className='req';sp.textContent=' *';lab.appendChild(sp);}});
     renderRefNote();
   }
   function toggleLang(){ setLang(curLang==='en'?'vi':'en'); }

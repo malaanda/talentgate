@@ -498,7 +498,7 @@
     getFreshToken().then(function(tok){
       if(!tok){
         if(SUBMIT){ SUBMIT.disabled=false; }
-        document.getElementById('err').textContent = (curLang==='en'?'Human verification did not complete — please press Submit again.':'Xác minh chưa hoàn tất — vui lòng nhấn Gửi lại.');
+        document.getElementById('err').textContent = (curLang==='en'?'Human verification did not complete — please press Submit again. If this keeps happening (e.g. a strict ad-blocker), email your application to jobs@talentgate.com.au.':'Xác minh chưa hoàn tất — vui lòng nhấn Gửi lại. Nếu vẫn không được (ví dụ do trình chặn quảng cáo), hãy gửi hồ sơ qua email jobs@talentgate.com.au.');
         document.getElementById('err').style.display='block';
         window.scrollTo({top:0,behavior:'smooth'});
         return;

@@ -829,7 +829,7 @@
   }
   function cardHTML(j){
     var idx=JOBS.indexOf(j);
-    var stLbl = curLang==='en'?j.status:(j.status==='Advertising'?'Đang tuyển':'Đang xét');
+    var stLbl = curLang==='en'?j.status:(j.status==='Advertising'?'Đang tuyển':(String(j.status||'').toLowerCase()==='closed'?'Đã đóng':'Đang xét'));
     var apply = curLang==='en'?'Apply':'Ứng tuyển';
     var view = curLang==='en'?'View details':'Xem chi tiết';
     var pIso=j.posted||todayISO(); var pD=postedDate(pIso); var cD=closeDate(pIso); var dl=daysLeft(cD); var open=adOpen(j);

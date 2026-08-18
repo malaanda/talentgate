@@ -699,7 +699,7 @@
       if(!tok){
         if(sendBtn){ sendBtn.disabled = false; }
         errBox.classList.add('show');
-        errBox.innerHTML=(lang==='vi') ? 'Xác minh chưa hoàn tất — vui lòng nhấn Gửi lại.' : 'Human verification did not complete — please press Submit again.';
+        errBox.innerHTML=(lang==='vi') ? 'Xác minh chưa hoàn tất — vui lòng nhấn Gửi lại. Nếu vẫn không được, hãy email <a href="mailto:gm@talentgate.com.au">gm@talentgate.com.au</a>.' : 'Human verification did not complete — please press Submit again. If it keeps happening, email <a href="mailto:gm@talentgate.com.au">gm@talentgate.com.au</a>.';
         errBox.scrollIntoView({behavior:'smooth', block:'center'}); return;
       }
       payload.turnstile = tok;

@@ -104,8 +104,8 @@
   <div class="wrap">
 
     <div id="done">
-      <h2 data-i18n="done_h">Application received</h2>
-      <p data-i18n="done_p">Thank you — your application has been sent to our team. We’ll be in touch.</p>
+      <h2 data-i18n="done_h">Referral received</h2>
+      <p data-i18n="done_p">Thank you — your referral is recorded to your partner code with today's date and time. Our team will follow up within one business day and keep you informed. Questions any time: gm@talentgate.com.au.</p>
     </div>
 
     <form id="appform" novalidate>
@@ -279,10 +279,6 @@
       </div>
   </form>
 
-  <div id="done" style="display:none;max-width:760px;margin:26px auto;padding:26px 22px;background:#fff;border:1px solid rgba(184,138,52,.28);border-radius:16px;text-align:center">
-    <h2 style="font-family:Fraunces,Georgia,serif;color:#143027;margin:0 0 8px" data-i18n="done_h">Referral received</h2>
-    <p style="margin:0;color:#53605A" data-i18n="done_p">Thank you — your referral is recorded to your partner code with today&rsquo;s date and time. Our team will follow up within one business day and keep you informed. Questions any time: gm@talentgate.com.au.</p>
-  </div>
 
 <footer>
       <p><b>TalentGate</b> — Talent Gate Australia Pty Ltd. Recruitment, workforce solutions, relocation and settlement support services.</p>
@@ -524,7 +520,7 @@
     var SUBMIT=document.querySelector('button[type="submit"]'); if(SUBMIT){ SUBMIT.disabled=true; }
     var err=document.getElementById('formErrR');
     getFreshToken().then(function(tok){
-      if(!tok){ showFail(lang==='vi'?'X\u00e1c minh ch\u01b0a ho\u00e0n t\u1ea5t \u2014 vui l\u00f2ng nh\u1ea5n G\u1eedi l\u1ea1i.':'Human verification did not complete \u2014 please press Submit again.'); window.scrollTo({top:0,behavior:'smooth'}); return; }
+      if(!tok){ showFail(lang==='vi'?'X\u00e1c minh ch\u01b0a ho\u00e0n t\u1ea5t \u2014 vui l\u00f2ng nh\u1ea5n G\u1eedi l\u1ea1i. N\u1ebfu v\u1eabn kh\u00f4ng \u0111\u01b0\u1ee3c, h\u00e3y email gm@talentgate.com.au.':'Human verification did not complete \u2014 please press Submit again. If it keeps happening, email gm@talentgate.com.au.'); window.scrollTo({top:0,behavior:'smooth'}); return; }
       P.turnstile=tok;
       fetch(FLOW_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(P)})
         .then(function(r){ if(!r.ok){ throw new Error('bad status'); } showDone(); })
